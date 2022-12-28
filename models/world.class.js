@@ -1,10 +1,6 @@
 class World {
 	character = new Character();
-	enemies = level1.enemies;
-
-	clouds = level1.clouds;
-	backgroundObjects = level1.backgroundObjects;
-
+	level = level1;
 	canvas;
 	ctx;
 	keyboard;
@@ -26,11 +22,11 @@ class World {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //Inhalt von Canvas wird gelöscht
 
 		this.ctx.translate(this.camera_x, 0);
-		this.addObjectsToCanvas(this.backgroundObjects);
+		this.addObjectsToCanvas(this.level.backgroundObjects);
 		this.addToCanvas(this.character);
 
-		this.addObjectsToCanvas(this.enemies);
-		this.addObjectsToCanvas(this.clouds);
+		this.addObjectsToCanvas(this.level.enemies);
+		this.addObjectsToCanvas(this.level.clouds);
 
 		this.ctx.translate(-this.camera_x, 0);
 
@@ -55,13 +51,18 @@ class World {
 			movableObject.x = movableObject.x * -1;
 		}
 
-		this.ctx.drawImage(
-			movableObject.img,
-			movableObject.x,
-			movableObject.y,
-			movableObject.width,
-			movableObject.height
-		);
+		try {
+			this.ctx.drawImage(
+				movableObject.img,
+				movableObject.x,
+				movableObject.y,
+				movableObject.width,
+				movableObject.height
+			);
+		} catch (e) {
+			console.warn('error loading image', e);
+			console.log(movableObject.img.src);
+		}
 
 		if (movableObject.otherDirection) {
 			movableObject.x = movableObject.x * -1;
