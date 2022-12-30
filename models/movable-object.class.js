@@ -10,7 +10,7 @@ class MovableObject {
 	otherDirection = false;
 
 	loadImage(path) {
-		this.img = new Image();
+		this.img = new Image(); // Image() = document.getElementById('').innerHTML = <img src="path" alt="" />
 		this.img.src = path;
 	}
 
@@ -22,9 +22,16 @@ class MovableObject {
 		});
 	}
 
-	moveRight() {
-		console.log('moving right');
+	playAnimation(images) {
+		let i = this.currrentImage % this.IMAGES_WALKING.length;
+		let path = images[i];
+		this.img = this.imageCache[path];
+		this.currrentImage++;
 	}
+
+	/* moveRight() {
+		console.log('moving right');
+	} */
 
 	moveLeft() {
 		setInterval(() => {

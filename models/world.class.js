@@ -51,18 +51,13 @@ class World {
 			movableObject.x = movableObject.x * -1;
 		}
 
-		try {
-			this.ctx.drawImage(
-				movableObject.img,
-				movableObject.x,
-				movableObject.y,
-				movableObject.width,
-				movableObject.height
-			);
-		} catch (e) {
-			console.warn('error loading image', e);
-			console.log(movableObject.img.src);
-		}
+		this.ctx.drawImage(
+			movableObject.img,
+			movableObject.x,
+			movableObject.y,
+			movableObject.width,
+			movableObject.height
+		);
 
 		if (movableObject.otherDirection) {
 			movableObject.x = movableObject.x * -1;
