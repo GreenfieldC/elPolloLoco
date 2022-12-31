@@ -1,6 +1,5 @@
 class World {
 	character = new Character();
-	bottle = new Bottle();
 	level = level1;
 	canvas;
 	ctx;
@@ -24,12 +23,14 @@ class World {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //Inhalt von Canvas wird gelöscht
 
 		this.ctx.translate(this.camera_x, 0);
+		//The order is important. Objects are being put on top of each other.
 		this.addObjectsToCanvas(this.level.backgroundObjects);
-		this.addToCanvas(this.character);
-		this.addToCanvas(this.bottle);
 
 		this.addObjectsToCanvas(this.level.enemies);
 		this.addObjectsToCanvas(this.level.clouds);
+		this.addObjectsToCanvas(this.level.bottlesOnGround);
+		this.addObjectsToCanvas(this.level.objectsInAir);
+		this.addToCanvas(this.character);
 
 		this.ctx.translate(-this.camera_x, 0);
 
