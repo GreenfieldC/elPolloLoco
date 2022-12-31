@@ -1,5 +1,6 @@
 class World {
 	character = new Character();
+	bottle = new Bottle();
 	level = level1;
 	canvas;
 	ctx;
@@ -12,6 +13,7 @@ class World {
 		this.keyboard = keyboard;
 		this.draw();
 		this.setWorld();
+		console.log(this.level);
 	}
 
 	setWorld() {
@@ -24,6 +26,7 @@ class World {
 		this.ctx.translate(this.camera_x, 0);
 		this.addObjectsToCanvas(this.level.backgroundObjects);
 		this.addToCanvas(this.character);
+		this.addToCanvas(this.bottle);
 
 		this.addObjectsToCanvas(this.level.enemies);
 		this.addObjectsToCanvas(this.level.clouds);

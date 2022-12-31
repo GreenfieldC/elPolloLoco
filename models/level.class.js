@@ -2,7 +2,7 @@ class Level {
 	enemies;
 	clouds;
 	backgroundObjects;
-	endOfLevel_x = 2250; // dasd funktioniert nicht. Man kann vorwärts gehen, aber nicht mehr zurück, ab dem Punkt x
+	endOfLevel_x = 2250;
 
 	constructor(enemies, clouds, backgroundObjects) {
 		this.enemies = enemies;
