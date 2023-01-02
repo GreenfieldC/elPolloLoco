@@ -1,5 +1,6 @@
 class Character extends MovableObject {
 	speed = 20;
+	y = 80;
 
 	IMAGES_WALKING = [
 		'./img/2_character_pepe/2_walk/W-21.png',
@@ -10,13 +11,26 @@ class Character extends MovableObject {
 		'./img/2_character_pepe/2_walk/W-26.png',
 	];
 
+	IMAGES_JUMPING = [
+		'./img/2_character_pepe/3_jump/J-31.png',
+		'./img/2_character_pepe/3_jump/J-32.png',
+		'./img/2_character_pepe/3_jump/J-33.png',
+		'./img/2_character_pepe/3_jump/J-34.png',
+		'./img/2_character_pepe/3_jump/J-35.png',
+		'./img/2_character_pepe/3_jump/J-36.png',
+		'./img/2_character_pepe/3_jump/J-37.png',
+		'./img/2_character_pepe/3_jump/J-38.png',
+		'./img/2_character_pepe/3_jump/J-39.png',
+	];
+
 	world;
 	walking_sound = new Audio('audio/walking_sound.mp3');
 
 	constructor() {
 		super().loadImage('./img/2_character_pepe/2_walk/W-21.png');
-		this.loadImages(this.IMAGES_WALKING);
-
+		this.loadImages(this.IMAGES_JUMPING);
+		this.loadImages(this.IMAGES_WALKING); // images werden geladen
+		this.applyGravity();
 		this.animation();
 	}
 
@@ -24,28 +38,41 @@ class Character extends MovableObject {
 		setInterval(() => {
 			this.walking_sound.pause();
 			if (this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x) {
-				// move to the right
-				this.x += this.speed;
+				this.moveRight();
 				this.otherDirection = false;
 				this.walking_sound.play();
 			}
 
 			if (this.world.keyboard.LEFT && this.x > -50) {
-				// move to the left
-				this.x -= this.speed;
+				this.moveLeft();
 				this.otherDirection = true; //if true then mirror character
 				this.walking_sound.play();
+			}
+
+			if (this.objectInAir()) {
+				this.walking_sound.pause();
 			}
 			this.world.camera_x = -this.x + 100;
 		}, 100);
 
 		setInterval(() => {
-			if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+			if (this.objectInAir()) {
+				this.playAnimation(this.IMAGES_JUMPING);
+			}
+			if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.y >= 170) {
 				// walk animation
 				this.playAnimation(this.IMAGES_WALKING);
 			}
-		}, 100);
-	}
 
-	jump() {}
+			if (this.objectInAir()) return;
+			if (this.world.keyboard.UP) {
+				this.jump();
+			}
+			if (this.y >= 180) this.airStatus = false;
+		}, 100);
+
+		/* setInterval(() => {
+			
+		}, 500); */
+	}
 }

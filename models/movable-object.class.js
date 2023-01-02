@@ -1,6 +1,6 @@
 class MovableObject {
 	x = 10;
-	y = 180;
+	y = 80;
 	speed = 0.25;
 	img;
 	height = 250;
@@ -8,6 +8,21 @@ class MovableObject {
 	currrentImage = 0;
 	imageCache = {};
 	otherDirection = false;
+	speedY = 0;
+	acceleration = 4;
+
+	objectInAir() {
+		return this.y < 180;
+	}
+
+	applyGravity() {
+		setInterval(() => {
+			if (this.objectInAir() || this.speedY > 0) {
+				this.y -= this.speedY; // warum nicht plus???
+				this.speedY -= this.acceleration;
+			}
+		}, 1000 / 25);
+	}
 
 	loadImage(path) {
 		this.img = new Image(); // Image() = document.getElementById('').innerHTML = <img src="path" alt="" />
@@ -29,13 +44,16 @@ class MovableObject {
 		this.currrentImage++;
 	}
 
-	/* moveRight() {
-		console.log('moving right');
-	} */
-
 	moveLeft() {
-		setInterval(() => {
-			this.x -= this.speed;
-		}, 1000 / 60);
+		// move to the left
+		this.x -= this.speed;
+	}
+
+	moveRight() {
+		this.x += this.speed;
+	}
+
+	jump() {
+		this.speedY = 40;
 	}
 }
