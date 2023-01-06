@@ -56,23 +56,24 @@ class Character extends MovableObject {
 		}, 100);
 
 		setInterval(() => {
-			if (this.objectInAir()) {
-				this.playAnimation(this.IMAGES_JUMPING);
-			}
 			if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.y >= 170) {
 				// walk animation
 				this.playAnimation(this.IMAGES_WALKING);
 			}
+		}, 100);
 
+		/* 
+		! Pepe soll immer gleich landen und abspringen! Muss noch gemacht werden.
+		 */
+		setInterval(() => {
+			if (this.objectInAir()) {
+				this.playAnimation(this.IMAGES_JUMPING);
+			}
 			if (this.objectInAir()) return;
 			if (this.world.keyboard.UP) {
 				this.jump();
 			}
 			if (this.y >= 180) this.airStatus = false;
-		}, 100);
-
-		/* setInterval(() => {
-			
-		}, 500); */
+		}, 150);
 	}
 }

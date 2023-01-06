@@ -45,7 +45,6 @@ class MovableObject {
 	}
 
 	moveLeft() {
-		// move to the left
 		this.x -= this.speed;
 	}
 

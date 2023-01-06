@@ -62,6 +62,17 @@ class World {
 			movableObject.height
 		);
 
+		this.ctx.beginPath();
+		this.ctx.lineWidth = '2';
+		this.ctx.strokeStyle = 'blue';
+		this.ctx.rect(
+			movableObject.x,
+			movableObject.y,
+			movableObject.width,
+			movableObject.height
+		);
+		this.ctx.stroke();
+
 		if (movableObject.otherDirection) {
 			movableObject.x = movableObject.x * -1;
 			this.ctx.restore();
