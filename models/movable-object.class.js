@@ -20,22 +20,6 @@ class MovableObject extends DrawableObject {
 		}, 1000 / 25);
 	}
 
-	drawBorders(ctx) {
-		// hier der Rahmen auf Character, Chicken, Chick begrent
-		if (
-			this instanceof Character ||
-			this instanceof Chicken ||
-			this instanceof Chick ||
-			this instanceof Endboss
-		) {
-			ctx.beginPath();
-			ctx.lineWidth = '2';
-			ctx.strokeStyle = 'blue';
-			ctx.rect(this.x, this.y, this.width, this.height);
-			ctx.stroke();
-		}
-	}
-
 	//character is colliding enemies
 	isColliding(MovableObject) {
 		return (

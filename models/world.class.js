@@ -1,5 +1,6 @@
 class World {
 	character = new Character();
+	healthStatusBar = new StatusBar();
 	level = level1;
 	canvas;
 	ctx;
@@ -28,6 +29,7 @@ class World {
 			this.level.enemies.forEach(enemy => {
 				if (this.character.isColliding(enemy)) {
 					this.character.injury();
+					this.healthStatusBar.setPercentage(this.character.energy);
 				}
 			});
 		}, 200);
@@ -39,6 +41,10 @@ class World {
 		this.ctx.translate(this.camera_x, 0);
 		//The order is important. Objects are being put on top of each other.
 		this.addObjectsToCanvas(this.level.backgroundObjects);
+
+		this.ctx.translate(-this.camera_x, 0); //backwards
+		this.addToCanvas(this.healthStatusBar);
+		this.ctx.translate(this.camera_x, 0); // forwards
 
 		this.addObjectsToCanvas(this.level.enemies);
 		this.addObjectsToCanvas(this.level.clouds);
