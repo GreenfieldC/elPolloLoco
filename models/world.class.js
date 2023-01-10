@@ -1,6 +1,6 @@
 class World {
 	character = new Character();
-	throwableBottle = [new ThrowableObjects()];
+	throwableBottle = [];
 	healthStatusBar = new HealthStatusBar();
 	bottlesStatusBar = new BottlesStatusBar();
 	coinsStatusBar = new CoinsStatusBar();
@@ -38,7 +38,7 @@ class World {
 
 	checkThrowBottles() {
 		let bottle = new ThrowableObjects(
-			this.character.x + 50,
+			this.character.x + 60,
 			this.character.y + 100
 		);
 		if (this.keyboard.D) this.throwableBottle.push(bottle);

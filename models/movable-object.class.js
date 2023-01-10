@@ -3,8 +3,8 @@ class MovableObject extends DrawableObject {
 	img;
 	otherDirection = false;
 	speedY = 0;
-	acceleration = 5;
-	energy = 100000000;
+	acceleration = 4;
+	energy = 100;
 	lastHit = 0;
 
 	objectInAir() {
@@ -72,6 +72,5 @@ class MovableObject extends DrawableObject {
 
 	jump() {
 		this.speedY = 40;
-		console.log(this.y);
 	}
 }

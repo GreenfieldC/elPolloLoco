@@ -1,6 +1,6 @@
 class ThrowableObjects extends MovableObject {
 	character = Character;
-	imageCache = {};
+	world;
 
 	IMAGES_FLYING_BOTTLES = [
 		'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -21,6 +21,7 @@ class ThrowableObjects extends MovableObject {
 	constructor(x, y) {
 		super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
 		this.loadImages(this.IMAGES_FLYING_BOTTLES);
+		this.loadImages(this.IMAGES_BURSTING_BOTTLES);
 		this.x = x;
 		this.y = y;
 		this.width = 90;
@@ -42,6 +43,7 @@ class ThrowableObjects extends MovableObject {
 		setInterval(() => {
 			this.x += 30;
 			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
+			this.bottleCollidingGround();
 		}, 50);
 	}
 
@@ -51,26 +53,38 @@ class ThrowableObjects extends MovableObject {
 		setInterval(() => {
 			this.x -= 30;
 			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
+			this.bottleCollidingGround();
 		}, 50);
 	}
 	throw() {
+		let bottle = 0;
 		if (this.headingForwards()) {
 			this.throwRight();
-			this.bottleCollidingGround();
 		}
 		if (this.headingBackwards()) {
 			this.throwLeft();
-			this.bottleCollidingGround();
 		}
+		if (world.throwableBottle.length > 0) {
+			console.log(world.throwableBottle[bottle].y);
+		}
+		console.log(bottle);
+		bottle++;
 	}
 
 	/* 
 	!FLASCHE SOLL AUF BODEN FALLEN KÖNNEN! */
 	bottleCollidingGround() {
-		if (this.y < 185) {
+		let bottleY = 0;
+		if (world.throwableBottle.length > 0)
+			bottleY = world.throwableBottle[0].y;
+		if (bottleY + this.height > 340) {
 			setInterval(() => {
 				this.playAnimation(this.IMAGES_BURSTING_BOTTLES);
 			}, 200);
 		}
+	}
+
+	isCollidingWithGround() {
+		return;
 	}
 }
