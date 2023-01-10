@@ -1,4 +1,4 @@
-class StatusBar extends DrawableObject {
+class HealthStatusBar extends DrawableObject {
 	IMAGES = [
 		'./img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png', // 0
 		'./img/7_statusbars/1_statusbar/2_statusbar_health/orange/20.png', // 1

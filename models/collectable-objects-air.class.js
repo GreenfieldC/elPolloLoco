@@ -1,6 +1,6 @@
 class CollectableObjectsAir extends MovableObject {
-	height = 80;
-	width = 80;
+	height = 90;
+	width = 90;
 	y = 0;
 
 	constructor(imagePath, x) {

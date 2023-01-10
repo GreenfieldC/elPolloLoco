@@ -1,6 +1,7 @@
 class Character extends MovableObject {
 	speed = 20;
 	y = 80;
+	movableObject = MovableObject; // kann ich damit auf die class zugreifen?
 
 	IMAGES_WALKING = [
 		'./img/2_character_pepe/2_walk/W-21.png',
@@ -50,23 +51,29 @@ class Character extends MovableObject {
 		this.loadImages(this.IMAGES_INPAIN); // images werden vorgeladen
 		this.applyGravity();
 		this.animation();
+		this.movableObject.otherDirection = false;
 	}
 
 	animation() {
 		setInterval(() => {
 			this.walking_sound.pause();
+
 			if (
 				this.world.keyboard.RIGHT &&
 				this.x < this.world.level.endOfLevel_x
 			) {
 				this.moveRight();
 				this.otherDirection = false;
+				this.movableObject.otherDirection = false; // wird otherDirection in movableobjects.class.js verändert?
 				this.walking_sound.play();
 			}
 
 			if (this.world.keyboard.LEFT && this.x > -50) {
 				this.moveLeft();
 				this.otherDirection = true; //if true then mirror character
+				this.movableObject.otherDirection = true;
+
+				console.log('this', this.movableObject.otherDirection);
 				this.walking_sound.play();
 			}
 

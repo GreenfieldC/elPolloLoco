@@ -3,11 +3,12 @@ class MovableObject extends DrawableObject {
 	img;
 	otherDirection = false;
 	speedY = 0;
-	acceleration = 4;
-	energy = 100;
+	acceleration = 5;
+	energy = 100000000;
 	lastHit = 0;
 
 	objectInAir() {
+		if (this instanceof ThrowableObjects) return true; // throwable objects fall down
 		return this.y < 180;
 	}
 
@@ -41,6 +42,7 @@ class MovableObject extends DrawableObject {
 		this.energy < 0
 			? (this.energy = 0)
 			: (this.lastHit = new Date().getTime());
+		/* console.log(this.energy); */
 	}
 
 	isInPain() {
@@ -70,5 +72,6 @@ class MovableObject extends DrawableObject {
 
 	jump() {
 		this.speedY = 40;
+		console.log(this.y);
 	}
 }
