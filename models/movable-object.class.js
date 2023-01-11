@@ -3,13 +3,32 @@ class MovableObject extends DrawableObject {
 	img;
 	otherDirection = false;
 	speedY = 0;
-	acceleration = 4;
+	speedX = 35;
+	acceleration = 9;
 	energy = 100;
 	lastHit = 0;
+	groundPosition = 180;
+	offset = {
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+	};
+
+	forwards() {
+		this.otherDirection = false;
+	}
+
+	backwards() {
+		this.otherDirection = true;
+	}
 
 	objectInAir() {
-		if (this instanceof ThrowableObjects) return true; // throwable objects fall down
-		return this.y < 180;
+		return this.y < this.groundPosition;
+	}
+
+	objectOnGround() {
+		return this.y >= 180;
 	}
 
 	applyGravity() {
@@ -17,6 +36,8 @@ class MovableObject extends DrawableObject {
 			if (this.objectInAir() || this.speedY > 0) {
 				this.y -= this.speedY; // warum nicht plus???
 				this.speedY -= this.acceleration;
+			} else {
+				this.speedX = 0; //bottles does not move on the ground!
 			}
 		}, 1000 / 25);
 	}
@@ -24,9 +45,9 @@ class MovableObject extends DrawableObject {
 	//character is colliding enemies
 	isColliding(MovableObject) {
 		return (
-			this.x + this.width >= MovableObject.x &&
+			this.x + this.width - this.offset.right >= MovableObject.x && // right side hits left of object
 			this.x <= MovableObject.x + MovableObject.width &&
-			this.x /* + this.offsetY */ + this.height >= MovableObject.x &&
+			this.x + this.offset.bottom + this.height >= MovableObject.x &&
 			this.x /* + this.offsetY */ <=
 				MovableObject.x + MovableObject.height /* &&
 			MovableObject.onCollisionCourse */
@@ -56,10 +77,10 @@ class MovableObject extends DrawableObject {
 	}
 
 	playAnimation(images) {
-		let i = this.currrentImage % images.length;
+		let i = this.currentImage % images.length;
 		let path = images[i];
 		this.img = this.imageCache[path];
-		this.currrentImage++;
+		this.currentImage++;
 	}
 
 	moveLeft() {
@@ -71,6 +92,6 @@ class MovableObject extends DrawableObject {
 	}
 
 	jump() {
-		this.speedY = 40;
+		this.speedY = 45;
 	}
 }

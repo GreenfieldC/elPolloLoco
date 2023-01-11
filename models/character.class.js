@@ -1,7 +1,15 @@
 class Character extends MovableObject {
 	speed = 20;
 	y = 180;
-	movableObject = MovableObject; // kann ich damit auf die class zugreifen?
+	world;
+	walking_sound = new Audio('audio/walking_sound.mp3'); //später auslagern
+
+	offset = {
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 25,
+	};
 
 	IMAGES_WALKING = [
 		'./img/2_character_pepe/2_walk/W-21.png',
@@ -40,9 +48,6 @@ class Character extends MovableObject {
 		'./img/2_character_pepe/4_hurt/H-43.png',
 	];
 
-	world;
-	walking_sound = new Audio('audio/walking_sound.mp3');
-
 	constructor() {
 		super().loadImage('./img/2_character_pepe/2_walk/W-21.png');
 		this.loadImages(this.IMAGES_JUMPING); // images werden vorgeladen
@@ -50,67 +55,85 @@ class Character extends MovableObject {
 		this.loadImages(this.IMAGES_DEAD); // images werden vorgeladen
 		this.loadImages(this.IMAGES_INPAIN); // images werden vorgeladen
 		this.applyGravity();
-		this.animation();
-		this.movableObject.otherDirection = false;
+		this.animate();
+		this.animations();
+		this.otherDirection = false;
 	}
 
-	animation() {
+	/* hier nur die Funktionen, wo Tasten gedrückt werden */
+	animate() {
 		setInterval(() => {
 			this.walking_sound.pause();
+			this.checkWalkingRight();
+			this.checkJumping();
+			this.checkWalkingLeft();
+			this.checkWalkingSound();
 
-			if (
-				this.world.keyboard.RIGHT &&
-				this.x < this.world.level.endOfLevel_x
-			) {
-				this.moveRight();
-				this.otherDirection = false;
-				this.movableObject.otherDirection = false; // wird otherDirection in movableobjects.class.js verändert?
-				this.walking_sound.play();
-			}
-
-			if (this.world.keyboard.LEFT && this.x > -50) {
-				this.moveLeft();
-				this.otherDirection = true; //if true then mirror character
-				this.movableObject.otherDirection = true;
-
-				this.walking_sound.play();
-			}
-
-			if (this.objectInAir()) {
-				this.walking_sound.pause();
-			}
-			this.world.camera_x = -this.x + 100;
+			this.setCameraForCharacter();
 		}, 100);
 
 		setInterval(() => {
-			if (
-				(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
-				this.y >= 170
-			) {
-				// walk animation
+			this.energy > 0 ? this.checkIsInPain() : this.checkIsDead();
+		}, 100);
+	}
+
+	/* hier sollen die Animtionen rein! */
+	animations() {
+		this.walkAnimation();
+	}
+
+	checkWalkingRight() {
+		if (this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x) {
+			this.moveRight();
+			this.forwards();
+			this.walking_sound.play();
+		}
+	}
+
+	checkWalkingLeft() {
+		if (this.world.keyboard.LEFT && this.x > -50) {
+			this.moveLeft();
+			this.backwards(); //if true then mirror character
+			this.walking_sound.play();
+		}
+	}
+
+	checkJumping() {
+		if (this.objectInAir()) {
+			this.playAnimation(this.IMAGES_JUMPING);
+		}
+		if (this.objectInAir()) return; // restrict more than one jump at the time
+		if (this.world.keyboard.UP) {
+			this.jump();
+		}
+		if (this.objectOnGround) this.airStatus = false;
+	}
+
+	checkWalkingSound() {
+		if (this.objectInAir()) {
+			this.walking_sound.pause();
+		}
+	}
+
+	walkAnimation() {
+		setInterval(() => {
+			if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.objectOnGround()) {
 				this.playAnimation(this.IMAGES_WALKING);
 			}
 		}, 100);
+	}
 
-		/* 
-		! Pepe soll immer gleich landen und abspringen! Muss noch gemacht werden.
-		 */
-		setInterval(() => {
-			if (this.energy > 0) {
-				if (this.isInPain()) {
-					this.playAnimation(this.IMAGES_INPAIN);
-				}
-				if (this.objectInAir()) {
-					this.playAnimation(this.IMAGES_JUMPING);
-				}
-				if (this.objectInAir()) return;
-				if (this.world.keyboard.UP) {
-					this.jump();
-				}
-				if (this.y >= 180) this.airStatus = false;
-			} else {
-				this.playAnimation(this.IMAGES_DEAD);
-			}
-		}, 150);
+	setCameraForCharacter() {
+		this.world.camera_x = -this.x + 100;
+	}
+
+	checkIsInPain() {
+		if (this.isInPain()) {
+			this.playAnimation(this.IMAGES_INPAIN);
+		}
+	}
+
+	checkIsDead() {
+		this.playAnimation(this.IMAGES_DEAD);
 	}
 }

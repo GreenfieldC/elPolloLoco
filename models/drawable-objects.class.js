@@ -5,7 +5,7 @@ class DrawableObject {
 	width = 120;
 	img;
 	imageCache = {};
-	currrentImage = 0;
+	currentImage = 0;
 
 	loadImage(path) {
 		this.img = new Image(); // Image() = document.getElementById('').innerHTML = <img src="path" alt="" />
@@ -31,7 +31,8 @@ class DrawableObject {
 			this instanceof Chicken ||
 			this instanceof Chick ||
 			this instanceof Endboss ||
-			this instanceof ThrowableObjects
+			this instanceof ThrowableObjects ||
+			this instanceof CollectableObjectsAir
 		) {
 			ctx.beginPath();
 			ctx.lineWidth = '2';

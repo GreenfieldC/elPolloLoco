@@ -27,7 +27,7 @@ class World {
 		this.character.energy--;
 	}
 
-	checkCollisions() {
+	checkCollisionsWithEnemies() {
 		this.level.enemies.forEach(enemy => {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury();
@@ -36,17 +36,34 @@ class World {
 		});
 	}
 
+	checkCollisionsWithBottlesOnGround() {
+		this.level.bottlesOnGround.forEach((bottlesOnGround, i) => {
+			if (this.character.isColliding(bottlesOnGround)) {
+				console.log('bottle on ground collected');
+				this.level.bottlesOnGround.splice(i, 1);
+			}
+		});
+	}
+	checkCollisionsWithObjectsInAir() {
+		this.level.objectsInAir.forEach((objectInAir, i) => {
+			if (this.character.isColliding(objectInAir)) {
+				console.log('bottle on ground collected');
+				this.level.objectsInAir.splice(i, 1);
+			}
+		});
+	}
+
 	checkThrowBottles() {
-		let bottle = new ThrowableObjects(
-			this.character.x + 60,
-			this.character.y + 100
-		);
+		let bottle = new ThrowableObjects(this.character.x + 60, this.character.y + 100);
 		if (this.keyboard.D) this.throwableBottle.push(bottle);
 	}
 
+	/* important to run the game */
 	run() {
 		setInterval(() => {
-			this.checkCollisions();
+			this.checkCollisionsWithEnemies();
+			this.checkCollisionsWithBottlesOnGround();
+			this.checkCollisionsWithObjectsInAir();
 			this.checkThrowBottles();
 		}, 200);
 	}

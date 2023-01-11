@@ -1,6 +1,6 @@
 class ThrowableObjects extends MovableObject {
-	character = Character;
 	world;
+	groundPosition = 320;
 
 	IMAGES_FLYING_BOTTLES = [
 		'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -26,65 +26,59 @@ class ThrowableObjects extends MovableObject {
 		this.y = y;
 		this.width = 90;
 		this.height = 90;
-		this.throw(x, y);
+		this.throw();
+		this.animate();
 	}
 
 	headingForwards() {
-		return this.character.otherDirection == false;
+		return this.otherDirection == false;
 	}
 
 	headingBackwards() {
-		return this.character.otherDirection == true;
+		return this.otherDirection == true;
 	}
 
 	throwRight() {
-		this.speedY = 30;
+		this.speedY = 50;
 		this.applyGravity();
+		/* if(this.groundPosition) !HIer weiter */
 		setInterval(() => {
-			this.x += 30;
-			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
-			this.bottleCollidingGround();
-		}, 50);
+			this.x += this.speedX;
+		}, 100);
 	}
 
 	throwLeft() {
-		this.speedY = 30;
+		this.speedY = 50;
 		this.applyGravity();
 		setInterval(() => {
-			this.x -= 30;
-			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
-			this.bottleCollidingGround();
+			this.x -= this.speedX;
 		}, 50);
 	}
 	throw() {
-		let bottle = 0;
 		if (this.headingForwards()) {
 			this.throwRight();
 		}
 		if (this.headingBackwards()) {
 			this.throwLeft();
 		}
-		if (world.throwableBottle.length > 0) {
-			console.log(world.throwableBottle[bottle].y);
-		}
-		console.log(bottle);
-		bottle++;
+	}
+
+	animate() {
+		setInterval(() => {
+			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
+		}, 50);
 	}
 
 	/* 
 	!FLASCHE SOLL AUF BODEN FALLEN KÖNNEN! */
-	bottleCollidingGround() {
+	/* 	bottleCollidingGround() {
 		let bottleY = 0;
 		if (world.throwableBottle.length > 0)
 			bottleY = world.throwableBottle[0].y;
-		if (bottleY + this.height > 340) {
+		if (bottleY + this.height > 320) {
 			setInterval(() => {
 				this.playAnimation(this.IMAGES_BURSTING_BOTTLES);
 			}, 200);
 		}
-	}
-
-	isCollidingWithGround() {
-		return;
-	}
+	} */
 }
