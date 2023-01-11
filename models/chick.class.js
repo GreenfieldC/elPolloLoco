@@ -5,8 +5,17 @@ class Chick extends MovableObject {
 		'./img/3_enemies_chicken/chicken_small/1_walk/3_w.png',
 	];
 
+	offset = {
+		top: 5,
+		bottom: 10,
+		left: 5,
+		right: 5,
+	};
+
 	constructor() {
-		super().loadImage('./img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
+		super().loadImage(
+			'./img/3_enemies_chicken/chicken_small/1_walk/1_w.png'
+		);
 		this.loadImages(this.IMAGES_WALKING);
 		this.x = 600 + Math.random() * 1000;
 		this.y = 350;

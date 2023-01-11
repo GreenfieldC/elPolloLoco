@@ -45,16 +45,20 @@ class MovableObject extends DrawableObject {
 	//character is colliding enemies
 	isColliding(MovableObject) {
 		return (
-			this.x + this.width - this.offset.right >= MovableObject.x && // right side hits left of object
-			this.x <= MovableObject.x + MovableObject.width &&
-			this.x + this.offset.bottom + this.height >= MovableObject.x &&
-			this.x /* + this.offsetY */ <=
-				MovableObject.x + MovableObject.height /* &&
-			MovableObject.onCollisionCourse */
-			/* offSetY?????? */
-			/* 
-			!wenn pepe über den enemies ist, dann verliert er energy */
-		); // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+			this.x + this.width - this.offset.right >
+				MovableObject.x + MovableObject.offset.left && // right side hits left of object
+			this.y + this.height - this.offset.bottom >
+				MovableObject.y + MovableObject.offset.top && // Bottom hits top of object
+			this.x + this.offset.left <
+				MovableObject.x +
+					MovableObject.width -
+					MovableObject.offset.right && // left side hit right side of object
+			this.y + this.offset.top <
+				MovableObject.y +
+					MovableObject.height -
+					MovableObject.offset.bottom
+		);
+		// Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 	}
 
 	// character looses energy after collsion with enemy
@@ -92,6 +96,7 @@ class MovableObject extends DrawableObject {
 	}
 
 	jump() {
-		this.speedY = 45;
+		// Pepe landet tiefer als 180. Warum?
+		this.speedY = 60;
 	}
 }

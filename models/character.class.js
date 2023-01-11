@@ -5,9 +5,9 @@ class Character extends MovableObject {
 	walking_sound = new Audio('audio/walking_sound.mp3'); //später auslagern
 
 	offset = {
-		top: 0,
-		bottom: 0,
-		left: 0,
+		top: 150,
+		bottom: -5,
+		left: 25,
 		right: 25,
 	};
 
@@ -83,7 +83,10 @@ class Character extends MovableObject {
 	}
 
 	checkWalkingRight() {
-		if (this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x) {
+		if (
+			this.world.keyboard.RIGHT &&
+			this.x < this.world.level.endOfLevel_x
+		) {
 			this.moveRight();
 			this.forwards();
 			this.walking_sound.play();
@@ -117,7 +120,10 @@ class Character extends MovableObject {
 
 	walkAnimation() {
 		setInterval(() => {
-			if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.objectOnGround()) {
+			if (
+				(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
+				this.objectOnGround()
+			) {
 				this.playAnimation(this.IMAGES_WALKING);
 			}
 		}, 100);
