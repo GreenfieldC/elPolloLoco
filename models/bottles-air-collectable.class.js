@@ -1,4 +1,4 @@
-class CollectableObjectsAir extends MovableObject {
+class BottlesInAir extends MovableObject {
 	height = 90;
 	width = 90;
 	y = 0;

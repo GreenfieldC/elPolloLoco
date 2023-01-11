@@ -27,6 +27,17 @@ class World {
 		this.character.energy--;
 	}
 
+	/* important to run the game */
+	run() {
+		setInterval(() => {
+			this.checkCollisionsWithEnemies();
+			this.checkCollisionsWithBottlesOnGround();
+			this.checkCollisionsWithBottlesInAir();
+			this.checkThrowBottles();
+			this.checkCollisionsWithCoins();
+		}, 200);
+	}
+
 	checkCollisionsWithEnemies() {
 		this.level.enemies.forEach(enemy => {
 			if (this.character.isColliding(enemy)) {
@@ -44,28 +55,31 @@ class World {
 			}
 		});
 	}
-	checkCollisionsWithObjectsInAir() {
-		this.level.objectsInAir.forEach((objectInAir, i) => {
+
+	checkCollisionsWithBottlesInAir() {
+		this.level.bottlesInAir.forEach((objectInAir, i) => {
 			if (this.character.isColliding(objectInAir)) {
 				console.log('bottle on ground collected');
-				this.level.objectsInAir.splice(i, 1);
+				this.level.bottlesInAir.splice(i, 1);
+			}
+		});
+	}
+
+	checkCollisionsWithCoins() {
+		this.level.coins.forEach((coins, i) => {
+			if (this.character.isColliding(coins)) {
+				console.log('bottle on ground collected');
+				this.level.coins.splice(i, 1);
 			}
 		});
 	}
 
 	checkThrowBottles() {
-		let bottle = new ThrowableObjects(this.character.x + 60, this.character.y + 100);
+		let bottle = new ThrowableObjects(
+			this.character.x + 60,
+			this.character.y + 100
+		);
 		if (this.keyboard.D) this.throwableBottle.push(bottle);
-	}
-
-	/* important to run the game */
-	run() {
-		setInterval(() => {
-			this.checkCollisionsWithEnemies();
-			this.checkCollisionsWithBottlesOnGround();
-			this.checkCollisionsWithObjectsInAir();
-			this.checkThrowBottles();
-		}, 200);
 	}
 
 	draw() {
@@ -85,7 +99,8 @@ class World {
 		this.addObjectsToCanvas(this.level.enemies);
 
 		this.addObjectsToCanvas(this.level.bottlesOnGround);
-		this.addObjectsToCanvas(this.level.objectsInAir);
+		this.addObjectsToCanvas(this.level.bottlesInAir);
+		this.addObjectsToCanvas(this.level.coins);
 		this.addToCanvas(this.character);
 		this.addObjectsToCanvas(this.throwableBottle);
 
