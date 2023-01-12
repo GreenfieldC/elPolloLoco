@@ -41,4 +41,27 @@ class DrawableObject {
 			ctx.stroke();
 		}
 	}
+
+	/**
+	 * @param {collectedAmount} - The amount of items collected.
+	 * @returns the index of the image to be displayed.
+	 *! ODER auch hier mit Prozent? Oder keine Statusbar?
+	 */
+	resolveImageIndex(collectedAmount) {
+		switch (true) {
+			case collectedAmount < 2:
+				return 0;
+			case collectedAmount <= 2:
+				return 1;
+			case collectedAmount <= 4:
+				return 2;
+			case collectedAmount <= 6:
+				return 3;
+			case collectedAmount <= 8:
+				return 4;
+			case collectedAmount <= 10:
+			case collectedAmount > 10:
+				return 5;
+		}
+	}
 }

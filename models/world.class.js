@@ -33,8 +33,8 @@ class World {
 			this.checkCollisionsWithEnemies();
 			this.checkCollisionsWithBottlesOnGround();
 			this.checkCollisionsWithBottlesInAir();
-			this.checkThrowBottles();
 			this.checkCollisionsWithCoins();
+			this.checkThrowBottles();
 		}, 200);
 	}
 
@@ -50,26 +50,52 @@ class World {
 	checkCollisionsWithBottlesOnGround() {
 		this.level.bottlesOnGround.forEach((bottlesOnGround, i) => {
 			if (this.character.isColliding(bottlesOnGround)) {
-				console.log('bottle on ground collected');
-				this.level.bottlesOnGround.splice(i, 1);
+				this.takeBottleOnGroundFromMap(i);
+				this.updateIncreaseStatusBarBottles();
 			}
 		});
+	}
+
+	takeBottleOnGroundFromMap(i) {
+		this.level.bottlesOnGround.splice(i, 1);
 	}
 
 	checkCollisionsWithBottlesInAir() {
 		this.level.bottlesInAir.forEach((objectInAir, i) => {
 			if (this.character.isColliding(objectInAir)) {
-				console.log('bottle on ground collected');
-				this.level.bottlesInAir.splice(i, 1);
+				this.takeBottleInAirFromMap(i);
+				this.updateIncreaseStatusBarBottles();
 			}
 		});
+	}
+
+	takeBottleInAirFromMap(i) {
+		this.level.bottlesInAir.splice(i, 1);
+	}
+
+	updateIncreaseStatusBarBottles() {
+		this.bottlesStatusBar.collectedBottles++;
+		this.bottlesStatusBar.setAmountBottles(
+			this.bottlesStatusBar.collectedBottles
+		);
+	}
+
+	updateDecreaseStatusBarBottles() {
+		this.bottlesStatusBar.collectedBottles--;
+		this.bottlesStatusBar.setAmountBottles(
+			this.bottlesStatusBar.collectedBottles
+		);
 	}
 
 	checkCollisionsWithCoins() {
 		this.level.coins.forEach((coins, i) => {
 			if (this.character.isColliding(coins)) {
-				console.log('bottle on ground collected');
+				console.log('coin on ground collected');
 				this.level.coins.splice(i, 1);
+				this.coinsStatusBar.collectedCoins++;
+				this.coinsStatusBar.setAmountCoins(
+					this.coinsStatusBar.collectedCoins
+				);
 			}
 		});
 	}
@@ -79,7 +105,15 @@ class World {
 			this.character.x + 60,
 			this.character.y + 100
 		);
-		if (this.keyboard.D) this.throwableBottle.push(bottle);
+		if (this.noBottlesCollected()) return;
+		if (this.keyboard.D) {
+			this.throwableBottle.push(bottle);
+			this.updateDecreaseStatusBarBottles();
+		}
+	}
+
+	noBottlesCollected() {
+		return this.bottlesStatusBar.collectedBottles == 0;
 	}
 
 	draw() {
