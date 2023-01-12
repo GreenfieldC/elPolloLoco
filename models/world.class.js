@@ -49,6 +49,7 @@ class World {
 
 	checkCollisionsWithBottlesOnGround() {
 		this.level.bottlesOnGround.forEach((bottlesOnGround, i) => {
+			if (this.bottlesStatusBar.collectedBottles == 10) return; //Pepe kann carry more than 10 bottles at the time
 			if (this.character.isColliding(bottlesOnGround)) {
 				this.takeBottleOnGroundFromMap(i);
 				this.updateIncreaseStatusBarBottles();
@@ -61,6 +62,7 @@ class World {
 	}
 
 	checkCollisionsWithBottlesInAir() {
+		if (this.bottlesStatusBar.collectedBottles == 10) return; //Pepe kann carry more than 10 bottles at the time
 		this.level.bottlesInAir.forEach((objectInAir, i) => {
 			if (this.character.isColliding(objectInAir)) {
 				this.takeBottleInAirFromMap(i);
@@ -85,6 +87,10 @@ class World {
 		this.bottlesStatusBar.setAmountBottles(
 			this.bottlesStatusBar.collectedBottles
 		);
+	}
+
+	checkCharacterAbleOfCollectingMore() {
+		if (this.bottlesStatusBar.collectedBottles == 10) return;
 	}
 
 	checkCollisionsWithCoins() {
