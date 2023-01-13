@@ -55,8 +55,8 @@ class Character extends MovableObject {
 		this.loadImages(this.IMAGES_DEAD); // images werden vorgeladen
 		this.loadImages(this.IMAGES_INPAIN); // images werden vorgeladen
 		this.applyGravity();
-		this.animate();
 		this.animations();
+		this.animate();
 		this.otherDirection = false;
 	}
 
@@ -65,9 +65,9 @@ class Character extends MovableObject {
 		setInterval(() => {
 			this.walking_sound.pause();
 			this.checkWalkingRight();
-			this.checkJumping();
-			this.checkWalkingLeft();
 			this.checkWalkingSound();
+			this.checkWalkingLeft();
+			this.checkJumping();
 
 			this.setCameraForCharacter();
 		}, 100);
@@ -102,10 +102,10 @@ class Character extends MovableObject {
 	}
 
 	checkJumping() {
-		if (this.objectInAir()) {
+		if (this.aboveGround()) {
 			this.playAnimation(this.IMAGES_JUMPING);
 		}
-		if (this.objectInAir()) return; // restrict more than one jump at the time
+		if (this.aboveGround()) return; // restrict more than one jump at the time
 		if (this.world.keyboard.UP) {
 			this.jump();
 		}
@@ -113,7 +113,7 @@ class Character extends MovableObject {
 	}
 
 	checkWalkingSound() {
-		if (this.objectInAir()) {
+		if (this.aboveGround()) {
 			this.walking_sound.pause();
 		}
 	}

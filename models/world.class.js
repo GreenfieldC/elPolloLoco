@@ -1,6 +1,7 @@
 class World {
 	character = new Character();
 	throwableBottle = [];
+	splashedBottle = [];
 	healthStatusBar = new HealthStatusBar();
 	bottlesStatusBar = new BottlesStatusBar();
 	coinsStatusBar = new CoinsStatusBar();
@@ -34,7 +35,9 @@ class World {
 			this.checkCollisionsWithBottlesOnGround();
 			this.checkCollisionsWithBottlesInAir();
 			this.checkCollisionsWithCoins();
-			this.checkThrowBottles();
+			this.checkThrowBottles(); // hier ansetzen für splashed bottles
+			this.checkBottleHitsGround();
+			this.checkBottleHitsChicks();
 		}, 200);
 	}
 
@@ -89,7 +92,7 @@ class World {
 		);
 	}
 
-	checkCharacterAbleOfCollectingMore() {
+	checkCharacterAbleOfCollectingMoreBottles() {
 		if (this.bottlesStatusBar.collectedBottles == 10) return;
 	}
 
@@ -122,6 +125,31 @@ class World {
 		return this.bottlesStatusBar.collectedBottles == 0;
 	}
 
+	checkBottleHitsGround() {
+		this.throwableBottle.forEach(bottle => {
+			if (bottle.y > 300) this.bottleSplashes(bottle);
+		});
+	}
+
+	bottleSplashes(bottlePosition) {
+		let bottle = new SplashedBottle(bottlePosition.x, bottlePosition.y);
+		this.throwableBottle.splice(bottlePosition, 1);
+		this.splashedBottle.push(bottle);
+		setTimeout(() => {
+			this.splashedBottle.splice(bottle);
+		}, 500);
+	}
+
+	checkBottleHitsChicks() {
+		this.throwableBottle.forEach(bottle => {
+			this.level.enemies.forEach(enemies => {
+				if (bottle.isColliding(enemies)) {
+					console.log('bottle hits enemies');
+				}
+			});
+		});
+	}
+
 	draw() {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //Inhalt von Canvas wird gelöscht
 
@@ -143,12 +171,13 @@ class World {
 		this.addObjectsToCanvas(this.level.coins);
 		this.addToCanvas(this.character);
 		this.addObjectsToCanvas(this.throwableBottle);
+		this.addObjectsToCanvas(this.splashedBottle);
 
 		this.ctx.translate(-this.camera_x, 0);
 
 		// Draw() wird immer wieder aufgerufen
 		let self = this;
-		requestAnimationFrame(function () {
+		requestAnimationFrame(() => {
 			self.draw();
 		});
 	}

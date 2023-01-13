@@ -2,12 +2,13 @@ class MovableObject extends DrawableObject {
 	speed = 0.25;
 	img;
 	otherDirection = false;
-	speedY = 0;
-	speedX = 35;
+	speedY = 50;
+	speedX = 80;
 	acceleration = 9;
 	energy = 100;
 	lastHit = 0;
 	groundPosition = 180;
+	world;
 	offset = {
 		top: 0,
 		bottom: 0,
@@ -23,17 +24,17 @@ class MovableObject extends DrawableObject {
 		this.otherDirection = true;
 	}
 
-	objectInAir() {
+	aboveGround() {
 		return this.y < this.groundPosition;
 	}
 
 	objectOnGround() {
-		return this.y >= 180;
+		return this.y >= this.groundPosition;
 	}
 
 	applyGravity() {
 		setInterval(() => {
-			if (this.objectInAir() || this.speedY > 0) {
+			if (this.aboveGround() || this.speedY > 0) {
 				this.y -= this.speedY; // warum nicht plus???
 				this.speedY -= this.acceleration;
 			} else {
@@ -43,22 +44,43 @@ class MovableObject extends DrawableObject {
 	}
 
 	//character is colliding enemies
-	isColliding(MovableObject) {
+	isColliding(object) {
 		return (
-			this.x + this.width - this.offset.right >
-				MovableObject.x + MovableObject.offset.left && // right side hits left of object
-			this.y + this.height - this.offset.bottom >
-				MovableObject.y + MovableObject.offset.top && // Bottom hits top of object
-			this.x + this.offset.left <
-				MovableObject.x +
-					MovableObject.width -
-					MovableObject.offset.right && // left side hit right side of object
-			this.y + this.offset.top <
-				MovableObject.y +
-					MovableObject.height -
-					MovableObject.offset.bottom
+			this.rightBorderColliding(object) && // right side hits left of object
+			this.bottomColliding(object) && // Bottom hits top of object
+			this.leftBorderColliding(object) && // left side hit right side of object
+			this.topBorderColliding(object)
 		);
 		// Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+	}
+
+	/* Checking if the right side of the object is colliding with the left side of the object. */
+	rightBorderColliding(object) {
+		return (
+			this.x + this.width - this.offset.right >
+			object.x + object.offset.left
+		);
+	}
+
+	bottomColliding(object) {
+		return (
+			this.y + this.height - this.offset.bottom >
+			object.y + object.offset.top
+		);
+	}
+
+	leftBorderColliding(object) {
+		return (
+			this.x + this.offset.left <
+			object.x + object.width - object.offset.right
+		);
+	}
+
+	topBorderColliding(object) {
+		return (
+			this.y + this.offset.top <
+			object.y + object.height - object.offset.bottom
+		);
 	}
 
 	// character looses energy after collsion with enemy
@@ -97,6 +119,6 @@ class MovableObject extends DrawableObject {
 
 	jump() {
 		// Pepe landet tiefer als 180. Warum?
-		this.speedY = 60;
+		this.speedY = 50;
 	}
 }

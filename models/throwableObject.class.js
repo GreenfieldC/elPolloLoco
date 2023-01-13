@@ -1,5 +1,4 @@
 class ThrowableObjects extends MovableObject {
-	world;
 	groundPosition = 320;
 
 	IMAGES_FLYING_BOTTLES = [
@@ -30,16 +29,15 @@ class ThrowableObjects extends MovableObject {
 	}
 
 	throwRight() {
-		this.speedY = 50;
+		this.speedY = this.speedY;
 		this.applyGravity();
-		/* if(this.groundPosition) !HIer weiter */
 		setInterval(() => {
 			this.x += this.speedX;
 		}, 100);
 	}
 
 	throwLeft() {
-		this.speedY = 50;
+		this.speedY = this.speedY;
 		this.applyGravity();
 		setInterval(() => {
 			this.x -= this.speedX;
@@ -57,19 +55,6 @@ class ThrowableObjects extends MovableObject {
 	animate() {
 		setInterval(() => {
 			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
-		}, 50);
+		}, 80);
 	}
-
-	/* 
-	!FLASCHE SOLL AUF BODEN FALLEN KÖNNEN! */
-	/* 	bottleCollidingGround() {
-		let bottleY = 0;
-		if (world.throwableBottle.length > 0)
-			bottleY = world.throwableBottle[0].y;
-		if (bottleY + this.height > 320) {
-			setInterval(() => {
-				this.playAnimation(this.IMAGES_BURSTING_BOTTLES);
-			}, 200);
-		}
-	} */
 }
