@@ -6,10 +6,10 @@ class Chick extends MovableObject {
 	];
 
 	offset = {
-		top: 5,
-		bottom: 10,
-		left: 5,
-		right: 5,
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
 	};
 
 	constructor() {

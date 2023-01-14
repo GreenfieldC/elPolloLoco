@@ -1,5 +1,13 @@
 class ThrowableObjects extends MovableObject {
 	groundPosition = 320;
+	speedY = 50;
+
+	offset = {
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+	};
 
 	IMAGES_FLYING_BOTTLES = [
 		'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -55,6 +63,6 @@ class ThrowableObjects extends MovableObject {
 	animate() {
 		setInterval(() => {
 			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
-		}, 80);
+		}, 90);
 	}
 }

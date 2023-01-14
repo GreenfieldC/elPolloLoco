@@ -7,21 +7,23 @@ const level1 = new Level(
 		new Chick(),
 		new Chick(),
 		new Chick(),
+		/* new Chick(),
 		new Chick(),
-		new Chick(),
-		new Chick(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Chicken(),
-		new Endboss(),
+		new Chick(), */
 	],
+	[
+		new Chicken(),
+		new Chicken(),
+		new Chicken(),
+		new Chicken(),
+		new Chicken(),
+		new Chicken(),
+		/* new Chicken(),
+		new Chicken(),
+		new Chicken(),
+		new Chicken(), */
+	],
+	[new Endboss()],
 
 	[
 		new Cloud(),
@@ -129,6 +131,22 @@ const level1 = new Level(
 		new BottlesInAir(
 			'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
 			200
+		),
+		new BottlesInAir(
+			'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
+			210
+		),
+		new BottlesInAir(
+			'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
+			220
+		),
+		new BottlesInAir(
+			'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
+			230
+		),
+		new BottlesInAir(
+			'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
+			240
 		),
 		new BottlesInAir(
 			'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',

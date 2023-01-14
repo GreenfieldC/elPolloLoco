@@ -2,9 +2,9 @@ class MovableObject extends DrawableObject {
 	speed = 0.25;
 	img;
 	otherDirection = false;
-	speedY = 50;
+	speedY = 0;
 	speedX = 80;
-	acceleration = 9;
+	acceleration = 10;
 	energy = 100;
 	lastHit = 0;
 	groundPosition = 180;
@@ -32,6 +32,7 @@ class MovableObject extends DrawableObject {
 		return this.y >= this.groundPosition;
 	}
 
+	// if aus setinterval raus!?
 	applyGravity() {
 		setInterval(() => {
 			if (this.aboveGround() || this.speedY > 0) {
@@ -40,14 +41,14 @@ class MovableObject extends DrawableObject {
 			} else {
 				this.speedX = 0; //bottles does not move on the ground!
 			}
-		}, 1000 / 25);
+		}, 50);
 	}
 
 	//character is colliding enemies
 	isColliding(object) {
 		return (
 			this.rightBorderColliding(object) && // right side hits left of object
-			this.bottomColliding(object) && // Bottom hits top of object
+			this.bottomBorderColliding(object) && // Bottom hits top of object
 			this.leftBorderColliding(object) && // left side hit right side of object
 			this.topBorderColliding(object)
 		);
@@ -62,7 +63,7 @@ class MovableObject extends DrawableObject {
 		);
 	}
 
-	bottomColliding(object) {
+	bottomBorderColliding(object) {
 		return (
 			this.y + this.height - this.offset.bottom >
 			object.y + object.offset.top
@@ -84,12 +85,11 @@ class MovableObject extends DrawableObject {
 	}
 
 	// character looses energy after collsion with enemy
-	injury() {
-		this.energy--;
+	injury(damage) {
+		this.energy -= damage;
 		this.energy < 0
 			? (this.energy = 0)
 			: (this.lastHit = new Date().getTime());
-		/* console.log(this.energy); */
 	}
 
 	isInPain() {
@@ -119,6 +119,6 @@ class MovableObject extends DrawableObject {
 
 	jump() {
 		// Pepe landet tiefer als 180. Warum?
-		this.speedY = 50;
+		this.speedY = 60;
 	}
 }

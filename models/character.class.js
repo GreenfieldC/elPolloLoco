@@ -7,8 +7,8 @@ class Character extends MovableObject {
 	offset = {
 		top: 150,
 		bottom: -5,
-		left: 25,
-		right: 25,
+		left: 0,
+		right: 0,
 	};
 
 	IMAGES_WALKING = [
@@ -48,12 +48,40 @@ class Character extends MovableObject {
 		'./img/2_character_pepe/4_hurt/H-43.png',
 	];
 
+	IMAGES_IDLE = [
+		'./img/2_character_pepe/1_idle/idle/I-1.png',
+		'./img/2_character_pepe/1_idle/idle/I-2.png',
+		'./img/2_character_pepe/1_idle/idle/I-3.png',
+		'./img/2_character_pepe/1_idle/idle/I-4.png',
+		'./img/2_character_pepe/1_idle/idle/I-5.png',
+		'./img/2_character_pepe/1_idle/idle/I-6.png',
+		'./img/2_character_pepe/1_idle/idle/I-7.png',
+		'./img/2_character_pepe/1_idle/idle/I-8.png',
+		'./img/2_character_pepe/1_idle/idle/I-9.png',
+		'./img/2_character_pepe/1_idle/idle/I-10.png',
+	];
+
+	IMAGES_LONG_IDLE = [
+		'./img/2_character_pepe/1_idle/long_idle/I-11.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-12.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-13.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-14.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-15.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-16.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-17.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-18.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-19.png',
+		'./img/2_character_pepe/1_idle/long_idle/I-20.png',
+	];
+
 	constructor() {
 		super().loadImage('./img/2_character_pepe/2_walk/W-21.png');
 		this.loadImages(this.IMAGES_JUMPING); // images werden vorgeladen
 		this.loadImages(this.IMAGES_WALKING); // images werden vorgeladen
 		this.loadImages(this.IMAGES_DEAD); // images werden vorgeladen
 		this.loadImages(this.IMAGES_INPAIN); // images werden vorgeladen
+		this.loadImages(this.IMAGES_IDLE); // images werden vorgeladen
+		this.loadImages(this.IMAGES_LONG_IDLE); // images werden vorgeladen
 		this.applyGravity();
 		this.animations();
 		this.animate();
@@ -118,6 +146,9 @@ class Character extends MovableObject {
 		}
 	}
 
+	/* 
+! kein if in setinterval!!!!! ändern!
+ */
 	walkAnimation() {
 		setInterval(() => {
 			if (
