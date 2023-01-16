@@ -92,6 +92,9 @@ class MovableObject extends DrawableObject {
 			: (this.lastHit = new Date().getTime());
 	}
 
+	/**
+
+ */
 	isInPain() {
 		let timepassed = new Date().getTime() - this.lastHit; // difference in ms
 		timepassed = timepassed / 1000;

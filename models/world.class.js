@@ -37,7 +37,8 @@ class World {
 			this.checkThrowBottles(); // hier ansetzen für splashed bottles
 			this.checkBottleHitsGround();
 			this.checkBottleHitsEnemy();
-		}, 20);
+			this.checkCharacterGetDetectedByEndboss();
+		}, 30);
 	}
 
 	checkCollsionWithEnemies() {
@@ -52,6 +53,7 @@ class World {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury(0.5);
 				this.healthStatusBar.setPercentage(this.character.energy);
+				/* this.character.isInactive = false; */ // Warum geht das nicht
 			}
 		});
 	}
@@ -61,6 +63,7 @@ class World {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury(1);
 				this.healthStatusBar.setPercentage(this.character.energy);
+				/* this.character.isInactive = false; */
 			}
 		});
 	}
@@ -70,10 +73,16 @@ class World {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury(5);
 				this.healthStatusBar.setPercentage(this.character.energy);
+				setTimeout(() => {
+					this.characterIsTooClose();
+				}, 1000);
 			}
 		});
 	}
 
+	/* 
+	! Hier sterben Feinde, auf die ich nicht springe! 
+	 */
 	checkKillEnemyByJump() {
 		this.checkHitsChickOnTop();
 		this.checkHitsChickenOnTop();
@@ -190,9 +199,9 @@ class World {
 		});
 	}
 
-	bottleSplashes(bottlePosition) {
-		let bottle = new SplashedBottle(bottlePosition.x, bottlePosition.y);
-		this.throwableBottle.splice(bottlePosition, 1);
+	bottleSplashes(bottleObj) {
+		let bottle = new SplashedBottle(bottleObj.x, bottleObj.y);
+		this.throwableBottle.splice(bottleObj, 1);
 		this.splashedBottle.push(bottle);
 		setTimeout(() => {
 			this.splashedBottle.splice(bottle);
@@ -216,12 +225,12 @@ class World {
 		});
 	}
 
-	chickDies(enemyPosition) {
-		let deadChick = new ChickDies(enemyPosition.x, enemyPosition.y);
-		this.level.smallEnemies.splice(enemyPosition, 1);
+	chickDies(enemyObj, position) {
+		let deadChick = new ChickDies(enemyObj.x, enemyObj.y);
+		this.level.smallEnemies.splice(position, 1);
 		this.deadEnemies.push(deadChick);
 		setTimeout(() => {
-			this.deadEnemies.splice(deadChick, 1);
+			this.deadEnemies.splice(0, 1);
 		}, 2000);
 	}
 
@@ -237,12 +246,12 @@ class World {
 		});
 	}
 
-	chickenDies(enemyPosition) {
-		let deadChicken = new ChickenDies(enemyPosition.x, enemyPosition.y);
-		this.level.biggerEnemies.splice(enemyPosition, 1);
+	chickenDies(enemyObj, position) {
+		let deadChicken = new ChickenDies(enemyObj.x, enemyObj.y);
+		this.level.biggerEnemies.splice(position, 1);
 		this.deadEnemies.push(deadChicken);
 		setTimeout(() => {
-			this.deadEnemies.splice(deadChicken, 1);
+			this.deadEnemies.splice(0, 1);
 		}, 2000);
 	}
 
@@ -250,20 +259,45 @@ class World {
 		this.throwableBottle.forEach((bottle) => {
 			this.level.endBoss.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
-					this.endBossDies(enemy, i);
+					this.level.endBoss[i].injury(54);
+					this.bottleSplashes(bottle);
+					this.endBossBeingAttackedByCharacter();
+				}
+
+				if (this.level.endBoss[i].energy <= 0) {
+					this.endBossDies(0, i);
 					this.bottleSplashes(bottle);
 				}
 			});
 		});
 	}
 
-	endBossDies(enemyPosition) {
+	endBossDies(enemyPosition, position) {
 		let deadEndBoss = new EndbossDies(enemyPosition.x, enemyPosition.y);
-		this.level.endBoss.splice(enemyPosition, 1);
+		this.level.endBoss.splice(position, 1);
 		this.deadEnemies.push(deadEndBoss);
 		setTimeout(() => {
-			this.deadEnemies.splice(deadEndBoss, 1);
+			this.deadEnemies.splice(position, 1);
 		}, 3000);
+	}
+
+	checkCharacterGetDetectedByEndboss() {
+		if (this.character.x > 3000) {
+			this.endBossDetectedCharacter();
+			console.log(this.character.x);
+		}
+	}
+
+	endBossDetectedCharacter() {
+		this.level.endBoss[0].characterDetected = true;
+	}
+
+	endBossBeingAttackedByCharacter() {
+		this.level.endBoss[0].beingAttacked = true;
+	}
+
+	characterIsTooClose() {
+		this.level.endBoss[0].tooClose = true;
 	}
 
 	draw() {

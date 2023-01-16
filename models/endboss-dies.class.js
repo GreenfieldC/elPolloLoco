@@ -3,13 +3,6 @@ class EndbossDies extends MovableObject {
 	height = 300;
 	y = 140;
 
-	offset = {
-		top: 100,
-		bottom: 15,
-		left: 50,
-		right: 50,
-	};
-
 	IMAGES_ENDBOSS_DYING = [
 		'./img/4_enemie_boss_chicken/5_dead/G24.png',
 		'./img/4_enemie_boss_chicken/5_dead/G25.png',
