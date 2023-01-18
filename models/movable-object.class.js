@@ -24,6 +24,10 @@ class MovableObject extends DrawableObject {
 		this.otherDirection = false;
 	}
 
+	headingForwards() {
+		return this.otherDirection == false;
+	}
+
 	backwards() {
 		this.otherDirection = true;
 	}

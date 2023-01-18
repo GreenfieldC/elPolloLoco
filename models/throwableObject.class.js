@@ -28,14 +28,6 @@ class ThrowableObjects extends MovableObject {
 		this.bottleBeingThrownAnimation(); //ist die schon in movableobject?
 	}
 
-	/* 	headingForwards() {
-		return this.otherDirection == false;
-	}
-
-	headingBackwards() {
-		return this.otherDirection == true;
-	} */
-
 	throw() {
 		this.speedY = this.speedY;
 		this.applyGravity();
@@ -43,18 +35,6 @@ class ThrowableObjects extends MovableObject {
 			this.x += this.speedX;
 		}, 120);
 	}
-
-	/* 		throwLeft() {
-		this.speedY = this.speedY;
-		this.applyGravity();
-		setInterval(() => {
-			this.x -= this.speedX;
-		}, 50);
-	} */
-	/* 	checkThrowing() {
-		if (this.headingBackwards()) return;
-		if (this.headingForwards()) this.throw();
-	} */
 
 	bottleBeingThrownAnimation() {
 		setInterval(() => {

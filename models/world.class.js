@@ -33,7 +33,7 @@ class World {
 		setInterval(() => {
 			this.checkCollsionWithEnemies();
 			this.checkCollsionWithCollectableObjects();
-			this.checkThrowBottles(); // hier ansetzen für splashed bottles
+			/* this.checkThrowBottles(); */ // hier ansetzen für splashed bottles
 			this.checkBottleHitsGround();
 			this.checkBottleHitsEnemy();
 			this.checkCharacterGetDetectedByEndboss();
@@ -173,22 +173,6 @@ class World {
 				);
 			}
 		});
-	}
-
-	checkThrowBottles() {
-		let bottle = new ThrowableObjects(
-			this.character.x + 60,
-			this.character.y + 100
-		);
-		if (this.noBottlesCollected()) return;
-		if (this.keyboard.D && this.headingLeft()) {
-			this.throwableObject.push(bottle);
-			this.updateDecreaseStatusBarBottles();
-		}
-	}
-
-	headingLeft() {
-		return !this.character.otherDirection;
 	}
 
 	noBottlesCollected() {

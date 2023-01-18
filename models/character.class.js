@@ -6,7 +6,7 @@ class Character extends MovableObject {
 	cache = new CharacterCache();
 	isInactive = false;
 	energy = 100;
-	otherDirection = false;
+	/* otherDirection = false; */
 
 	offset = {
 		top: 150,
@@ -39,7 +39,7 @@ class Character extends MovableObject {
 			this.checkJumping();
 			this.checkIsIdling(); // intervall zu hoch auslagern in andere Funktionen
 			this.checkIsLongIdling(); // intervall zu hoch auslagern in andere Funktionen
-			/* this.checkThrowing(); */
+			this.checkThrowing();
 			this.checkStopLongIdling();
 			this.checkReactionToInjury();
 			this.setCameraForCharacter();
@@ -166,13 +166,41 @@ class Character extends MovableObject {
 		if (this.isMoving()) this.isInactive = false;
 		return;
 	}
-	/* 
-!!! geht das?
- */
-	/* 	checkThrowing() {
-		if (this.world.keyboard.D && this.isAlive())
-			this.world.throwableObject[0].throw();
-	} */
+
+	/**
+	 * If the player is alive, heading forwards, and pressing the D key,
+	 * then throw a bottle
+	 * @returns the value of the expression.
+	 */
+	checkThrowing() {
+		let bottle = new ThrowableObjects(this.x + 60, this.y + 100);
+		if (this.noBottleToThrow()) return;
+		if (this.world.keyboard.D && this.isAlive() && this.headingForwards()) {
+			this.throwBottle(bottle);
+			this.world.updateDecreaseStatusBarBottles();
+		}
+	}
+
+	throwBottle(bottle) {
+		this.world.throwableObject.push(bottle);
+	}
+
+	/**
+	 * If there are no bottles collected,
+	 * then the player cannot throw a bottle.
+	 * @returns The method is returning a boolean value.
+	 */
+	noBottleToThrow() {
+		return this.world.noBottlesCollected();
+	}
+
+	/**
+	 * If the number of bottles collected is equal to 0, then return true.
+	 * @returns The number of bottles collected.
+	 */
+	noBottlesCollected() {
+		return this.world.bottlesStatusBar.collectedBottles == 0;
+	}
 
 	/**
 	 * If the energy is greater than 0, check if the character is in pain.
