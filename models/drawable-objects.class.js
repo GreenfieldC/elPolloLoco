@@ -24,7 +24,7 @@ class DrawableObject {
 		ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 	}
 
-	drawBorders(ctx) {
+	/* drawBorders(ctx) {
 		// hier der Rahmen auf Character, Chicken, Chick begrent
 		if (
 			this instanceof Character ||
@@ -40,7 +40,7 @@ class DrawableObject {
 			ctx.rect(this.x, this.y, this.width, this.height);
 			ctx.stroke();
 		}
-	}
+	} */
 
 	/**
 	 * @param {collectedAmount} - The amount of items collected.

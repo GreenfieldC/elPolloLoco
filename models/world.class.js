@@ -208,6 +208,11 @@ class World {
 		}, 500);
 	}
 
+	showStatusBarOfEndBoss() {
+		let statusbar = new statusBarEndboss();
+		this.statusBarEndboss.push(statusbar);
+	}
+
 	checkBottleHitsEnemy() {
 		this.checkBottleHitsChick();
 		this.checkBottleHitsChicken();
@@ -259,7 +264,10 @@ class World {
 		this.throwableObject.forEach((bottle) => {
 			this.level.endBoss.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
-					this.level.endBoss[i].injury(54);
+					this.level.endBoss[i].injury(10);
+					this.statusBarEndboss.setPercentage(
+						this.level.endBoss[i].energy
+					);
 					this.bottleSplashes(bottle);
 					this.endBossBeingAttackedByCharacter();
 				}
@@ -283,7 +291,6 @@ class World {
 	checkCharacterGetDetectedByEndboss() {
 		if (this.character.x > 3000) {
 			this.endBossDetectedCharacter();
-			console.log(this.character.x);
 		}
 	}
 
@@ -352,7 +359,7 @@ class World {
 		}
 
 		movableObject.draw(this.ctx);
-		movableObject.drawBorders(this.ctx);
+		/* movableObject.drawBorders(this.ctx); */
 
 		if (movableObject.otherDirection) {
 			this.flipImageBack(movableObject);
