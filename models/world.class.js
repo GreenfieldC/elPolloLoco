@@ -7,6 +7,7 @@ class World {
 	bottlesStatusBar = new BottlesStatusBar();
 	coinsStatusBar = new CoinsStatusBar();
 	statusBarEndboss = new HealthStatusBarEndBoss();
+	overlayIconStatusBarEndboss = new OverlayIconEndboss();
 	level = level1;
 	canvas;
 	ctx;
@@ -18,6 +19,7 @@ class World {
 		this.canvas = canvas;
 		this.keyboard = keyboard;
 		this.draw();
+
 		this.setWorld();
 		this.run();
 	}
@@ -208,10 +210,10 @@ class World {
 		}, 500);
 	}
 
-	showStatusBarOfEndBoss() {
+	/* showStatusBarOfEndBoss() {
 		let statusbar = new statusBarEndboss();
 		this.statusBarEndboss.push(statusbar);
-	}
+	} */
 
 	checkBottleHitsEnemy() {
 		this.checkBottleHitsChick();
@@ -314,30 +316,14 @@ class World {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //Inhalt von Canvas wird gelöscht
 
 		this.ctx.translate(this.camera_x, 0);
-		//The order is important. Objects are being put on top of each other.
-		this.addObjectsToCanvas(this.level.backgroundObjects);
-		this.addObjectsToCanvas(this.level.clouds);
+
+		this.drawNature();
 
 		this.ctx.translate(-this.camera_x, 0); //backwards
-		this.addToCanvas(this.healthStatusBar);
-		this.addToCanvas(this.bottlesStatusBar);
-		this.addToCanvas(this.coinsStatusBar);
-		this.addToCanvas(this.statusBarEndboss);
+		this.drawFixedObjects();
 		this.ctx.translate(this.camera_x, 0); // forwards
 
-		/* this.addObjectsToCanvas(this.level.enemies); */
-		this.addObjectsToCanvas(this.level.smallEnemies);
-		this.addObjectsToCanvas(this.level.biggerEnemies);
-		this.addObjectsToCanvas(this.level.endBoss);
-
-		this.addObjectsToCanvas(this.level.bottlesOnGround);
-		this.addObjectsToCanvas(this.level.bottlesInAir);
-		this.addObjectsToCanvas(this.level.coins);
-		this.addToCanvas(this.character);
-		this.addObjectsToCanvas(this.throwableObject);
-		this.addObjectsToCanvas(this.splashedBottle);
-		this.addObjectsToCanvas(this.deadEnemies);
-
+		this.drawMovableObjects();
 		this.ctx.translate(-this.camera_x, 0);
 
 		// Draw() wird immer wieder aufgerufen
@@ -347,6 +333,37 @@ class World {
 		});
 	}
 
+	drawNature() {
+		this.addObjectsToCanvas(this.level.backgroundObjects);
+		this.addObjectsToCanvas(this.level.clouds);
+	}
+
+	drawFixedObjects() {
+		if (
+			this.level.endBoss[0].characterDetected ||
+			this.level.endBoss[0].beingAttacked
+		) {
+			this.addToCanvas(this.statusBarEndboss);
+			this.addToCanvas(this.overlayIconStatusBarEndboss);
+		}
+		this.addToCanvas(this.healthStatusBar);
+		this.addToCanvas(this.bottlesStatusBar);
+		this.addToCanvas(this.coinsStatusBar);
+	}
+
+	drawMovableObjects() {
+		this.addObjectsToCanvas(this.level.smallEnemies);
+		this.addObjectsToCanvas(this.level.biggerEnemies);
+		this.addObjectsToCanvas(this.level.endBoss);
+		this.addObjectsToCanvas(this.level.bottlesOnGround);
+		this.addObjectsToCanvas(this.level.bottlesInAir);
+		this.addObjectsToCanvas(this.level.coins);
+		this.addToCanvas(this.character);
+		this.addObjectsToCanvas(this.throwableObject);
+		this.addObjectsToCanvas(this.splashedBottle);
+		this.addObjectsToCanvas(this.deadEnemies);
+	}
+
 	addObjectsToCanvas(objects) {
 		objects.forEach((object) => {
 			this.addToCanvas(object);
@@ -354,16 +371,20 @@ class World {
 	}
 
 	addToCanvas(movableObject) {
-		if (movableObject.otherDirection) {
+		if (
+			movableObject.otherDirection ||
+			movableObject == this.statusBarEndboss
+		)
 			this.flipImage(movableObject);
-		}
 
 		movableObject.draw(this.ctx);
 		/* movableObject.drawBorders(this.ctx); */
 
-		if (movableObject.otherDirection) {
+		if (
+			movableObject.otherDirection ||
+			movableObject == this.statusBarEndboss
+		)
 			this.flipImageBack(movableObject);
-		}
 	}
 
 	/**

@@ -26,12 +26,20 @@ class Chick extends MovableObject {
 	}
 
 	animation() {
+		this.chickMovesLeft();
+
+		this.walkingAnimation();
+	}
+
+	walkingAnimation() {
+		setInterval(() => {
+			this.playAnimation(this.IMAGES_WALKING);
+		}, 100);
+	}
+
+	chickMovesLeft() {
 		setInterval(() => {
 			this.moveLeft();
 		}, 1000 / 60);
-
-		setInterval(() => {
-			this.playAnimation(this.IMAGES_WALKING);
-		}, 300);
 	}
 }

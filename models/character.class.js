@@ -39,6 +39,7 @@ class Character extends MovableObject {
 			this.checkJumping();
 			this.checkIsIdling(); // intervall zu hoch auslagern in andere Funktionen
 			this.checkIsLongIdling(); // intervall zu hoch auslagern in andere Funktionen
+			/* this.checkThrowing(); */
 			this.checkStopLongIdling();
 			this.checkReactionToInjury();
 			this.setCameraForCharacter();
@@ -165,6 +166,13 @@ class Character extends MovableObject {
 		if (this.isMoving()) this.isInactive = false;
 		return;
 	}
+	/* 
+!!! geht das?
+ */
+	/* 	checkThrowing() {
+		if (this.world.keyboard.D && this.isAlive())
+			this.world.throwableObject[0].throw();
+	} */
 
 	/**
 	 * If the energy is greater than 0, check if the character is in pain.
@@ -172,7 +180,7 @@ class Character extends MovableObject {
 	 * play the animation for being killed
 	 */
 	checkReactionToInjury() {
-		this.energy > 0 ? this.checkIsInPain() : this.isBeingKilledAnimation();
+		this.isAlive() ? this.checkIsInPain() : this.isBeingKilledAnimation();
 	}
 
 	/**

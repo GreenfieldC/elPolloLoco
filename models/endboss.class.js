@@ -94,6 +94,7 @@ class Endboss extends MovableObject {
 	 * move left towards character.
 	 */
 	checkWalking() {
+		if (this.tooClose) return; // funktioniert zu spät!
 		if (this.characterDetected || this.beingAttacked) {
 			this.moveLeft();
 			this.walkAnimation();
