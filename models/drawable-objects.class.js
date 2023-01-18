@@ -13,7 +13,7 @@ class DrawableObject {
 	}
 
 	loadImages(arr) {
-		arr.forEach(path => {
+		arr.forEach((path) => {
 			let img = new Image();
 			img.src = path;
 			this.imageCache[path] = img;
@@ -47,7 +47,7 @@ class DrawableObject {
 	 * @returns the index of the image to be displayed.
 	 *! ODER auch hier mit Prozent? Oder keine Statusbar?
 	 */
-	resolveImageIndex(collectedAmount) {
+	resolveImageIndexCollectableObjectsBar(collectedAmount) {
 		switch (true) {
 			case collectedAmount < 2:
 				return 0;
@@ -62,6 +62,22 @@ class DrawableObject {
 			case collectedAmount <= 10:
 			case collectedAmount > 10:
 				return 5;
+		}
+	}
+	resolveImageIndexHealthBar() {
+		switch (true) {
+			case this.percentage == 100:
+				return 5;
+			case this.percentage > 80:
+				return 4;
+			case this.percentage > 60:
+				return 3;
+			case this.percentage > 40:
+				return 2;
+			case this.percentage > 20:
+				return 1;
+			default:
+				return 0;
 		}
 	}
 }

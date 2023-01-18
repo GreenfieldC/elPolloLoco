@@ -23,24 +23,7 @@ class HealthStatusBarEndBoss extends DrawableObject {
 	//example set percentage = 40
 	setPercentage(percentage) {
 		this.percentage = percentage; //hieraus einen index zwischen 0 und 5 ermitteln
-		let path = this.IMAGES[this.resolveImageIndex()];
+		let path = this.IMAGES[this.resolveImageIndexHealthBar()];
 		this.img = this.imageCache[path];
-	}
-
-	resolveImageIndex() {
-		switch (true) {
-			case this.percentage == 100:
-				return 5;
-			case this.percentage > 80:
-				return 4;
-			case this.percentage > 60:
-				return 3;
-			case this.percentage > 40:
-				return 2;
-			case this.percentage > 20:
-				return 1;
-			default:
-				return 0;
-		}
 	}
 }
