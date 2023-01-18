@@ -6,6 +6,7 @@ class World {
 	healthStatusBar = new HealthStatusBar();
 	bottlesStatusBar = new BottlesStatusBar();
 	coinsStatusBar = new CoinsStatusBar();
+	statusBarEndboss = new HealthStatusBarEndBoss();
 	level = level1;
 	canvas;
 	ctx;
@@ -178,10 +179,14 @@ class World {
 			this.character.y + 100
 		);
 		if (this.noBottlesCollected()) return;
-		if (this.keyboard.D) {
+		if (this.keyboard.D && this.headingLeft()) {
 			this.throwableObject.push(bottle);
 			this.updateDecreaseStatusBarBottles();
 		}
+	}
+
+	headingLeft() {
+		return !this.character.otherDirection;
 	}
 
 	noBottlesCollected() {
@@ -310,6 +315,7 @@ class World {
 		this.addToCanvas(this.healthStatusBar);
 		this.addToCanvas(this.bottlesStatusBar);
 		this.addToCanvas(this.coinsStatusBar);
+		this.addToCanvas(this.statusBarEndboss);
 		this.ctx.translate(this.camera_x, 0); // forwards
 
 		/* this.addObjectsToCanvas(this.level.enemies); */

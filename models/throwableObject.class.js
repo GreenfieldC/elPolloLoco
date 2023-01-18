@@ -24,41 +24,37 @@ class ThrowableObjects extends MovableObject {
 		this.y = y;
 		this.width = 90;
 		this.height = 90;
-		this.checkThrowing();
+		this.throw();
 		this.bottleBeingThrownAnimation(); //ist die schon in movableobject?
 	}
 
-	headingForwards() {
+	/* 	headingForwards() {
 		return this.otherDirection == false;
 	}
 
 	headingBackwards() {
 		return this.otherDirection == true;
-	}
+	} */
 
-	throwRight() {
+	throw() {
 		this.speedY = this.speedY;
 		this.applyGravity();
 		setInterval(() => {
 			this.x += this.speedX;
-		}, 100);
+		}, 120);
 	}
 
-	throwLeft() {
+	/* 		throwLeft() {
 		this.speedY = this.speedY;
 		this.applyGravity();
 		setInterval(() => {
 			this.x -= this.speedX;
 		}, 50);
-	}
-	checkThrowing() {
-		if (this.headingForwards()) {
-			this.throwRight();
-		}
-		if (this.headingBackwards()) {
-			this.throwLeft();
-		}
-	}
+	} */
+	/* 	checkThrowing() {
+		if (this.headingBackwards()) return;
+		if (this.headingForwards()) this.throw();
+	} */
 
 	bottleBeingThrownAnimation() {
 		setInterval(() => {
