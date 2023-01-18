@@ -24,8 +24,8 @@ class ThrowableObjects extends MovableObject {
 		this.y = y;
 		this.width = 90;
 		this.height = 90;
-		this.throw();
-		this.animate(); //ist die schon in movableobject?
+		this.checkThrowing();
+		this.bottleBeingThrownAnimation(); //ist die schon in movableobject?
 	}
 
 	headingForwards() {
@@ -51,7 +51,7 @@ class ThrowableObjects extends MovableObject {
 			this.x -= this.speedX;
 		}, 50);
 	}
-	throw() {
+	checkThrowing() {
 		if (this.headingForwards()) {
 			this.throwRight();
 		}
@@ -60,7 +60,7 @@ class ThrowableObjects extends MovableObject {
 		}
 	}
 
-	animate() {
+	bottleBeingThrownAnimation() {
 		setInterval(() => {
 			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
 		}, 90);
