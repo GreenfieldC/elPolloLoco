@@ -40,7 +40,7 @@ class Endboss extends MovableObject {
 			this.checkWalking();
 			this.checkBeingAttacked();
 			this.checkAttackCharacter();
-			this.checkDyingEndboss(IDOfIntervall);
+			this.checkIsBeingKilled(IDOfIntervall);
 		}, 250);
 	}
 
@@ -129,28 +129,12 @@ class Endboss extends MovableObject {
 	 * If the endboss is dead, he jumps, goes to his grave, and plays his dying animation.
 	 * @param {IDOfIntervall} - The ID of the interval that is used to check if the endboss is dead.
 	 */
-	checkDyingEndboss(IDOfIntervall) {
+	checkIsBeingKilled(IDOfIntervall) {
 		if (this.isDead()) {
 			this.jump();
-			this.endBossGoesToHisGrave();
+			this.goesToGrave();
 			this.dyingAnimation();
 			this.stopsDyingAnimation(IDOfIntervall);
 		}
-	}
-
-	/**
-	 * By setting the groundposition out of the map after its final jump,
-	 * endboss falls out off map!.
-	 */
-	endBossGoesToHisGrave() {
-		this.groundPosition = 1000;
-	}
-
-	/**
-	 * It stops the dying animation
-	 * @param {IDOfIntervall} - The ID of the intervall you want to stop.
-	 */
-	stopsDyingAnimation(IDOfIntervall) {
-		clearInterval(IDOfIntervall);
 	}
 }

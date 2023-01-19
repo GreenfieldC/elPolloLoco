@@ -1,7 +1,6 @@
 class Character extends MovableObject {
 	speed = 20;
 	y = 180;
-	x = 3000;
 	world;
 	walking_sound = new Audio('audio/walking_sound.mp3'); //später auslagern
 	cache = new CharacterCache();
@@ -17,7 +16,7 @@ class Character extends MovableObject {
 	};
 
 	constructor() {
-		super().loadImage('./img/2_character_pepe/2_walk/W-21.png');
+		super().loadImage(this.cache.IMAGES_WALKING[0]);
 		this.loadImages(this.cache.IMAGES_WALKING); // images are being pre loaded for usage!
 		this.loadImages(this.cache.IMAGES_JUMPING);
 		this.loadImages(this.cache.IMAGES_DEAD);
@@ -31,7 +30,7 @@ class Character extends MovableObject {
 
 	/* hier nur die Funktionen, wo Tasten gedrückt werden */
 	animate() {
-		setInterval(() => {
+		let IDOfIntervall = setInterval(() => {
 			this.walking_sound.pause();
 			this.checkWalking();
 			this.checkWalkingRight();
@@ -40,9 +39,10 @@ class Character extends MovableObject {
 			this.checkJumping();
 			this.checkIsIdling(); // intervall zu hoch auslagern in andere Funktionen
 			this.checkIsLongIdling(); // intervall zu hoch auslagern in andere Funktionen
-			this.checkThrowing();
 			this.checkStopLongIdling();
+			this.checkThrowing();
 			this.checkReactionToInjury();
+			this.checkIsBeingKilled(IDOfIntervall);
 			this.setCameraForCharacter();
 		}, 100);
 	}
@@ -57,7 +57,7 @@ class Character extends MovableObject {
 		this.idlingAnimation();
 		this.longIdlingAnimation();
 		this.beingInPainAnimation();
-		this.isBeingKilledAnimation();
+		this.dyingAnimation();
 	}
 
 	/**
@@ -182,6 +182,10 @@ class Character extends MovableObject {
 		}
 	}
 
+	/**
+	 * The function takes a bottle object and pushes it into the throwableObject array
+	 * @param bottle - The bottle object to throw.
+	 */
 	throwBottle(bottle) {
 		this.world.throwableObject.push(bottle);
 	}
@@ -209,7 +213,8 @@ class Character extends MovableObject {
 	 * play the animation for being killed
 	 */
 	checkReactionToInjury() {
-		this.isAlive() ? this.checkIsInPain() : this.isBeingKilledAnimation();
+		if (this.isDead()) return;
+		if (this.isAlive()) this.checkIsBeingHurt();
 	}
 
 	/**
@@ -217,10 +222,20 @@ class Character extends MovableObject {
 	 * If the player is in pain, play the animation.
 	 * @returns The function isInPain() is being returned.
 	 */
-	checkIsInPain() {
+	checkIsBeingHurt() {
 		if (this.aboveGround()) return;
 		if (this.isInPain()) {
 			this.beingInPainAnimation();
+		}
+	}
+
+	checkIsBeingKilled(IDOfIntervall) {
+		if (this.isDead()) {
+			this.applyGravity();
+			this.jump();
+			this.goesToGrave();
+			this.dyingAnimation();
+			this.stopsDyingAnimation(IDOfIntervall);
 		}
 	}
 
@@ -280,7 +295,7 @@ class Character extends MovableObject {
 	/**
 	 * Play the animation of the player being killed.
 	 */
-	isBeingKilledAnimation() {
+	dyingAnimation() {
 		this.playAnimation(this.cache.IMAGES_DEAD);
 	}
 

@@ -40,9 +40,54 @@
 		<script src="js/levels/level1.js" defer></script>
 		<script src="js/game.js" defer></script>
 	</head>
-	<body onload="init()">
-		<h1>El Pollo Loco</h1>
+	<body>
+		<!-- <h1>El Pollo Loco</h1> -->
 
-		<canvas id="canvas" width="720" height="480"></canvas>
+		<canvas id="canvas" width="960" height="480"> </canvas>
+
+		<div id="startScreen" class="startScreen">
+			<div id="navigationContainer" class="navigationContainer">
+				<div class="containerOpenNavigationButton">
+					<div
+						onclick="enableDisableSliderMenu()"
+						id="openNavigationBar"
+						class="openNavigationBar"
+					>
+						<span>Start</span>
+					</div>
+				</div>
+
+				<div id="navigationBar" class="navigationBar">
+					<img
+						onclick="startGame()"
+						class="navigationButtons"
+						src="./img/10_navbar/icons8-play-50.png"
+						alt="play"
+						title="play"
+					/>
+
+					<img
+						class="navigationButtons"
+						src="./img/10_navbar/icons8-arrow-keys-50.png"
+						alt="keyboard"
+						title="keyboard"
+					/>
+
+					<img
+						class="navigationButtons"
+						src="./img/10_navbar/icons8-musical-notes-50.png"
+						alt="music"
+						title="music switch"
+					/>
+
+					<img
+						class="navigationButtons"
+						src="./img/10_navbar/icons8-audio-50.png"
+						alt="sound switch"
+						title="sound switch"
+					/>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

@@ -13,7 +13,7 @@ function init() {
 
 /* 
 !keyCode überarbeiten. Das ist veraltet! key! */
-window.addEventListener('keydown', event => {
+window.addEventListener('keydown', (event) => {
 	if (event.keyCode == 37) {
 		keyboard.LEFT = true;
 	}
@@ -38,7 +38,7 @@ window.addEventListener('keydown', event => {
 	}
 });
 
-window.addEventListener('keyup', event => {
+window.addEventListener('keyup', (event) => {
 	if (event.keyCode == 37) {
 		keyboard.LEFT = false;
 	}
@@ -62,3 +62,32 @@ window.addEventListener('keyup', event => {
 		keyboard.D = false;
 	}
 });
+
+/* ===========
+Start Screen
+==============*/
+
+/**
+ * When the user clicks on the hamburger menu,
+ * toggle the class 'showNavigationBar' on the navigation
+ * container.
+ */
+function enableDisableSliderMenu() {
+	document
+		.getElementById('navigationContainer')
+		.classList.toggle('showNavigationBar');
+}
+
+function startGame() {
+	hideWholeStartScreen();
+	hideNavigation();
+	init();
+}
+
+function hideNavigation() {
+	document.getElementById('navigationContainer').classList.add('d-none');
+}
+
+function hideWholeStartScreen() {
+	document.getElementById('startScreen').classList.add('d-none');
+}

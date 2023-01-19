@@ -17,7 +17,7 @@ class MovableObject extends DrawableObject {
 	};
 
 	isAlive() {
-		return this.energy > 0;
+		return this.energy >= 0;
 	}
 
 	forwards() {
@@ -130,5 +130,21 @@ class MovableObject extends DrawableObject {
 
 	jump() {
 		this.speedY = 60;
+	}
+
+	/**
+	 * By setting the groundposition out of the map after its final jump,
+	 * endboss falls out off map!.
+	 */
+	goesToGrave() {
+		this.groundPosition = 1000;
+	}
+
+	/**
+	 * It stops the dying animation
+	 * @param {IDOfIntervall} - The ID of the intervall you want to stop.
+	 */
+	stopsDyingAnimation(IDOfIntervall) {
+		clearInterval(IDOfIntervall);
 	}
 }
