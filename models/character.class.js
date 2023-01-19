@@ -1,6 +1,7 @@
 class Character extends MovableObject {
 	speed = 20;
 	y = 180;
+	x = 3000;
 	world;
 	walking_sound = new Audio('audio/walking_sound.mp3'); //später auslagern
 	cache = new CharacterCache();

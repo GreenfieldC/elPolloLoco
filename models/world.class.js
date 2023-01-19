@@ -33,7 +33,7 @@ class World {
 		setInterval(() => {
 			this.checkCollsionWithEnemies();
 			this.checkCollsionWithCollectableObjects();
-			/* this.checkThrowBottles(); */ // hier ansetzen für splashed bottles
+			this.checkCharacterMakingEndbossWild();
 			this.checkBottleHitsGround();
 			this.checkBottleHitsEnemy();
 			this.checkCharacterGetDetectedByEndboss();
@@ -73,11 +73,11 @@ class World {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury(5);
 				this.healthStatusBar.setPercentage(this.character.energy);
-				setTimeout(() => {
+				/* setTimeout(() => {
 					this.characterIsTooClose();
-				}, 1500);
+				}, 1500); */
 			}
-			this.characterNotTooClose();
+			/* this.characterNotTooClose(); */
 		});
 	}
 
@@ -288,9 +288,22 @@ class World {
 		this.level.endBoss[0].beingAttacked = true;
 	}
 
-	characterIsTooClose() {
-		this.level.endBoss[0].tooClose = true;
+	checkCharacterMakingEndbossWild() {
+		if (
+			this.level.endBoss[0].x - this.character.x < 50 &&
+			this.character.isAlive()
+		)
+			this.level.endBoss[0].tooClose = true;
+
+		if (
+			this.level.endBoss[0].x - this.character.x > 50 ||
+			this.character.isDead()
+		)
+			this.characterNotTooClose();
 	}
+
+	/* 
+	!oben abends weiter bitte! */
 
 	characterNotTooClose() {
 		this.level.endBoss[0].tooClose = false;
