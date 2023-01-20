@@ -1,5 +1,5 @@
 class OverlayIconEndboss extends DrawableObject {
-	x = 651;
+	x = 890;
 	y = 0;
 	width = 70;
 	height = 70;

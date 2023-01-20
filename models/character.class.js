@@ -1,6 +1,7 @@
 class Character extends MovableObject {
 	speed = 20;
 	y = 180;
+
 	world;
 	walking_sound = new Audio('audio/walking_sound.mp3'); //später auslagern
 	cache = new CharacterCache();
@@ -65,11 +66,7 @@ class Character extends MovableObject {
 	 * the walking animation
 	 */
 	checkWalking() {
-		if (
-			(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
-			this.objectOnGround()
-		)
-			this.walkingAnimation();
+		if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.objectOnGround()) this.walkingAnimation();
 	}
 
 	/**
@@ -77,10 +74,7 @@ class Character extends MovableObject {
 	 * player right and play the walking sound
 	 */
 	checkWalkingRight() {
-		if (
-			this.world.keyboard.RIGHT &&
-			this.x < this.world.level.endOfLevel_x
-		) {
+		if (this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x) {
 			this.moveRight();
 			this.forwards();
 			this.walking_sound.play();
@@ -132,13 +126,7 @@ class Character extends MovableObject {
 	 * @returns the value of the function.
 	 */
 	checkIsIdling() {
-		if (
-			this.isInactive == true ||
-			this.isMoving() ||
-			this.isDead() ||
-			this.aboveGround()
-		)
-			return;
+		if (this.isInactive == true || this.isMoving() || this.isDead() || this.aboveGround()) return;
 		this.idlingAnimation();
 		/* this.stopLongIdling(); */
 		setTimeout(() => {
@@ -152,13 +140,7 @@ class Character extends MovableObject {
 	 * @returns the value of the function longIdlingAnimation()
 	 */
 	checkIsLongIdling() {
-		if (
-			this.isInactive == false ||
-			this.isMoving() ||
-			this.isDead() ||
-			this.aboveGround()
-		)
-			return;
+		if (this.isInactive == false || this.isMoving() || this.isDead() || this.aboveGround()) return;
 		this.longIdlingAnimation();
 	}
 
@@ -312,11 +294,6 @@ class Character extends MovableObject {
 	 * @returns a boolean value.
 	 */
 	isMoving() {
-		return (
-			this.world.keyboard.RIGHT ||
-			this.world.keyboard.LEFT ||
-			this.world.keyboard.UP ||
-			this.world.keyboard.D
-		);
+		return this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.D;
 	}
 }

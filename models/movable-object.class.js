@@ -48,8 +48,9 @@ class MovableObject extends DrawableObject {
 				this.speedY -= this.acceleration;
 			} else {
 				this.speedX = 0; //bottles does not move on the ground!
+				this.y = this.groundPosition;
 			}
-		}, 50);
+		}, 40);
 	}
 
 	//character is colliding enemies
@@ -65,39 +66,25 @@ class MovableObject extends DrawableObject {
 
 	/* Checking if the right side of the object is colliding with the left side of the object. */
 	rightBorderColliding(object) {
-		return (
-			this.x + this.width - this.offset.right >
-			object.x + object.offset.left
-		);
+		return this.x + this.width - this.offset.right > object.x + object.offset.left;
 	}
 
 	bottomBorderColliding(object) {
-		return (
-			this.y + this.height - this.offset.bottom >
-			object.y + object.offset.top
-		);
+		return this.y + this.height - this.offset.bottom > object.y + object.offset.top;
 	}
 
 	leftBorderColliding(object) {
-		return (
-			this.x + this.offset.left <
-			object.x + object.width - object.offset.right
-		);
+		return this.x + this.offset.left < object.x + object.width - object.offset.right;
 	}
 
 	topBorderColliding(object) {
-		return (
-			this.y + this.offset.top <
-			object.y + object.height - object.offset.bottom
-		);
+		return this.y + this.offset.top < object.y + object.height - object.offset.bottom;
 	}
 
 	// character looses energy after collsion with enemy
 	injury(damage) {
 		this.energy -= damage;
-		this.energy < 0
-			? (this.energy = 0)
-			: (this.lastHit = new Date().getTime());
+		this.energy < 0 ? (this.energy = 0) : (this.lastHit = new Date().getTime());
 	}
 
 	/**
@@ -110,7 +97,7 @@ class MovableObject extends DrawableObject {
 	}
 
 	isDead() {
-		return this.energy == 0;
+		return this.energy <= 0;
 	}
 
 	playAnimation(images) {

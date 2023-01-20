@@ -6,15 +6,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>El Pollo Loco</title>
 
+		<!-- CSS -->
+		<link rel="stylesheet" href="styles/font.css" />
 		<link rel="stylesheet" href="styles.css" />
+
+		<!-- Favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="favicon/" />
+		<link rel="apple-touch-icon" sizes="60x60" href="favicon//apple-icon-60x60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="favicon//apple-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="favicon//apple-icon-76x76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="favicon//apple-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="favicon//apple-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="favicon//apple-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="favicon//apple-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon//apple-icon-180x180.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="favicon//android-icon-192x192.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon//favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="favicon//favicon-96x96.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon//favicon-16x16.png" />
+		<link rel="manifest" href="favicon//manifest.json" />
+		<meta name="msapplication-TileColor" content="#ffffff" />
+		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+		<meta name="theme-color" content="#ffffff" />
 
 		<!-- Javascript -->
 		<script src="models/drawable-objects.class.js" defer></script>
 		<script src="models/statusbar-endboss.class.js" defer></script>
-		<script
-			src="models/statusbar-overlay-icon-endboss.class.js"
-			defer
-		></script>
+		<script src="models/statusbar-overlay-icon-endboss.class.js" defer></script>
 		<script src="models/statusbar-health.class.js" defer></script>
 		<script src="models/statusbar-bottles.class.js" defer></script>
 		<script src="models/statusbar-coins.class.js" defer></script>
@@ -41,52 +59,39 @@
 		<script src="js/game.js" defer></script>
 	</head>
 	<body>
-		<!-- <h1>El Pollo Loco</h1> -->
+		<canvas id="canvas" width="960" height="480"></canvas>
 
-		<canvas id="canvas" width="960" height="480"> </canvas>
+		<div id="startScreen" class="startScreen"><h1>El Pollo Loco</h1></div>
 
-		<div id="startScreen" class="startScreen">
-			<div id="navigationContainer" class="navigationContainer">
-				<div class="containerOpenNavigationButton">
-					<div
-						onclick="enableDisableSliderMenu()"
-						id="openNavigationBar"
-						class="openNavigationBar"
-					>
-						<span>Start</span>
+		<!-- Menu -->
+		<div id="menuContainerOverlay" class="menuContainerOverlay">
+			<div id="menuContainer" class="menuContainer">
+				<!-- Menu Opener Button -->
+				<div id="containerOpenNavigationButton" class="containerOpenNavigationButton">
+					<div onclick="enableDisableSliderMenu()" id="openNavigationBar" class="openNavigationBar">
+						<span>Menu</span>
 					</div>
 				</div>
-
+				<!-- Menu Bar -->
 				<div id="navigationBar" class="navigationBar">
-					<img
-						onclick="startGame()"
-						class="navigationButtons"
-						src="./img/10_navbar/icons8-play-50.png"
-						alt="play"
-						title="play"
-					/>
+					<img onclick="startGame()" class="navigationButtons" src="./img/10_navbar/icons8-play-50.png" alt="play" title="play" />
 
-					<img
-						class="navigationButtons"
-						src="./img/10_navbar/icons8-arrow-keys-50.png"
-						alt="keyboard"
-						title="keyboard"
-					/>
+					<img class="navigationButtons" src="./img/10_navbar/icons8-arrow-keys-50.png" alt="keyboard" title="keyboard" />
 
-					<img
-						class="navigationButtons"
-						src="./img/10_navbar/icons8-musical-notes-50.png"
-						alt="music"
-						title="music switch"
-					/>
+					<img class="navigationButtons" src="./img/10_navbar/icons8-musical-notes-50.png" alt="music" title="music switch" />
 
-					<img
-						class="navigationButtons"
-						src="./img/10_navbar/icons8-audio-50.png"
-						alt="sound switch"
-						title="sound switch"
-					/>
+					<img class="navigationButtons" src="./img/10_navbar/icons8-audio-50.png" alt="sound switch" title="sound switch" />
 				</div>
+			</div>
+			<!-- Play Buttons -->
+			<div id="rightSidePlayButtons" class="playButtonsContainer rightSide">
+				<img id="jumpRightSide" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" />
+				<img id="right" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-right-50.png" alt="" />
+			</div>
+			<div id="leftSidePlayButtons" class="playButtonsContainer leftSide">
+				<img id="throw" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-throw-bottle-99.png" alt="" />
+				<img id="jumpLeftSide" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" />
+				<img id="left" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-left-50.png" alt="" />
 			</div>
 		</div>
 	</body>

@@ -13,7 +13,7 @@ class HealthStatusBarEndBoss extends DrawableObject {
 	constructor() {
 		super();
 		this.loadImages(this.IMAGES);
-		this.x = 500;
+		this.x = 750;
 		this.y = 0;
 		this.width = 200;
 		this.height = this.width * 0.265;

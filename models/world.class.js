@@ -37,7 +37,7 @@ class World {
 			this.checkBottleHitsGround();
 			this.checkBottleHitsEnemy();
 			this.checkCharacterGetDetectedByEndboss();
-		}, 30);
+		}, 40);
 	}
 
 	checkCollsionWithEnemies() {
@@ -88,24 +88,18 @@ class World {
 
 	checkHitsChickOnTop() {
 		this.level.smallEnemies.forEach((chick, i) => {
-			if (
-				this.character.isColliding(chick) &&
-				this.character.aboveGround()
-			) {
+			if (this.character.isColliding(chick) && this.character.aboveGround()) {
 				this.chickDies(chick, i);
-				/* this.character.jump(); */
+				this.character.jump();
 			}
 		});
 	}
 
 	checkHitsChickenOnTop() {
 		this.level.biggerEnemies.forEach((chicken, i) => {
-			if (
-				this.character.isColliding(chicken) &&
-				this.character.aboveGround()
-			) {
+			if (this.character.isColliding(chicken) && this.character.aboveGround()) {
 				this.chickenDies(chicken, i);
-				/* this.character.jump(); */
+				this.character.jump();
 			}
 		});
 	}
@@ -146,16 +140,12 @@ class World {
 
 	updateIncreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles++;
-		this.bottlesStatusBar.setAmountBottles(
-			this.bottlesStatusBar.collectedBottles
-		);
+		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
 	}
 
 	updateDecreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles--;
-		this.bottlesStatusBar.setAmountBottles(
-			this.bottlesStatusBar.collectedBottles
-		);
+		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
 	}
 
 	checkCharacterAbleOfCollectingMoreBottles() {
@@ -168,9 +158,7 @@ class World {
 				console.log('coin on ground collected');
 				this.level.coins.splice(i, 1);
 				this.coinsStatusBar.collectedCoins++;
-				this.coinsStatusBar.setAmountCoins(
-					this.coinsStatusBar.collectedCoins
-				);
+				this.coinsStatusBar.setAmountCoins(this.coinsStatusBar.collectedCoins);
 			}
 		});
 	}
@@ -193,11 +181,6 @@ class World {
 			this.splashedBottle.splice(bottle);
 		}, 500);
 	}
-
-	/* showStatusBarOfEndBoss() {
-		let statusbar = new statusBarEndboss();
-		this.statusBarEndboss.push(statusbar);
-	} */
 
 	checkBottleHitsEnemy() {
 		this.checkBottleHitsChick();
@@ -251,15 +234,12 @@ class World {
 			this.level.endBoss.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
 					this.level.endBoss[i].injury(10);
-					this.statusBarEndboss.setPercentage(
-						this.level.endBoss[i].energy
-					);
+					this.statusBarEndboss.setPercentage(this.level.endBoss[i].energy);
 					this.bottleSplashes(bottle);
 					this.endBossBeingAttackedByCharacter();
 				}
 
-				if (this.level.endBoss[i].energy <= 0) {
-					/* this.endBossDies(0, i); */
+				if (this.level.endBoss[i].isDead()) {
 					this.bottleSplashes(bottle);
 					this.level.endBoss[i].speed = 0;
 					this.endBossDies(i);
@@ -289,17 +269,9 @@ class World {
 	}
 
 	checkCharacterMakingEndbossWild() {
-		if (
-			this.level.endBoss[0].x - this.character.x < 50 &&
-			this.character.isAlive()
-		)
-			this.level.endBoss[0].tooClose = true;
+		if (this.level.endBoss[0].x - this.character.x < 50 && this.character.isAlive()) this.level.endBoss[0].tooClose = true;
 
-		if (
-			this.level.endBoss[0].x - this.character.x > 50 ||
-			this.character.isDead()
-		)
-			this.characterNotTooClose();
+		if (this.level.endBoss[0].x - this.character.x > 50 || this.character.isDead()) this.characterNotTooClose();
 	}
 
 	/* 
@@ -336,10 +308,7 @@ class World {
 	}
 
 	drawFixedObjects() {
-		if (
-			this.level.endBoss[0].characterDetected ||
-			this.level.endBoss[0].beingAttacked
-		) {
+		if (this.level.endBoss[0].characterDetected || this.level.endBoss[0].beingAttacked) {
 			this.addToCanvas(this.statusBarEndboss);
 			this.addToCanvas(this.overlayIconStatusBarEndboss);
 		}
@@ -368,20 +337,12 @@ class World {
 	}
 
 	addToCanvas(movableObject) {
-		if (
-			movableObject.otherDirection ||
-			movableObject == this.statusBarEndboss
-		)
-			this.flipImage(movableObject);
+		if (movableObject.otherDirection || movableObject == this.statusBarEndboss) this.flipImage(movableObject);
 
 		movableObject.draw(this.ctx);
 		/* movableObject.drawBorders(this.ctx); */
 
-		if (
-			movableObject.otherDirection ||
-			movableObject == this.statusBarEndboss
-		)
-			this.flipImageBack(movableObject);
+		if (movableObject.otherDirection || movableObject == this.statusBarEndboss) this.flipImageBack(movableObject);
 	}
 
 	/**

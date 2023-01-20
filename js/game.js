@@ -4,6 +4,7 @@
 let canvas;
 let world;
 let keyboard;
+let levelRunning = false;
 
 function init() {
 	keyboard = new Keyboard();
@@ -26,13 +27,6 @@ window.addEventListener('keydown', (event) => {
 		keyboard.RIGHT = true;
 	}
 
-	if (event.keyCode == 40) {
-		keyboard.DOWN = true;
-	}
-
-	if (event.keyCode == 32) {
-		keyboard.SPACE = true;
-	}
 	if (event.keyCode == 68) {
 		keyboard.D = true;
 	}
@@ -51,17 +45,66 @@ window.addEventListener('keyup', (event) => {
 		keyboard.RIGHT = false;
 	}
 
-	if (event.keyCode == 40) {
-		keyboard.DOWN = false;
-	}
-
-	if (event.keyCode == 32) {
-		keyboard.SPACE = false;
-	}
 	if (event.keyCode == 68) {
 		keyboard.D = false;
 	}
 });
+
+/* ==============================
+	MOBILE NAVIGATION CHARACTER
+================================*/
+
+function buttonListener() {
+	document.getElementById('right').ontouchstart = (e) => {
+		handleEvent(e);
+		keyboard.RIGHT = true;
+	};
+
+	document.getElementById('right').ontouchend = (e) => {
+		handleEvent(e);
+		keyboard.RIGHT = false;
+	};
+
+	document.getElementById('left').ontouchstart = (e) => {
+		handleEvent(e);
+		keyboard.LEFT = true;
+	};
+
+	document.getElementById('left').ontouchend = (e) => {
+		handleEvent(e);
+		keyboard.LEFT = false;
+	};
+
+	document.getElementById('jumpRightSide').ontouchstart = (e) => {
+		handleEvent(e);
+		keyboard.UP = true;
+	};
+
+	document.getElementById('jumpRightSide').ontouchend = (e) => {
+		handleEvent(e);
+		keyboard.UP = false;
+	};
+
+	document.getElementById('jumpLeftSide').ontouchstart = (e) => {
+		handleEvent(e);
+		keyboard.UP = true;
+	};
+
+	document.getElementById('jumpLeftSide').ontouchend = (e) => {
+		handleEvent(e);
+		keyboard.UP = false;
+	};
+
+	document.getElementById('throw').ontouchstart = (e) => {
+		handleEvent(e);
+		keyboard.D = true;
+	};
+
+	document.getElementById('throw').ontouchend = (e) => {
+		handleEvent(e);
+		keyboard.D = false;
+	};
+}
 
 /* ===========
 Start Screen
@@ -73,15 +116,17 @@ Start Screen
  * container.
  */
 function enableDisableSliderMenu() {
-	document
-		.getElementById('navigationContainer')
-		.classList.toggle('showNavigationBar');
+	showHideTogglePlayButtons();
+	document.getElementById('menuContainer').classList.toggle('showNavigationBar');
 }
 
-function startGame() {
+async function startGame() {
 	hideWholeStartScreen();
-	hideNavigation();
+	enableDisableSliderMenu();
+	showHideTogglePlayButtons();
+	initLevel1();
 	init();
+	buttonListener();
 }
 
 function hideNavigation() {
@@ -90,4 +135,21 @@ function hideNavigation() {
 
 function hideWholeStartScreen() {
 	document.getElementById('startScreen').classList.add('d-none');
+}
+
+/**
+ * show and hide play buttons for mobile version
+ */
+function showHideTogglePlayButtons() {
+	if (!levelRunning) {
+		document.getElementById('rightSidePlayButtons').classList.toggle('showSideButtons');
+		document.getElementById('leftSidePlayButtons').classList.toggle('showSideButtons');
+	}
+	levelRunning = true;
+}
+
+function handleEvent(e) {
+	if (e.cancelable) {
+		e.preventDefault();
+	}
 }

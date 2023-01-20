@@ -28,7 +28,6 @@ class Endboss extends MovableObject {
 		this.loadImages(this.cache.IMAGES_ENDBOSS_DYING);
 		this.animate();
 		this.animations();
-		this.applyGravity();
 	}
 
 	/**
@@ -131,6 +130,7 @@ class Endboss extends MovableObject {
 	 */
 	checkIsBeingKilled(IDOfIntervall) {
 		if (this.isDead()) {
+			this.applyGravity();
 			this.jump();
 			this.goesToGrave();
 			this.dyingAnimation();

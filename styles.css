@@ -1,17 +1,20 @@
 body {
-	background-image: url(./img/background-image-desktopIpad.jpg);
+	background-image: url(./img/desert-5396906_1920.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-position: bottom;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	font-family: 'Walter Turncoat';
 }
 
 canvas {
 	background-color: black;
+	display: block;
 }
 
 .startScreen {
@@ -22,10 +25,30 @@ canvas {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: bottom;
+	/* overflow: hidden; */
+}
+
+h1 {
+	display: block;
+	color: black;
+	position: absolute;
+	top: -100px;
+	left: 0;
+	right: 0;
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 3rem;
+}
+
+.menuContainerOverlay {
+	position: absolute;
+	width: 960px;
+	height: 480px;
 	overflow: hidden;
 }
 
-.navigationContainer {
+.menuContainer {
 	position: absolute;
 	bottom: 10px;
 	left: 0;
@@ -35,7 +58,7 @@ canvas {
 	width: 400px;
 	height: auto;
 	transition: all 255ms ease-in-out;
-	transform: translateY(115px);
+	transform: translateY(130px);
 }
 
 .showNavigationBar {
@@ -71,10 +94,6 @@ canvas {
 	box-shadow: inset 100px 0 0 0 rgb(255, 209, 0);
 }
 
-/* .openNavigationBar:active {
-	background-color: rgb(255, 209, 0);
-} */
-
 .navigationBar {
 	background-image: url(./img/6_salsa_bottle/navbar-bottle.png);
 	/* background-position: cover; */
@@ -107,6 +126,95 @@ canvas {
 	box-shadow: inset 50px 0 0 0 rgb(255, 209, 0);
 }
 
+.navigationButtons:active {
+	transform: scale(0.97);
+}
+
+/* =============
+	PLAY BUTTONS
+ ===============*/
+
+.mobilePlayButtonsContainer {
+	position: absolute;
+	bottom: 24px;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.playButtonsContainer {
+	display: none;
+	flex-direction: column;
+	width: 50px;
+	height: fit-content;
+	gap: 8px;
+}
+
+.rightSide {
+	border-radius: 0.5rem;
+	bottom: 16px;
+	margin-right: 8px;
+	position: absolute;
+	right: 16px;
+	transition: all 255ms ease-in-out;
+	transform: translateX(70px);
+}
+
+.showSideButtons {
+	transform: translateX(0px);
+}
+
+.leftSide {
+	border-radius: 0.5rem;
+	bottom: 16px;
+	left: 16px;
+	margin-left: 8px;
+	position: absolute;
+	transition: all 255ms ease-in-out;
+	transform: translateX(-70px);
+}
 .d-none {
 	display: none;
+}
+.showSideButtons {
+	transform: translateX(0px);
+}
+
+.backgroundTransparent {
+	background-color: transparent !important;
+}
+
+/* TABLETS */
+
+@media (max-width: 1024px) {
+	.playButtonsContainer {
+		display: flex;
+	}
+}
+
+/* SMARTPHONES */
+@media only screen and (max-width: 960px) {
+	canvas,
+	.menuContainerOverlay,
+	.startScreen {
+		width: 100%;
+	}
+
+	h1 {
+		display: none;
+	}
+
+	.openNavigationBar {
+		height: 1.5rem;
+		width: 5rem;
+		font-size: 1.5rem;
+	}
+}
+
+@media only screen and (max-height: 480px) {
+	canvas,
+	.menuContainerOverlay,
+	.startScreen {
+		height: 100vh;
+	}
 }

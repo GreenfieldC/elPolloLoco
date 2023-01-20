@@ -1,0 +1,12 @@
+/* walter-turncoat-regular - latin */
+@font-face {
+	font-family: 'Walter Turncoat';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/walter-turncoat-v19-latin-regular.eot'); /* IE9 Compat Modes */
+	src: local(''), url('../fonts/walter-turncoat-v19-latin-regular.eot?#iefix') format('embedded-opentype'),
+		/* IE6-IE8 */ url('../fonts/walter-turncoat-v19-latin-regular.woff2') format('woff2'),
+		/* Super Modern Browsers */ url('../fonts/walter-turncoat-v19-latin-regular.woff') format('woff'),
+		/* Modern Browsers */ url('../fonts/walter-turncoat-v19-latin-regular.ttf') format('truetype'),
+		/* Safari, Android, iOS */ url('../fonts/walter-turncoat-v19-latin-regular.svg#WalterTurncoat') format('svg'); /* Legacy iOS */
+}
