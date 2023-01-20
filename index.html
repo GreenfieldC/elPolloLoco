@@ -59,39 +59,48 @@
 		<script src="js/game.js" defer></script>
 	</head>
 	<body>
-		<canvas id="canvas" width="960" height="480"></canvas>
+		<div class="fullscreen" id="fullscreen">
+			<canvas id="canvas" width="960" height="480"></canvas>
 
-		<div id="startScreen" class="startScreen"><h1>El Pollo Loco</h1></div>
+			<div id="startScreen" class="startScreen"><h1>El Pollo Loco</h1></div>
 
-		<!-- Menu -->
-		<div id="menuContainerOverlay" class="menuContainerOverlay">
-			<div id="menuContainer" class="menuContainer">
-				<!-- Menu Opener Button -->
-				<div id="containerOpenNavigationButton" class="containerOpenNavigationButton">
-					<div onclick="enableDisableSliderMenu()" id="openNavigationBar" class="openNavigationBar">
-						<span>Menu</span>
+			<!-- Menu -->
+			<div id="menuContainerOverlay" class="menuContainerOverlay">
+				<div id="menuContainer" class="menuContainer">
+					<!-- Menu Opener Button -->
+					<div id="containerOpenNavigationButton" class="containerOpenNavigationButton">
+						<div onclick="enableDisableSliderMenu()" id="openNavigationBar" class="openNavigationBar">
+							<span>Menu</span>
+						</div>
+					</div>
+					<!-- Menu Bar -->
+					<div id="navigationBar" class="navigationBar">
+						<img onclick="startGame()" class="navigationButtons" src="./img/10_navbar/icons8-play-50.png" alt="play" title="play" />
+
+						<img
+							onclick="toggleFullScreen()"
+							id="fullScreenButton"
+							class="navigationButtons"
+							src="./img/10_navbar/icons8-erweitern-80.png"
+							alt="toggle fullscreen"
+							title="toggle fullscreen"
+						/>
+
+						<img class="navigationButtons" src="./img/10_navbar/icons8-musical-notes-50.png" alt="music" title="music switch" />
+
+						<img class="navigationButtons" src="./img/10_navbar/icons8-audio-50.png" alt="sound switch" title="sound switch" />
 					</div>
 				</div>
-				<!-- Menu Bar -->
-				<div id="navigationBar" class="navigationBar">
-					<img onclick="startGame()" class="navigationButtons" src="./img/10_navbar/icons8-play-50.png" alt="play" title="play" />
-
-					<img class="navigationButtons" src="./img/10_navbar/icons8-arrow-keys-50.png" alt="keyboard" title="keyboard" />
-
-					<img class="navigationButtons" src="./img/10_navbar/icons8-musical-notes-50.png" alt="music" title="music switch" />
-
-					<img class="navigationButtons" src="./img/10_navbar/icons8-audio-50.png" alt="sound switch" title="sound switch" />
+				<!-- Play Buttons -->
+				<div id="rightSidePlayButtons" class="playButtonsContainer rightSide">
+					<img id="jumpRightSide" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" />
+					<img id="right" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-right-50.png" alt="" />
 				</div>
-			</div>
-			<!-- Play Buttons -->
-			<div id="rightSidePlayButtons" class="playButtonsContainer rightSide">
-				<img id="jumpRightSide" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" />
-				<img id="right" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-right-50.png" alt="" />
-			</div>
-			<div id="leftSidePlayButtons" class="playButtonsContainer leftSide">
-				<img id="throw" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-throw-bottle-99.png" alt="" />
-				<img id="jumpLeftSide" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" />
-				<img id="left" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-left-50.png" alt="" />
+				<div id="leftSidePlayButtons" class="playButtonsContainer leftSide">
+					<img id="throw" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-throw-bottle-99.png" alt="" />
+					<img id="jumpLeftSide" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" />
+					<img id="left" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-left-50.png" alt="" />
+				</div>
 			</div>
 		</div>
 	</body>

@@ -1,14 +1,15 @@
 /* code by Christian Greenfield */
 'use strict';
 
-let canvas;
+let canvas = document.getElementById('canvas');
 let world;
 let keyboard;
 let levelRunning = false;
+let fullScreen = false;
 
 function init() {
 	keyboard = new Keyboard();
-	canvas = document.getElementById('canvas');
+	canvas;
 	world = new World(canvas, keyboard);
 }
 
@@ -148,6 +149,35 @@ function showHideTogglePlayButtons() {
 	levelRunning = true;
 }
 
+function toggleFullScreen() {
+	let fullscreen = document.getElementById('fullscreen');
+	enterFullscreen(fullscreen);
+}
+
+function enterFullscreen(element) {
+	if (element.requestFullscreen) {
+		element.requestFullscreen();
+	} else if (element.msRequestFullscreen) {
+		// for IE11 (remove June 15, 2022)
+		element.msRequestFullscreen();
+	} else if (element.webkitRequestFullscreen) {
+		// iOS Safari
+		element.webkitRequestFullscreen();
+	}
+}
+
+function exitFullscreen() {
+	if (document.exitFullscreen) {
+		document.exitFullscreen();
+	} else if (document.webkitExitFullscreen) {
+		document.webkitExitFullscreen();
+	}
+}
+
+/**
+ * If the event is cancelable, prevent the default action.
+ * @param {e} - The event object.
+ */
 function handleEvent(e) {
 	if (e.cancelable) {
 		e.preventDefault();
