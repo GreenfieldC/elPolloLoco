@@ -6,6 +6,8 @@ let world;
 let keyboard;
 let levelRunning = false;
 let fullScreen = false;
+let openMenu = false;
+let hiddenLegends = true;
 
 function init() {
 	keyboard = new Keyboard();
@@ -107,6 +109,16 @@ function buttonListener() {
 	};
 }
 
+/**
+ * If the event is cancelable, prevent the default action.
+ * @param {e} - The event object.
+ */
+function handleEvent(e) {
+	if (e.cancelable) {
+		e.preventDefault();
+	}
+}
+
 /* ===========
 Start Screen
 ==============*/
@@ -116,18 +128,24 @@ Start Screen
  * toggle the class 'showNavigationBar' on the navigation
  * container.
  */
-function enableDisableSliderMenu() {
-	showHideTogglePlayButtons();
+function openCloseMenuToggle() {
 	document.getElementById('menuContainer').classList.toggle('showNavigationBar');
+	!openMenu ? (openMenu = true) : (openMenu = false);
 }
 
 async function startGame() {
-	hideWholeStartScreen();
-	enableDisableSliderMenu();
 	showHideTogglePlayButtons();
+	/* levelRunning = true; */
+	/* toggleShowHideStartGameButton(); */
+	openCloseMenuToggle();
+	hideShowKeyLegendsToggle();
+	keyLegendsDefault();
+	hideWholeStartScreen();
 	initLevel1();
 	init();
 	buttonListener();
+	levelRunning = true;
+	toggleShowHideStartGameButton();
 }
 
 function hideNavigation() {
@@ -138,21 +156,41 @@ function hideWholeStartScreen() {
 	document.getElementById('startScreen').classList.add('d-none');
 }
 
+function toggleShowHideStartGameButton() {
+	if (levelRunning) {
+		document.getElementById('startIcon').classList.add('d-none');
+	}
+}
+
 /**
  * show and hide play buttons for mobile version
  */
 function showHideTogglePlayButtons() {
-	if (!levelRunning) {
-		document.getElementById('rightSidePlayButtons').classList.toggle('showSideButtons');
-		document.getElementById('leftSidePlayButtons').classList.toggle('showSideButtons');
+	if (!levelRunning && openMenu && !hiddenLegends) return;
+	if (!levelRunning /* || (!hiddenLegends && openMenu && !levelRunning) */) {
+		document
+			.getElementById('rightSidePlayButtons')
+			.classList.toggle('showSideButtons');
+		document
+			.getElementById('leftSidePlayButtons')
+			.classList.toggle('showSideButtons');
 	}
-	levelRunning = true;
+
+	if (openMenu && levelRunning) hideShowKeyLegendsToggle();
 }
 
 function toggleFullScreen() {
 	let fullscreen = document.getElementById('fullscreen');
 	enterFullscreen(fullscreen);
 }
+
+function keyLegendsDefault() {
+	!hiddenLegends && openMenu && levelRunning
+		? hideShowKeyLegendsToggle()
+		: (hiddenLegends = true);
+}
+
+/* Fullscrenn */
 
 function enterFullscreen(element) {
 	if (element.requestFullscreen) {
@@ -166,6 +204,7 @@ function enterFullscreen(element) {
 	}
 }
 
+/* noch nicht in toggleFullScreen */
 function exitFullscreen() {
 	if (document.exitFullscreen) {
 		document.exitFullscreen();
@@ -174,12 +213,10 @@ function exitFullscreen() {
 	}
 }
 
-/**
- * If the event is cancelable, prevent the default action.
- * @param {e} - The event object.
- */
-function handleEvent(e) {
-	if (e.cancelable) {
-		e.preventDefault();
-	}
+function hideShowKeyLegendsToggle() {
+	let legends = document.getElementsByTagName('span');
+	Array.from(legends).forEach((span) => {
+		span.classList.toggle('d-none');
+		hiddenLegends = !hiddenLegends;
+	});
 }

@@ -34,7 +34,8 @@ body {
 
 .startScreen {
 	position: absolute;
-	width: 960px;
+	width: 100%;
+	max-width: 960px;
 	height: 480px;
 	background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
 	background-repeat: no-repeat;
@@ -58,7 +59,8 @@ h1 {
 
 .menuContainerOverlay {
 	position: absolute;
-	width: 960px;
+	width: 100%;
+	max-width: 960px;
 	height: 480px;
 	overflow: hidden;
 }
@@ -94,19 +96,14 @@ h1 {
 	align-items: center;
 	width: 100px;
 	height: 3rem;
-	background-color: rgba(255, 255, 255, 0.849);
+	background-color: rgb(199, 219, 231);
 	font-size: 2rem;
 	border-radius: 0.5rem;
-	transition: all 225ms ease-in-out;
+	/* transition: all 225ms ease-in-out;
+	box-shadow: inset 0 0 0 0 rgb(255, 209, 0); */
 	box-shadow: 2px 3px 3px rgba(157, 59, 23, 0.842);
-	box-shadow: inset 0 0 0 0 rgb(255, 209, 0);
 	cursor: pointer;
 	z-index: 1;
-}
-
-.openNavigationBar:hover {
-	transition: all 225ms ease-in-out;
-	box-shadow: inset 100px 0 0 0 rgb(255, 209, 0);
 }
 
 .navigationBar {
@@ -129,7 +126,7 @@ h1 {
 	align-items: center;
 	height: 50px;
 	width: 50px;
-	background-color: rgba(255, 255, 255, 0.849);
+	background-color: rgb(199, 219, 231);
 	border-radius: 0.5rem;
 	transition: all 225ms ease-in-out;
 	box-shadow: inset 0 0 0 0 rgb(255, 209, 0);
@@ -143,6 +140,15 @@ h1 {
 
 .navigationButtons:active {
 	transform: scale(0.97);
+}
+
+.startRestartContainer {
+	position: relative;
+}
+
+.start {
+	position: absolute;
+	top: 0;
 }
 
 /* =============
@@ -159,10 +165,17 @@ h1 {
 
 .playButtonsContainer {
 	display: none;
+	justify-content: center;
+	align-items: center;
 	flex-direction: column;
-	width: 50px;
+	width: 70px;
 	height: fit-content;
 	gap: 8px;
+}
+
+span {
+	display: block;
+	text-align: center;
 }
 
 .rightSide {
@@ -172,7 +185,7 @@ h1 {
 	position: absolute;
 	right: 16px;
 	transition: all 255ms ease-in-out;
-	transform: translateX(70px);
+	transform: translateX(90px);
 }
 
 .showSideButtons {
@@ -186,7 +199,7 @@ h1 {
 	margin-left: 8px;
 	position: absolute;
 	transition: all 255ms ease-in-out;
-	transform: translateX(-70px);
+	transform: translateX(-90px);
 }
 .d-none {
 	display: none;
@@ -212,7 +225,8 @@ h1 {
 	canvas,
 	.menuContainerOverlay,
 	.startScreen {
-		width: 100%;
+		max-width: 100%;
+		height: 480px;
 	}
 
 	h1 {

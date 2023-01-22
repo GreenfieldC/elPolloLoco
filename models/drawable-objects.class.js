@@ -45,7 +45,6 @@ class DrawableObject {
 	/**
 	 * @param {collectedAmount} - The amount of items collected.
 	 * @returns the index of the image to be displayed.
-	 *! ODER auch hier mit Prozent? Oder keine Statusbar?
 	 */
 	resolveImageIndexCollectableObjectsBar(collectedAmount) {
 		switch (true) {
