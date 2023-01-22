@@ -140,6 +140,7 @@ async function startGame() {
 	openCloseMenuToggle();
 	hideShowKeyLegendsToggle();
 	keyLegendsDefault();
+
 	hideWholeStartScreen();
 	initLevel1();
 	init();
