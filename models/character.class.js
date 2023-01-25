@@ -83,7 +83,7 @@ class Character extends MovableObject {
 	 * If the player is above ground, pause the walking sound
 	 */
 	checkWalkingSound() {
-		this.aboveGround() ? this.walking_sound.pause() : null;
+		this.aboveGround() || this.isInPain() ? this.walking_sound.pause() : null;
 	}
 
 	/**

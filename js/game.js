@@ -1,6 +1,7 @@
 /* code by Christian Greenfield */
 'use strict';
 
+let maximalTableSize = window.innerWidth <= 1024 || (window.innerHeight <= 1024 && window.innerWidth <= 768);
 let canvas = document.getElementById('canvas');
 let world;
 let keyboard;
@@ -135,37 +136,16 @@ function openCloseMenuToggle() {
 }
 
 function startGame() {
-	showHideTogglePlayButtons();
-	/* levelRunning = true; */
-	/* toggleShowHideStartGameButton(); */
-	hideShowKeyLegendsToggle();
-	keyLegendsDefault();
+	checkMobilePlayButtonNeeded();
+	toggleShowHideStartGameButton();
 	openCloseMenuToggle();
 	hideWholeStartScreen();
-	/* countDown(); */
 	initLevel1();
 	init();
 	buttonListener();
 	levelRunning = true;
 	toggleShowHideStartGameButton();
 }
-
-/* function countDown() {
-	document.getElementById('countDownScreen').classList.remove('d-none');
-	let i = 3;
-	setInterval(() => {
-		if (i > -1) {
-			document.getElementById('numberCountdown').innerHTML = i;
-		}
-		i--;
-		if (i < -1) {
-			document.getElementById('countDownScreen').classList.add('d-none');
-		}
-	}, 1000);
-	setTimeout(() => {
-		startGame();
-	}, 3000);
-} */
 
 function hideNavigation() {
 	document.getElementById('navigationContainer').classList.add('d-none');
@@ -186,27 +166,15 @@ function toggleShowFullscreenButton() {
 }
 
 /**
- * show and hide play buttons for mobile version
+ * Shows play buttons for mobil devices
  */
-function showHideTogglePlayButtons() {
-	if (openPlaybuttons && (!levelRunning || levelRunning)) return;
-
-	if (!levelRunning || (levelRunning && openMenu && openLegends)) {
-		document.getElementById('rightSidePlayButtons').classList.toggle('showSideButtons');
-		document.getElementById('leftSidePlayButtons').classList.toggle('showSideButtons');
-	}
-	openPlaybuttons = !openPlaybuttons;
+function checkMobilePlayButtonNeeded() {
+	maximalTableSize ? showMobilePlayButtons() : null;
 }
 
-function keyLegendsDefault() {
-	openLegends && openMenu && levelRunning ? hideShowKeyLegendsToggle() : (openLegends = true);
-}
-
-function hideShowKeyLegendsToggle() {
-	let legends = document.getElementsByTagName('span');
-	Array.from(legends).forEach((span) => {
-		span.classList.toggle('d-none');
-		openLegends = openLegends;
+function showMobilePlayButtons() {
+	['rightSidePlayButtons', 'leftSidePlayButtons'].forEach((id) => {
+		document.getElementById(id).classList.remove('d-none');
 	});
 }
 

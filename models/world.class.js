@@ -431,7 +431,7 @@ class World extends DrawableObject {
 			document.getElementById(screenId).classList.remove('d-none');
 			this.gameEnds = true;
 			this.stopAllIntervals();
-			/* this.backToStartScreen(); */
+			this.backToStartScreen();
 		}, 2000);
 	}
 
