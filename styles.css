@@ -1,15 +1,18 @@
 body {
-	/* background-image: url(./img/desert-5396906_1920.jpg);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: bottom; */
 	margin: 0;
 	display: flex;
-	/* flex-direction: column; */
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
 	font-family: 'Walter Turncoat';
+}
+
+canvas,
+.endScreen,
+.startScreen,
+.loosesEndScreen {
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.562);
+	border-radius: 20px;
 }
 
 .fullscreen {
@@ -25,24 +28,30 @@ body {
 	background-position: bottom;
 }
 
-.startScreen {
+.startScreen,
+.endScreen,
+.loosesEndScreen,
+.callToTurnScreen,
+.menuContainerOverlay,
+.testContainer {
 	position: absolute;
 	width: 100%;
-	max-width: 960px;
-	height: 480px;
+	max-width: 760px;
+	max-height: 480px;
+	/* height: 100%; */
+	aspect-ratio: auto 1 / 0.631;
+}
+
+.startScreen {
 	background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: bottom;
+	background-position: center;
 	/* overflow: hidden; */
 }
 
 /* media query nicht vergessen */
 .endScreen {
-	position: absolute;
-	width: 100%;
-	max-width: 960px;
-	height: 480px;
 	background-image: url(./img/9_intro_outro_screens/game_over/game\ over.png);
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -50,24 +59,27 @@ body {
 }
 
 .loosesEndScreen {
-	position: absolute;
-	width: 100%;
-	max-width: 960px;
-	height: 480px;
 	background-image: url(./img/9_intro_outro_screens/game_over/you\ lost.png);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: bottom;
 }
 
-.countDownScreen {
-	position: absolute;
-	width: 100%;
-	max-width: 960px;
-	height: 480px;
-	display: flex;
+.testContainer {
+	max-height: 480px;
+	max-width: 760px;
+}
+
+.callToTurnScreen {
+	display: none;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.message {
+	font-size: 2rem;
+	text-align: center;
 }
 
 h2 {
@@ -90,8 +102,7 @@ h1 {
 .menuContainerOverlay {
 	position: absolute;
 	width: 100%;
-	max-width: 960px;
-	height: 480px;
+	height: 100%;
 	overflow: hidden;
 }
 
@@ -199,7 +210,7 @@ h1 {
 }
 
 .playButtonsContainer {
-	display: none;
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -256,17 +267,23 @@ span {
 }
 
 /* SMARTPHONES */
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 760px) {
 	canvas,
 	.menuContainerOverlay,
 	.startScreen,
-	.endScreen {
-		max-width: 100%;
-		height: 480px;
+	.endScreen,
+	.loosesEndScreen,
+	.callToTurnScreen {
+		width: 100vw !important;
+		border-radius: unset;
 	}
 
 	h1 {
 		display: none;
+	}
+
+	.callToTurnScreen {
+		display: flex;
 	}
 
 	.openNavigationBar {
@@ -280,7 +297,8 @@ span {
 	canvas,
 	.menuContainerOverlay,
 	.startScreen,
-	.endScreen {
-		height: 100vh;
+	.endScreen,
+	.loosesEndScreen {
+		height: 100vh !important;
 	}
 }
