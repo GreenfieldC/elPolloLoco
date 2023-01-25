@@ -1,7 +1,6 @@
 class Character extends MovableObject {
 	speed = 20;
 	y = 180;
-
 	world;
 	walking_sound = new Audio('audio/walking_sound.mp3'); //später auslagern
 	cache = new CharacterCache();
@@ -18,20 +17,15 @@ class Character extends MovableObject {
 
 	constructor() {
 		super().loadImage(this.cache.IMAGES_WALKING[0]);
-		this.loadImages(this.cache.IMAGES_WALKING); // images are being pre loaded for usage!
-		this.loadImages(this.cache.IMAGES_JUMPING);
-		this.loadImages(this.cache.IMAGES_DEAD);
-		this.loadImages(this.cache.IMAGES_INPAIN);
-		this.loadImages(this.cache.IMAGES_IDLE);
-		this.loadImages(this.cache.IMAGES_LONG_IDLE);
+		this.loadAllImagesFromCache();
 		this.applyGravity();
-		this.animations();
+		/* this.animations(); */ // muss das in den constructor?
 		this.animate();
 	}
 
 	/* hier nur die Funktionen, wo Tasten gedrückt werden */
 	animate() {
-		let IDOfIntervall = setInterval(() => {
+		setInterval(() => {
 			this.walking_sound.pause();
 			this.checkWalking();
 			this.checkWalkingRight();
@@ -43,7 +37,7 @@ class Character extends MovableObject {
 			this.checkStopLongIdling();
 			this.checkThrowing();
 			this.checkReactionToInjury();
-			this.checkIsBeingKilled(IDOfIntervall);
+			this.checkIsBeingKilled();
 			this.setCameraForCharacter();
 		}, 100);
 	}
@@ -66,7 +60,10 @@ class Character extends MovableObject {
 	 * the walking animation
 	 */
 	checkWalking() {
-		if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.objectOnGround()) this.walkingAnimation();
+		(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
+		this.objectOnGround()
+			? this.walkingAnimation()
+			: null;
 	}
 
 	/**
@@ -74,11 +71,9 @@ class Character extends MovableObject {
 	 * player right and play the walking sound
 	 */
 	checkWalkingRight() {
-		if (this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x) {
-			this.moveRight();
-			this.forwards();
-			this.walking_sound.play();
-		}
+		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x
+			? (this.moveRight(), this.forwards(), this.walking_sound.play())
+			: null;
 	}
 
 	/**
@@ -86,20 +81,16 @@ class Character extends MovableObject {
 	 * the character left and play the walking sound
 	 */
 	checkWalkingLeft() {
-		if (this.world.keyboard.LEFT && this.x > -50) {
-			this.moveLeft();
-			this.backwards(); //if true then mirror character
-			this.walking_sound.play();
-		}
+		this.world.keyboard.LEFT && this.x > -50
+			? (this.moveLeft(), this.backwards(), this.walking_sound.play())
+			: null;
 	}
 
 	/**
 	 * If the player is above ground, pause the walking sound
 	 */
 	checkWalkingSound() {
-		if (this.aboveGround()) {
-			this.walking_sound.pause();
-		}
+		this.aboveGround() ? this.walking_sound.pause() : null;
 	}
 
 	/**
@@ -114,7 +105,7 @@ class Character extends MovableObject {
 		if (this.aboveGround()) {
 			this.jumpingAnimation();
 		}
-		if (this.aboveGround()) return; // restrict more than one jump at the time
+		if (this.aboveGround()) return; // restricts another jump while being above ground level
 		if (this.world.keyboard.UP) {
 			this.jump();
 		}
@@ -126,9 +117,14 @@ class Character extends MovableObject {
 	 * @returns the value of the function.
 	 */
 	checkIsIdling() {
-		if (this.isInactive == true || this.isMoving() || this.isDead() || this.aboveGround()) return;
+		if (
+			this.isInactive == true ||
+			this.isMoving() ||
+			this.isDead() ||
+			this.aboveGround()
+		)
+			return;
 		this.idlingAnimation();
-		/* this.stopLongIdling(); */
 		setTimeout(() => {
 			this.isInactive = true;
 		}, 5000);
@@ -140,7 +136,13 @@ class Character extends MovableObject {
 	 * @returns the value of the function longIdlingAnimation()
 	 */
 	checkIsLongIdling() {
-		if (this.isInactive == false || this.isMoving() || this.isDead() || this.aboveGround()) return;
+		if (
+			this.isInactive == false ||
+			this.isMoving() ||
+			this.isDead() ||
+			this.aboveGround()
+		)
+			return;
 		this.longIdlingAnimation();
 	}
 
@@ -211,13 +213,12 @@ class Character extends MovableObject {
 		}
 	}
 
-	checkIsBeingKilled(IDOfIntervall) {
+	checkIsBeingKilled() {
 		if (this.isDead()) {
 			this.applyGravity();
 			this.jump();
-			this.goesToGrave();
+			this.goesToGrave(1000);
 			this.dyingAnimation();
-			this.stopsDyingAnimation(IDOfIntervall);
 		}
 	}
 
@@ -294,6 +295,11 @@ class Character extends MovableObject {
 	 * @returns a boolean value.
 	 */
 	isMoving() {
-		return this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.D;
+		return (
+			this.world.keyboard.RIGHT ||
+			this.world.keyboard.LEFT ||
+			this.world.keyboard.UP ||
+			this.world.keyboard.D
+		);
 	}
 }

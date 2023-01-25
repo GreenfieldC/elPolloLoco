@@ -3,14 +3,18 @@ class Endboss extends MovableObject {
 	height = 300;
 	y = 140;
 	x = 3420;
-	/* speedY = 90; */
+	speedY = 5;
 	speed = 25;
+	acceleration = 5;
 	energy = 100;
 	beingAttacked = false;
 	characterDetected = false;
 	tooClose = false;
+	lastJump = false;
 	groundPosition = 100;
 	cache = new EndbossCache();
+	i = 0;
+	id;
 
 	offset = {
 		top: 100,
@@ -21,38 +25,35 @@ class Endboss extends MovableObject {
 
 	constructor() {
 		super().loadImage(this.cache.IMAGES_ALERT[0]);
-		this.loadImages(this.cache.IMAGES_ALERT);
-		this.loadImages(this.cache.IMAGES_WALKING);
-		this.loadImages(this.cache.IMAGES_HURT);
-		this.loadImages(this.cache.IMAGES_ATTACK);
-		this.loadImages(this.cache.IMAGES_ENDBOSS_DYING);
+		this.loadAllImagesFromCache();
 		this.animate();
 		this.animations();
+		console.log();
 	}
 
 	/**
 	 * It checks if the character is alert, walking, being attacked, attacking the character or dying.
 	 */
 	animate() {
-		let IDOfIntervall = setInterval(() => {
+		this.id = setInterval(() => {
 			this.checkBeingAlert();
 			this.checkWalking();
 			this.checkBeingAttacked();
 			this.checkAttackCharacter();
-			this.checkIsBeingKilled(IDOfIntervall);
-		}, 250);
+			this.checkIsBeingKilled();
+		}, 200);
 	}
 
 	/**
 	 * This function calls other functions that are responsible to show the endboss
 	 * being alert, walking, attacking, being hurt and dying.
 	 */
-	animations() {
+	animations(id) {
 		this.alertAnimation();
 		this.walkAnimation();
 		this.attackAnimation();
 		this.hurtAnimation();
-		this.dyingAnimation();
+		this.dyingAnimation(id);
 	}
 
 	/* Playing the animation of the endboss being alert. */
@@ -79,13 +80,28 @@ class Endboss extends MovableObject {
 	 */
 	attackAnimation() {
 		this.playAnimation(this.cache.IMAGES_ATTACK);
+		this.moveLeft(); // drinnen lassen?
 	}
 
 	/**
 	 * This function plays the dying animation of the endboss.
 	 */
+
 	dyingAnimation() {
-		this.playAnimation(this.cache.IMAGES_ENDBOSS_DYING);
+		if (this.i >= 3 || this.isAlive()) return;
+		if (this.i >= 2 || this.lastJump)
+			this.loadImage(this.cache.IMAGES_ENDBOSS_DYING[2]); //! HIER GEHT ES EINFACH NICHT REIN. WARUM?
+		if (this.i < 2 || /* (!this.aboveGround() */ /* && */ this.isDead()) {
+			/* ) */ this.playAnimation(this.cache.IMAGES_ENDBOSS_DYING);
+			this.i++;
+		}
+		if (!this.aboveGround() && !this.lastJump) {
+			this.applyGravity();
+			this.jump();
+			this.goesToGrave(2000);
+			this.lastJump = true;
+		}
+		if (this.i == 2) this.lastJump = true;
 	}
 
 	/**
@@ -93,8 +109,8 @@ class Endboss extends MovableObject {
 	 * move left towards character.
 	 */
 	checkWalking() {
-		if (this.tooClose) return; // funktioniert zu spät!
-		if (this.characterDetected || this.beingAttacked) {
+		if (this.tooClose || this.isDead()) return; // funktioniert zu spät!
+		if (this.isAlive() && (this.characterDetected || this.beingAttacked)) {
 			this.moveLeft();
 			this.walkAnimation();
 		}
@@ -113,6 +129,7 @@ class Endboss extends MovableObject {
 	 * then play the hurt animation
 	 */
 	checkBeingAttacked() {
+		if (this.isDead()) return;
 		if (this.beingAttacked && this.isInPain()) this.hurtAnimation();
 	}
 
@@ -121,20 +138,17 @@ class Endboss extends MovableObject {
 	 * the enemy will attack
 	 */
 	checkAttackCharacter() {
-		if (this.tooClose) this.attackAnimation();
+		if (this.tooClose && this.isAlive()) this.attackAnimation();
 	}
 
 	/**
 	 * If the endboss is dead, he jumps, goes to his grave, and plays his dying animation.
-	 * @param {IDOfIntervall} - The ID of the interval that is used to check if the endboss is dead.
+	 * @param {checkEndbossIdInterval} - The ID of the interval that is used to check if the endboss is dead.
 	 */
-	checkIsBeingKilled(IDOfIntervall) {
-		if (this.isDead()) {
-			this.applyGravity();
-			this.jump();
-			this.goesToGrave();
+	checkIsBeingKilled() {
+		if (this.isAlive()) return;
+		if (this.isDead() && !this.lastJump) {
 			this.dyingAnimation();
-			this.stopsDyingAnimation(IDOfIntervall);
 		}
 	}
 }

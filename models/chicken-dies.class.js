@@ -4,11 +4,11 @@ class ChickenDies extends MovableObject {
 	];
 
 	constructor(x, y) {
-		super().loadImage(this.IMAGES_CHICKEN_DIES[0]); // warum die FUnktion?
+		super().loadImage(this.IMAGES_CHICKEN_DIES[0]);
+		this.loadImages(this.IMAGES_CHICKEN_DIES);
 		this.x = x;
 		this.y = y;
 		this.height = 75;
 		this.width = 75;
-		this.loadImages(this.IMAGES_CHICKEN_DIES); // warum die FUnktion?
 	}
 }

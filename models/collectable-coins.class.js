@@ -4,6 +4,13 @@ class Coins extends MovableObject {
 	y = 0;
 	growthRate = 10;
 
+	offset = {
+		top: 50,
+		bottom: 20,
+		left: 50,
+		right: 50,
+	};
+
 	constructor(imagePath, x) {
 		super().loadImage(imagePath, x);
 		this.y = 80 + Math.random() * 200;
@@ -13,7 +20,7 @@ class Coins extends MovableObject {
 
 	/**
 	 * Enlarges and shrinks coins in an infinite loop.
-	 * {growthrate}
+	 *
 	 */
 	pulsatingCoinsAnimation() {
 		setInterval(() => {
@@ -25,16 +32,28 @@ class Coins extends MovableObject {
 		}, 800);
 	}
 
+	/**
+	 * Makes sure that coins stay
+	 * always at the same position while rezizing
+	 */
 	fixationCoins() {
 		this.x -= this.growthRate / 2;
 		this.y -= this.growthRate / 2;
 	}
 
+	/**
+	 * Defines the growthrate
+	 * of the coins
+	 */
 	sizingCoins() {
 		this.height += this.growthRate;
 		this.width += this.growthRate;
 	}
 
+	/**
+	 * Changes growthrate to the opposite
+	 * to activate shrinking or enlarging of coins
+	 */
 	toggleGrowthDirection() {
 		this.growthRate = -this.growthRate;
 	}

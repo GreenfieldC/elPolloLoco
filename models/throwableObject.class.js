@@ -28,6 +28,10 @@ class ThrowableObjects extends MovableObject {
 		this.bottleBeingThrownAnimation(); //ist die schon in movableobject?
 	}
 
+	/**
+	 * Moves bottle with speedY and speedX
+	 * in a flight path over the map
+	 */
 	throw() {
 		this.speedY = this.speedY;
 		this.applyGravity();
@@ -36,6 +40,9 @@ class ThrowableObjects extends MovableObject {
 		}, 120);
 	}
 
+	/**
+	 * Animates being thrown bottle
+	 */
 	bottleBeingThrownAnimation() {
 		setInterval(() => {
 			this.playAnimation(this.IMAGES_FLYING_BOTTLES);

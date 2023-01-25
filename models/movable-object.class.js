@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
 	energy = 100;
 	lastHit = 0;
 	groundPosition = 180;
+	setIntervalId = [];
 
 	offset = {
 		top: 0,
@@ -17,7 +18,11 @@ class MovableObject extends DrawableObject {
 	};
 
 	isAlive() {
-		return this.energy >= 0;
+		return this.energy > 0;
+	}
+
+	isDead() {
+		return this.energy <= 0;
 	}
 
 	forwards() {
@@ -66,25 +71,39 @@ class MovableObject extends DrawableObject {
 
 	/* Checking if the right side of the object is colliding with the left side of the object. */
 	rightBorderColliding(object) {
-		return this.x + this.width - this.offset.right > object.x + object.offset.left;
+		return (
+			this.x + this.width - this.offset.right >
+			object.x + object.offset.left
+		);
 	}
 
 	bottomBorderColliding(object) {
-		return this.y + this.height - this.offset.bottom > object.y + object.offset.top;
+		return (
+			this.y + this.height - this.offset.bottom >
+			object.y + object.offset.top
+		);
 	}
 
 	leftBorderColliding(object) {
-		return this.x + this.offset.left < object.x + object.width - object.offset.right;
+		return (
+			this.x + this.offset.left <
+			object.x + object.width - object.offset.right
+		);
 	}
 
 	topBorderColliding(object) {
-		return this.y + this.offset.top < object.y + object.height - object.offset.bottom;
+		return (
+			this.y + this.offset.top <
+			object.y + object.height - object.offset.bottom
+		);
 	}
 
 	// character looses energy after collsion with enemy
 	injury(damage) {
 		this.energy -= damage;
-		this.energy < 0 ? (this.energy = 0) : (this.lastHit = new Date().getTime());
+		this.energy < 0
+			? (this.energy = 0)
+			: (this.lastHit = new Date().getTime());
 	}
 
 	/**
@@ -94,10 +113,6 @@ class MovableObject extends DrawableObject {
 		let timepassed = new Date().getTime() - this.lastHit; // difference in ms
 		timepassed = timepassed / 1000;
 		return timepassed < 0.5;
-	}
-
-	isDead() {
-		return this.energy <= 0;
 	}
 
 	playAnimation(images) {
@@ -123,15 +138,7 @@ class MovableObject extends DrawableObject {
 	 * By setting the groundposition out of the map after its final jump,
 	 * endboss falls out off map!.
 	 */
-	goesToGrave() {
-		this.groundPosition = 1000;
-	}
-
-	/**
-	 * It stops the dying animation
-	 * @param {IDOfIntervall} - The ID of the intervall you want to stop.
-	 */
-	stopsDyingAnimation(IDOfIntervall) {
-		clearInterval(IDOfIntervall);
+	goesToGrave(newGround) {
+		this.groundPosition = newGround;
 	}
 }

@@ -23,9 +23,7 @@ class CoinsStatusBar extends DrawableObject {
 	setAmountCoins(collectedCoins) {
 		this.collectedCoins = collectedCoins; //hieraus einen index zwischen 0 und 5 ermitteln
 		let path =
-			this.IMAGES[
-				this.resolveImageIndexCollectableObjectsBar(collectedCoins)
-			];
+			this.IMAGES[this.resolveImageIndexCollectableObjectsBar(collectedCoins)];
 		this.img = this.imageCache[path];
 	}
 }

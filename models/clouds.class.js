@@ -7,12 +7,15 @@ class Cloud extends MovableObject {
 	constructor() {
 		super().loadImage('./img/5_background/layers/4_clouds/1.png');
 		this.x = Math.random() * 4200;
-		this.animation();
+		this.moveLeftAnimation();
 	}
 
-	animation() {
+	/**
+	 * Moves the clouds from the right to the left side of the map
+	 */
+	moveLeftAnimation() {
 		setInterval(() => {
 			this.moveLeft();
-		}, 1000 / 60); // how to change speed?
+		}, 1000 / 60);
 	}
 }

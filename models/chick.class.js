@@ -17,26 +17,31 @@ class Chick extends MovableObject {
 			'./img/3_enemies_chicken/chicken_small/1_walk/1_w.png'
 		);
 		this.loadImages(this.IMAGES_WALKING);
-		this.x = 600 + Math.random() * 1000;
+		this.x = 600 + Math.random() * 1000; // chicks start walking from different positions
 		this.y = 365;
 		this.height = 60;
 		this.width = 60;
-		this.animation();
-		this.speed = 0.15 + Math.random() * 1.9;
+		this.speed = 0.15 + Math.random() * 1.9; // chicks walk at different speeds
+		this.animation(); // muss das in den constructor?
 	}
 
 	animation() {
 		this.chickMovesLeft();
-
 		this.walkingAnimation();
 	}
 
+	/**
+	 * Runs animation of the walking chick
+	 */
 	walkingAnimation() {
 		setInterval(() => {
 			this.playAnimation(this.IMAGES_WALKING);
 		}, 100);
 	}
 
+	/**
+	 * Moves the chick to the left side of the map
+	 */
 	chickMovesLeft() {
 		setInterval(() => {
 			this.moveLeft();

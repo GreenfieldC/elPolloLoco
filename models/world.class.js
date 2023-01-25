@@ -1,4 +1,4 @@
-class World {
+class World extends DrawableObject {
 	character = new Character();
 	throwableObject = [];
 	splashedBottle = [];
@@ -8,18 +8,20 @@ class World {
 	coinsStatusBar = new CoinsStatusBar();
 	statusBarEndboss = new HealthStatusBarEndBoss();
 	overlayIconStatusBarEndboss = new OverlayIconEndboss();
+
 	level = level1;
+	gameEnds = false;
 	canvas;
 	ctx;
 	keyboard;
 	camera_x = -100;
 
 	constructor(canvas, keyboard) {
+		super();
 		this.ctx = canvas.getContext('2d');
 		this.canvas = canvas;
 		this.keyboard = keyboard;
-		this.draw();
-
+		this.drawWorld();
 		this.setWorld();
 		this.run();
 	}
@@ -37,6 +39,7 @@ class World {
 			this.checkBottleHitsGround();
 			this.checkBottleHitsEnemy();
 			this.checkCharacterGetDetectedByEndboss();
+			this.checksRightEndScreen();
 		}, 40);
 	}
 
@@ -53,7 +56,7 @@ class World {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury(0.5);
 				this.healthStatusBar.setPercentage(this.character.energy);
-				/* this.character.isInactive = false; */ // Warum geht das nicht
+				/* this.character.isInactive = false; */
 			}
 		});
 	}
@@ -73,11 +76,7 @@ class World {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury(5);
 				this.healthStatusBar.setPercentage(this.character.energy);
-				/* setTimeout(() => {
-					this.characterIsTooClose();
-				}, 1500); */
 			}
-			/* this.characterNotTooClose(); */
 		});
 	}
 
@@ -88,7 +87,10 @@ class World {
 
 	checkHitsChickOnTop() {
 		this.level.smallEnemies.forEach((chick, i) => {
-			if (this.character.isColliding(chick) && this.character.aboveGround()) {
+			if (
+				this.character.isColliding(chick) &&
+				this.character.aboveGround()
+			) {
 				this.chickDies(chick, i);
 				this.character.jump();
 			}
@@ -97,7 +99,10 @@ class World {
 
 	checkHitsChickenOnTop() {
 		this.level.biggerEnemies.forEach((chicken, i) => {
-			if (this.character.isColliding(chicken) && this.character.aboveGround()) {
+			if (
+				this.character.isColliding(chicken) &&
+				this.character.aboveGround()
+			) {
 				this.chickenDies(chicken, i);
 				this.character.jump();
 			}
@@ -120,6 +125,11 @@ class World {
 		});
 	}
 
+	/**
+	 * Takes bottle from map by splicing
+	 * obect out of bottlesOnGround array
+	 * @param {number} i index of array of bottles
+	 */
 	takeBottleOnGroundFromMap(i) {
 		this.level.bottlesOnGround.splice(i, 1);
 	}
@@ -138,14 +148,21 @@ class World {
 		this.level.bottlesInAir.splice(i, 1);
 	}
 
+	/**
+	 * Updates Statusbar for collected bottles
+	 */
 	updateIncreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles++;
-		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
+		this.bottlesStatusBar.setAmountBottles(
+			this.bottlesStatusBar.collectedBottles
+		);
 	}
 
 	updateDecreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles--;
-		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
+		this.bottlesStatusBar.setAmountBottles(
+			this.bottlesStatusBar.collectedBottles
+		);
 	}
 
 	checkCharacterAbleOfCollectingMoreBottles() {
@@ -158,15 +175,24 @@ class World {
 				console.log('coin on ground collected');
 				this.level.coins.splice(i, 1);
 				this.coinsStatusBar.collectedCoins++;
-				this.coinsStatusBar.setAmountCoins(this.coinsStatusBar.collectedCoins);
+				this.coinsStatusBar.setAmountCoins(
+					this.coinsStatusBar.collectedCoins
+				);
 			}
 		});
 	}
 
+	/**
+	 * @returns {boolean}
+	 */
 	noBottlesCollected() {
 		return this.bottlesStatusBar.collectedBottles == 0;
 	}
 
+	/**
+	 * lets bottle splash if it hits the ground
+	 * @param {object} bottle
+	 */
 	checkBottleHitsGround() {
 		this.throwableObject.forEach((bottle) => {
 			if (bottle.y > 300) this.bottleSplashes(bottle);
@@ -188,6 +214,11 @@ class World {
 		this.checkBottleHitsEndboss();
 	}
 
+	/**
+	 * Shows deadChick when being hit by bottle
+	 * @param {object} bottle
+	 * @param {object} enemy
+	 */
 	checkBottleHitsChick() {
 		this.throwableObject.forEach((bottle) => {
 			this.level.smallEnemies.forEach((enemy, i) => {
@@ -199,8 +230,15 @@ class World {
 		});
 	}
 
-	chickDies(enemyObj, position) {
-		let deadChick = new ChickDies(enemyObj.x, enemyObj.y);
+	/**
+	 *Splices chicken and puts died chicken
+	 in its place
+	 * @param {object} enemy that has died
+	 * @param {number} position of died enemy
+	 * @param {object} deadChick gets added to map
+	 */
+	chickDies(enemy, position) {
+		let deadChick = new ChickDies(enemy.x, enemy.y);
 		this.level.smallEnemies.splice(position, 1);
 		this.deadEnemies.push(deadChick);
 		setTimeout(() => {
@@ -208,157 +246,186 @@ class World {
 		}, 2000);
 	}
 
-	// Das Funktioniert noch nicht so gut. offset überprüfen
+	/**
+	 * Whenever bottle hits chicken,
+	 * bottle splashes and chicken is taken out of map
+	 * @param {object} bottle that hits chicken splashes
+	 * @param {number} chicken of index i gets spliced
+	 */
 	checkBottleHitsChicken() {
 		this.throwableObject.forEach((bottle) => {
 			this.level.biggerEnemies.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
 					this.chickenDies(enemy, i);
 					this.bottleSplashes(bottle);
+					console.log(typeof bottle);
 				}
 			});
 		});
 	}
 
-	chickenDies(enemyObj, position) {
-		let deadChicken = new ChickenDies(enemyObj.x, enemyObj.y);
-		this.level.biggerEnemies.splice(position, 1);
+	/**
+	 *
+	 * @param {object} dead chicken image is being added, at the position,
+	 * where chicken has died.
+	 * @param {number} chicken being hit by bottle gets spliced at index i
+	 */
+	chickenDies(enemy, i) {
+		let deadChicken = new ChickenDies(enemy.x, enemy.y);
+		this.level.biggerEnemies.splice(i, 1);
 		this.deadEnemies.push(deadChicken);
 		setTimeout(() => {
 			this.deadEnemies.splice(0, 1);
 		}, 2000);
 	}
 
+	/**
+	 * Whenever endboss gets hit by bottle,
+	 * the bottle splashes and he either gets hurt or killed
+	 *@param {object} bottle being thrown
+	 *@param {object} enemy is the endboss
+	 *@param {number} i is index of array containing endboss
+	 */
 	checkBottleHitsEndboss() {
 		this.throwableObject.forEach((bottle) => {
 			this.level.endBoss.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
-					this.level.endBoss[i].injury(10);
-					this.statusBarEndboss.setPercentage(this.level.endBoss[i].energy);
+					this.endbossLoosesEnergy(i);
+					this.upDatinghealthbarOfEndboss(i);
 					this.bottleSplashes(bottle);
-					this.endBossBeingAttackedByCharacter();
+					this.setsEndBossBeingAttackedByCharacter();
 				}
 
 				if (this.level.endBoss[i].isDead()) {
 					this.bottleSplashes(bottle);
-					this.level.endBoss[i].speed = 0;
-					this.endBossDies(i);
+					this.stopEndboss(i);
 				}
 			});
 		});
 	}
 
-	endBossDies(position) {
-		setTimeout(() => {
-			this.level.endBoss.splice(position, 1);
-		}, 500000);
+	/**
+	 * Endboss looses energy
+	 * 10 is substracted from its current energy level
+	 */
+	endbossLoosesEnergy(i) {
+		this.level.endBoss[i].injury(10);
 	}
 
+	/**
+	 * Updates the healthbar of endboss
+	 */
+
+	upDatinghealthbarOfEndboss(i) {
+		this.statusBarEndboss.setPercentage(this.level.endBoss[i].energy);
+	}
+
+	/**
+	 * Stops endboss moving forward
+	 */
+	stopEndboss(i) {
+		this.level.endBoss[i].speed = 0;
+	}
+
+	/**
+	 * Sets dectectedCharacter variable to true,
+	 * if the character is getting on its radar
+	 */
 	checkCharacterGetDetectedByEndboss() {
 		if (this.character.x > 3000) {
 			this.endBossDetectedCharacter();
 		}
 	}
 
+	/**
+	 * Sets the variable characterDetected = true
+	 */
 	endBossDetectedCharacter() {
 		this.level.endBoss[0].characterDetected = true;
 	}
 
-	endBossBeingAttackedByCharacter() {
+	/**
+	 * Sets the variable beingAttackt = true
+	 */
+	setsEndBossBeingAttackedByCharacter() {
 		this.level.endBoss[0].beingAttacked = true;
 	}
 
+	/**
+	 * Sets tooClose value to false or true
+	 * according to the distance between endboss and character
+	 */
 	checkCharacterMakingEndbossWild() {
-		if (this.level.endBoss[0].x - this.character.x < 50 && this.character.isAlive()) this.level.endBoss[0].tooClose = true;
-
-		if (this.level.endBoss[0].x - this.character.x > 50 || this.character.isDead()) this.characterNotTooClose();
-	}
-
-	/* 
-	!oben abends weiter bitte! */
-
-	characterNotTooClose() {
-		this.level.endBoss[0].tooClose = false;
-	}
-
-	draw() {
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //Inhalt von Canvas wird gelöscht
-
-		this.ctx.translate(this.camera_x, 0);
-
-		this.drawNature();
-
-		this.ctx.translate(-this.camera_x, 0); //backwards
-		this.drawFixedObjects();
-		this.ctx.translate(this.camera_x, 0); // forwards
-
-		this.drawMovableObjects();
-		this.ctx.translate(-this.camera_x, 0);
-
-		// Draw() wird immer wieder aufgerufen
-		let self = this;
-		requestAnimationFrame(() => {
-			self.draw();
-		});
-	}
-
-	drawNature() {
-		this.addObjectsToCanvas(this.level.backgroundObjects);
-		this.addObjectsToCanvas(this.level.clouds);
-	}
-
-	drawFixedObjects() {
-		if (this.level.endBoss[0].characterDetected || this.level.endBoss[0].beingAttacked) {
-			this.addToCanvas(this.statusBarEndboss);
-			this.addToCanvas(this.overlayIconStatusBarEndboss);
-		}
-		this.addToCanvas(this.healthStatusBar);
-		this.addToCanvas(this.bottlesStatusBar);
-		this.addToCanvas(this.coinsStatusBar);
-	}
-
-	drawMovableObjects() {
-		this.addObjectsToCanvas(this.level.smallEnemies);
-		this.addObjectsToCanvas(this.level.biggerEnemies);
-		this.addObjectsToCanvas(this.level.endBoss);
-		this.addObjectsToCanvas(this.level.bottlesOnGround);
-		this.addObjectsToCanvas(this.level.bottlesInAir);
-		this.addObjectsToCanvas(this.level.coins);
-		this.addToCanvas(this.character);
-		this.addObjectsToCanvas(this.throwableObject);
-		this.addObjectsToCanvas(this.splashedBottle);
-		this.addObjectsToCanvas(this.deadEnemies);
-	}
-
-	addObjectsToCanvas(objects) {
-		objects.forEach((object) => {
-			this.addToCanvas(object);
-		});
-	}
-
-	addToCanvas(movableObject) {
-		if (movableObject.otherDirection || movableObject == this.statusBarEndboss) this.flipImage(movableObject);
-
-		movableObject.draw(this.ctx);
-		/* movableObject.drawBorders(this.ctx); */
-
-		if (movableObject.otherDirection || movableObject == this.statusBarEndboss) this.flipImageBack(movableObject);
+		this.notEnoughDistance() && this.character.isAlive()
+			? this.setCharacterTooClose()
+			: this.setCharacterNotTooClose();
 	}
 
 	/**
-	 * The function flips the image by translating the canvas to the width of the image, scaling the
-	 * canvas by -1, and then translating the image by the width of the image.
-	 * @param {movableObject} - The object that you want to flip.
+	 * @returns a boolean depending on
+	 * the distance between endboss and character
 	 */
-	flipImage(movableObject) {
-		this.ctx.save();
-		this.ctx.translate(movableObject.width, 0);
-		this.ctx.scale(-1, 1);
-		movableObject.x = movableObject.x * -1;
+	notEnoughDistance() {
+		return this.level.endBoss[0].x - this.character.x < 50;
 	}
 
-	flipImageBack(movableObject) {
-		movableObject.x = movableObject.x * -1;
-		this.ctx.restore();
+	/**
+	 * Sets the tooClose to false
+	 */
+	setCharacterNotTooClose() {
+		this.level.endBoss[0].tooClose = false;
+	}
+
+	setCharacterTooClose() {
+		this.level.endBoss[0].tooClose = true;
+	}
+
+	/* =================
+		SCREEN BEHAVIOR
+	================= */
+
+	/**
+	 * Checks how the level ends
+	 * and show the right screen accordingly: Game Over or You Lose
+	 */
+	checksRightEndScreen() {
+		if (this.level.endBoss[0].isDead()) this.showEndScreen('endScreen');
+		if (this.character.isDead()) this.showEndScreen('loosesEndScreen');
+	}
+
+	/**
+	 *
+	 * @param {number} is id of divs that contains endscreen image
+	 */
+	showEndScreen(screenId) {
+		setTimeout(() => {
+			document.getElementById(screenId).classList.remove('d-none');
+			this.gameEnds = true;
+			this.stopAllIntervals();
+			this.backToStartScreen();
+		}, 2000);
+	}
+
+	/**
+	 * Reloads the page
+	 * so that you are back on start screen
+	 */
+	backToStartScreen() {
+		setTimeout(() => {
+			if (this.gameEnds) {
+				window.location.reload();
+			}
+		}, 3000);
+	}
+
+	/**
+	 * Stops every setInterval in the game
+	 */
+	stopAllIntervals() {
+		setTimeout(() => {
+			for (let i = 0; i < 999; i++) {
+				clearInterval(i);
+			}
+		}, 3000);
 	}
 }

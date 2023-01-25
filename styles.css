@@ -25,13 +25,6 @@ body {
 	background-position: bottom;
 }
 
-/* #canvas {
-	background-color: black;
-	display: block;
-	width: var(--width-canvas) px;
-	height: calc(var(--width-canvas) / 2) px;
-} */
-
 .startScreen {
 	position: absolute;
 	width: 100%;
@@ -42,6 +35,43 @@ body {
 	background-size: cover;
 	background-position: bottom;
 	/* overflow: hidden; */
+}
+
+/* media query nicht vergessen */
+.endScreen {
+	position: absolute;
+	width: 100%;
+	max-width: 960px;
+	height: 480px;
+	background-image: url(./img/9_intro_outro_screens/game_over/game\ over.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: bottom;
+}
+
+.loosesEndScreen {
+	position: absolute;
+	width: 100%;
+	max-width: 960px;
+	height: 480px;
+	background-image: url(./img/9_intro_outro_screens/game_over/you\ lost.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: bottom;
+}
+
+.countDownScreen {
+	position: absolute;
+	width: 100%;
+	max-width: 960px;
+	height: 480px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h2 {
+	font-size: 10rem;
 }
 
 h1 {
@@ -142,11 +172,16 @@ h1 {
 	transform: scale(0.97);
 }
 
-.startRestartContainer {
+.menuButtonsContainer {
 	position: relative;
 }
 
 .start {
+	position: absolute;
+	top: 0;
+}
+
+.fullscreenIcon {
 	position: absolute;
 	top: 0;
 }
@@ -224,16 +259,13 @@ span {
 @media only screen and (max-width: 960px) {
 	canvas,
 	.menuContainerOverlay,
-	.startScreen {
+	.startScreen,
+	.endScreen {
 		max-width: 100%;
 		height: 480px;
 	}
 
 	h1 {
-		display: none;
-	}
-
-	#fullScreenButton {
 		display: none;
 	}
 
@@ -247,7 +279,8 @@ span {
 @media only screen and (max-height: 480px) {
 	canvas,
 	.menuContainerOverlay,
-	.startScreen {
+	.startScreen,
+	.endScreen {
 		height: 100vh;
 	}
 }

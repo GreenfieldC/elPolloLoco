@@ -23,11 +23,9 @@ class BottlesStatusBar extends DrawableObject {
 
 	//example set percentage = 40
 	setAmountBottles(collectedBottles) {
-		this.collectedBottles = collectedBottles; //hieraus einen index zwischen 0 und 5 ermitteln
+		this.collectedBottles = collectedBottles;
 		let path =
-			this.IMAGES[
-				this.resolveImageIndexCollectableObjectsBar(collectedBottles)
-			];
+			this.IMAGES[this.resolveImageIndexCollectableObjectsBar(collectedBottles)];
 		this.img = this.imageCache[path];
 	}
 }

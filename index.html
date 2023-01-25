@@ -12,9 +12,21 @@
 
 		<!-- Favicon -->
 		<link rel="apple-touch-icon" sizes="57x57" href="favicon/" />
-		<link rel="apple-touch-icon" sizes="60x60" href="favicon//apple-icon-60x60.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="favicon//apple-icon-72x72.png" />
-		<link rel="apple-touch-icon" sizes="76x76" href="favicon//apple-icon-76x76.png" />
+		<link
+			rel="apple-touch-icon"
+			sizes="60x60"
+			href="favicon//apple-icon-60x60.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="72x72"
+			href="favicon//apple-icon-72x72.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="76x76"
+			href="favicon//apple-icon-76x76.png"
+		/>
 		<link
 			rel="apple-touch-icon"
 			sizes="114x114"
@@ -72,7 +84,10 @@
 		<!-- Javascript -->
 		<script src="models/drawable-objects.class.js" defer></script>
 		<script src="models/statusbar-endboss.class.js" defer></script>
-		<script src="models/statusbar-overlay-icon-endboss.class.js" defer></script>
+		<script
+			src="models/statusbar-overlay-icon-endboss.class.js"
+			defer
+		></script>
 		<script src="models/statusbar-health.class.js" defer></script>
 		<script src="models/statusbar-bottles.class.js" defer></script>
 		<script src="models/statusbar-coins.class.js" defer></script>
@@ -90,7 +105,7 @@
 		<script src="models/bottles-air-collectable.class.js" defer></script>
 		<script src="models/keyboard.class.js" defer></script>
 		<script src="models/world.class.js" defer></script>
-		<script src="models/coins-collectable.class.js" defer></script>
+		<script src="models/collectable-coins.class.js" defer></script>
 		<script src="models/throwableObject.class.js" defer></script>
 		<script src="models/bottles-splashed.class.js" defer></script>
 		<script src="models/bottles-ground-collectable.class.js" defer></script>
@@ -102,7 +117,14 @@
 		<div class="fullscreen" id="fullscreen">
 			<canvas id="canvas" width="960" height="480"></canvas>
 
-			<div id="startScreen" class="startScreen"><h1>El Pollo Loco</h1></div>
+			<div id="startScreen" class="startScreen">
+				<h1>El Pollo Loco</h1>
+			</div>
+			<!-- <div id="countDownScreen" class="countDownScreen d-none">
+				<h2 id="numberCountdown">3</h2>
+			</div> -->
+			<div id="endScreen" class="endScreen d-none"></div>
+			<div id="loosesEndScreen" class="loosesEndScreen d-none"></div>
 
 			<!-- Menu -->
 			<div id="menuContainerOverlay" class="menuContainerOverlay">
@@ -125,7 +147,7 @@
 						<div
 							onclick="startGame()"
 							id="startRestart"
-							class="startRestartContainer"
+							class="menuButtonsContainer"
 						>
 							<img
 								class="navigationButtons"
@@ -143,21 +165,32 @@
 						</div>
 
 						<img
-							onclick="showHideTogglePlayButtons();"
+							onclick="showHideTogglePlayButtons(), hideShowKeyLegendsToggle();"
 							class="navigationButtons"
 							src="./img/10_navbar/icons8-arrow-keys-50.png"
 							alt="play"
 							title="play"
 						/>
 
-						<img
-							onclick="toggleFullScreen()"
+						<div
+							onclick="toggleFullScreen(), toggleShowFullscreenButton()"
 							id="fullScreenButton"
-							class="navigationButtons"
-							src="./img/10_navbar/icons8-erweitern-80.png"
-							alt="toggle fullscreen"
-							title="toggle fullscreen"
-						/>
+							class="menuButtonsContainer"
+						>
+							<img
+								id="fullscreenIcon"
+								class="navigationButtons fullscreenIcon"
+								src="./img/10_navbar/icons8-erweitern-80.png"
+								alt="toggle fullscreen"
+								title="toggle fullscreen"
+							/>
+							<img
+								class="navigationButtons"
+								src="./img/10_navbar/icons8-verkleinern-80.png"
+								alt="toggle fullscreen"
+								title="toggle fullscreen"
+							/>
+						</div>
 
 						<img
 							class="navigationButtons"
@@ -167,6 +200,7 @@
 						/>
 
 						<img
+							onclick="toggleEndScreen()"
 							class="navigationButtons"
 							src="./img/10_navbar/icons8-audio-50.png"
 							alt="sound switch"
@@ -175,7 +209,10 @@
 					</div>
 				</div>
 				<!-- Play Buttons -->
-				<div id="rightSidePlayButtons" class="playButtonsContainer rightSide">
+				<div
+					id="rightSidePlayButtons"
+					class="playButtonsContainer rightSide"
+				>
 					<img
 						id="jumpRightSide"
 						class="navigationButtons backgroundTransparent"
@@ -192,7 +229,10 @@
 					/>
 					<span>WALK RIGHT</span>
 				</div>
-				<div id="leftSidePlayButtons" class="playButtonsContainer leftSide">
+				<div
+					id="leftSidePlayButtons"
+					class="playButtonsContainer leftSide"
+				>
 					<img
 						id="throw"
 						class="navigationButtons backgroundTransparent"
