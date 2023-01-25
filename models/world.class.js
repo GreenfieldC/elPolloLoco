@@ -111,10 +111,7 @@ class World extends DrawableObject {
 	 */
 	checkHitsChickOnTop() {
 		this.level.smallEnemies.forEach((chick, i) => {
-			if (
-				this.character.isColliding(chick) &&
-				this.character.aboveGround()
-			) {
+			if (this.character.isColliding(chick) && this.character.aboveGround()) {
 				this.chickDies(chick, i);
 				this.character.jump();
 			}
@@ -129,10 +126,7 @@ class World extends DrawableObject {
 	 */
 	checkHitsChickenOnTop() {
 		this.level.biggerEnemies.forEach((chicken, i) => {
-			if (
-				this.character.isColliding(chicken) &&
-				this.character.aboveGround()
-			) {
+			if (this.character.isColliding(chicken) && this.character.aboveGround()) {
 				this.chickenDies(chicken, i);
 				this.character.jump();
 			}
@@ -196,16 +190,12 @@ class World extends DrawableObject {
 	 */
 	updateIncreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles++;
-		this.bottlesStatusBar.setAmountBottles(
-			this.bottlesStatusBar.collectedBottles
-		);
+		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
 	}
 
 	updateDecreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles--;
-		this.bottlesStatusBar.setAmountBottles(
-			this.bottlesStatusBar.collectedBottles
-		);
+		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
 	}
 
 	checkCharacterAbleOfCollectingMoreBottles() {
@@ -218,9 +208,7 @@ class World extends DrawableObject {
 				console.log('coin on ground collected');
 				this.level.coins.splice(i, 1);
 				this.coinsStatusBar.collectedCoins++;
-				this.coinsStatusBar.setAmountCoins(
-					this.coinsStatusBar.collectedCoins
-				);
+				this.coinsStatusBar.setAmountCoins(this.coinsStatusBar.collectedCoins);
 			}
 		});
 	}
@@ -399,9 +387,7 @@ class World extends DrawableObject {
 	 * according to the distance between endboss and character
 	 */
 	checkCharacterMakingEndbossWild() {
-		this.notEnoughDistance() && this.character.isAlive()
-			? this.setCharacterTooClose()
-			: this.setCharacterNotTooClose();
+		this.notEnoughDistance() && this.character.isAlive() ? this.setCharacterTooClose() : this.setCharacterNotTooClose();
 	}
 
 	/**
