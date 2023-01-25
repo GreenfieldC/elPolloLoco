@@ -50,6 +50,12 @@ class World extends DrawableObject {
 		this.checkKillEnemyByJump();
 	}
 
+	/**
+	 * Checks collision with smaller enemies
+	 * and reduces energy of character and
+	 * updates his healthbar
+	 * @param {object} enemy
+	 */
 	checkCollisionsWithSmallEnemies() {
 		this.level.smallEnemies.forEach((enemy) => {
 			if (this.character.aboveGround()) return;
@@ -61,6 +67,12 @@ class World extends DrawableObject {
 		});
 	}
 
+	/**
+	 * Checks collision with bigger enemies
+	 * and reduces energy of character and
+	 * updates his healthbar
+	 * @param {object} enemy
+	 */
 	checkCollisionsWithBiggerEnemies() {
 		this.level.biggerEnemies.forEach((enemy) => {
 			if (this.character.isColliding(enemy)) {
@@ -71,6 +83,12 @@ class World extends DrawableObject {
 		});
 	}
 
+	/**
+	 * Checks collision with endboss
+	 * and reduces energy of character and
+	 * updates his healthbar
+	 * @param {object} enemy
+	 */
 	checkCollisionsWithEndBossEnemies() {
 		this.level.endBoss.forEach((enemy) => {
 			if (this.character.isColliding(enemy)) {
@@ -85,6 +103,12 @@ class World extends DrawableObject {
 		this.checkHitsChickenOnTop();
 	}
 
+	/**
+	 * Checks if character hits chicken on top
+	 * and kills it if it is the case
+	 * @param {object} chick
+	 * @param {number} i
+	 */
 	checkHitsChickOnTop() {
 		this.level.smallEnemies.forEach((chick, i) => {
 			if (
@@ -97,6 +121,12 @@ class World extends DrawableObject {
 		});
 	}
 
+	/**
+	 * Checks if character hits chicken on top
+	 * and kills it if it is the case
+	 * @param {object} chicken
+	 * @param {number} i
+	 */
 	checkHitsChickenOnTop() {
 		this.level.biggerEnemies.forEach((chicken, i) => {
 			if (
@@ -115,14 +145,27 @@ class World extends DrawableObject {
 		this.checkCollisionsWithCoins();
 	}
 
+	/**
+	 * Checks collsion with bottle on ground
+	 * takes the bottle from map in case of collision,
+	 * if character can still carry more  bottles and updates status bar
+	 */
 	checkCollisionsWithBottlesOnGround() {
 		this.level.bottlesOnGround.forEach((bottlesOnGround, i) => {
-			if (this.bottlesStatusBar.collectedBottles == 10) return; //Pepe kann carry more than 10 bottles at the time
+			if (this.cannotCarryMoreBottles()) return; //Pepe kann carry more than 10 bottles at the time
 			if (this.character.isColliding(bottlesOnGround)) {
 				this.takeBottleOnGroundFromMap(i);
 				this.updateIncreaseStatusBarBottles();
 			}
 		});
+	}
+
+	/**
+	 *
+	 * @returns {boolean}
+	 */
+	cannotCarryMoreBottles() {
+		return this.bottlesStatusBar.collectedBottles == 10;
 	}
 
 	/**

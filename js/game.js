@@ -130,9 +130,7 @@ Start Screen
  * container.
  */
 function openCloseMenuToggle() {
-	document
-		.getElementById('menuContainer')
-		.classList.toggle('showNavigationBar');
+	document.getElementById('menuContainer').classList.toggle('showNavigationBar');
 	!openMenu ? (openMenu = true) : (openMenu = false);
 }
 
@@ -194,20 +192,14 @@ function showHideTogglePlayButtons() {
 	if (openPlaybuttons && (!levelRunning || levelRunning)) return;
 
 	if (!levelRunning || (levelRunning && openMenu && openLegends)) {
-		document
-			.getElementById('rightSidePlayButtons')
-			.classList.toggle('showSideButtons');
-		document
-			.getElementById('leftSidePlayButtons')
-			.classList.toggle('showSideButtons');
+		document.getElementById('rightSidePlayButtons').classList.toggle('showSideButtons');
+		document.getElementById('leftSidePlayButtons').classList.toggle('showSideButtons');
 	}
 	openPlaybuttons = !openPlaybuttons;
 }
 
 function keyLegendsDefault() {
-	openLegends && openMenu && levelRunning
-		? hideShowKeyLegendsToggle()
-		: (openLegends = true);
+	openLegends && openMenu && levelRunning ? hideShowKeyLegendsToggle() : (openLegends = true);
 }
 
 function hideShowKeyLegendsToggle() {

@@ -60,10 +60,7 @@ class Character extends MovableObject {
 	 * the walking animation
 	 */
 	checkWalking() {
-		(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
-		this.objectOnGround()
-			? this.walkingAnimation()
-			: null;
+		(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.objectOnGround() ? this.walkingAnimation() : null;
 	}
 
 	/**
@@ -71,9 +68,7 @@ class Character extends MovableObject {
 	 * player right and play the walking sound
 	 */
 	checkWalkingRight() {
-		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x
-			? (this.moveRight(), this.forwards(), this.walking_sound.play())
-			: null;
+		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x ? (this.moveRight(), this.forwards(), this.walking_sound.play()) : null;
 	}
 
 	/**
@@ -81,9 +76,7 @@ class Character extends MovableObject {
 	 * the character left and play the walking sound
 	 */
 	checkWalkingLeft() {
-		this.world.keyboard.LEFT && this.x > -50
-			? (this.moveLeft(), this.backwards(), this.walking_sound.play())
-			: null;
+		this.world.keyboard.LEFT && this.x > -50 ? (this.moveLeft(), this.backwards(), this.walking_sound.play()) : null;
 	}
 
 	/**
@@ -117,13 +110,7 @@ class Character extends MovableObject {
 	 * @returns the value of the function.
 	 */
 	checkIsIdling() {
-		if (
-			this.isInactive == true ||
-			this.isMoving() ||
-			this.isDead() ||
-			this.aboveGround()
-		)
-			return;
+		if (this.isInactive == true || this.isMoving() || this.isDead() || this.aboveGround()) return;
 		this.idlingAnimation();
 		setTimeout(() => {
 			this.isInactive = true;
@@ -136,13 +123,7 @@ class Character extends MovableObject {
 	 * @returns the value of the function longIdlingAnimation()
 	 */
 	checkIsLongIdling() {
-		if (
-			this.isInactive == false ||
-			this.isMoving() ||
-			this.isDead() ||
-			this.aboveGround()
-		)
-			return;
+		if (this.isInactive == false || this.isMoving() || this.isDead() || this.aboveGround()) return;
 		this.longIdlingAnimation();
 	}
 
@@ -295,11 +276,6 @@ class Character extends MovableObject {
 	 * @returns a boolean value.
 	 */
 	isMoving() {
-		return (
-			this.world.keyboard.RIGHT ||
-			this.world.keyboard.LEFT ||
-			this.world.keyboard.UP ||
-			this.world.keyboard.D
-		);
+		return this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.D;
 	}
 }
