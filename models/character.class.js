@@ -174,7 +174,6 @@ class Character extends MovableObject {
 			this.throwBottle(bottle);
 			this.world.updateDecreaseStatusBarBottles();
 			this.lastThrow = new Date().getTime();
-			console.log(this.throwAllowed());
 		}
 	}
 

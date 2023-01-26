@@ -28,7 +28,6 @@ class Endboss extends MovableObject {
 		this.loadAllImagesFromCache();
 		this.animate();
 		this.animations();
-		console.log();
 	}
 
 	/**

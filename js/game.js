@@ -219,5 +219,4 @@ function toggleGameGuide() {
  */
 function toggleSounds() {
 	soundsOn ? (soundsOn = false) : (soundsOn = true);
-	console.log(soundsOn);
 }
