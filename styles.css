@@ -225,10 +225,8 @@ h1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;
-	width: 70px;
-	height: fit-content;
-	gap: 8px;
+	height: 50px;
+	width: auto;
 }
 
 span {
@@ -240,23 +238,21 @@ span {
 	border-radius: 0.5rem;
 	bottom: 16px;
 	position: absolute;
-	right: 88px;
-	transition: all 255ms ease-in-out;
-	transform: translateX(90px);
+	right: 0;
+	padding-right: 8px;
 }
 
-.showSideButtons {
-	transform: translateX(0px);
+.btnBottle {
+	height: 38px;
+	width: auto;
+	padding: 6px 6px;
 }
 
 .leftSide {
-	border-radius: 0.5rem;
-	bottom: 16px;
-	left: 88px;
-
 	position: absolute;
-	transition: all 255ms ease-in-out;
-	transform: translateX(-90px);
+	bottom: 16px;
+	padding-left: 8px;
+	border-radius: 0.5rem;
 }
 .d-none {
 	display: none;
@@ -286,8 +282,9 @@ span {
 	.loosesEndScreen,
 	.callToTurnScreen,
 	.testContainer {
-		width: 100vw !important;
+		width: 100vw !important; /* ! I dont want that, because it looses aspect ratio! */
 		border-radius: unset;
+		aspect-ratio: auto 1 / 0.631;
 	}
 
 	h1 {
@@ -302,6 +299,35 @@ span {
 		height: 1.5rem;
 		width: 5rem;
 		font-size: 1.5rem;
+	}
+
+	.navigationButtons {
+		transform: scale(0.7);
+	}
+
+	.rightSide,
+	.leftSide {
+		bottom: 4px;
+		padding: unset;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.rightSide,
+	.leftSide {
+		bottom: -5px;
+	}
+
+	.rightSide {
+		right: -5px;
+	}
+
+	.leftSide {
+		left: -5px;
+	}
+
+	.navigationBar {
+		transform: scale(0.8);
 	}
 }
 

@@ -2,7 +2,7 @@ class Character extends MovableObject {
 	speed = 20;
 	y = 180;
 	world;
-	walking_sound = new Audio('audio/walking_sound.mp3'); //später auslagern
+	sounds = new Sounds(); //später auslagern
 	cache = new CharacterCache();
 	isInactive = false;
 	energy = 100;
@@ -21,12 +21,13 @@ class Character extends MovableObject {
 		this.applyGravity();
 		/* this.animations(); */ // muss das in den constructor?
 		this.animate();
+		this.sounds.setVolume();
 	}
 
 	/* hier nur die Funktionen, wo Tasten gedrückt werden */
 	animate() {
 		setInterval(() => {
-			this.walking_sound.pause();
+			this.sounds.walking_sound.pause();
 			this.checkWalking();
 			this.checkWalkingRight();
 			this.checkWalkingLeft();
@@ -68,7 +69,7 @@ class Character extends MovableObject {
 	 * player right and play the walking sound
 	 */
 	checkWalkingRight() {
-		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x ? (this.moveRight(), this.forwards(), this.walking_sound.play()) : null;
+		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x ? (this.moveRight(), this.forwards(), this.sounds.walking_sound.play()) : null;
 	}
 
 	/**
@@ -76,14 +77,14 @@ class Character extends MovableObject {
 	 * the character left and play the walking sound
 	 */
 	checkWalkingLeft() {
-		this.world.keyboard.LEFT && this.x > -50 ? (this.moveLeft(), this.backwards(), this.walking_sound.play()) : null;
+		this.world.keyboard.LEFT && this.x > -50 ? (this.moveLeft(), this.backwards(), this.sounds.walking_sound.play()) : null;
 	}
 
 	/**
 	 * If the player is above ground, pause the walking sound
 	 */
 	checkWalkingSound() {
-		this.aboveGround() || this.isInPain() ? this.walking_sound.pause() : null;
+		this.aboveGround() || this.isInPain() ? this.sounds.walking_sound.pause() : null;
 	}
 
 	/**

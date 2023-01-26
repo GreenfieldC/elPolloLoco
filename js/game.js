@@ -80,22 +80,12 @@ function buttonListener() {
 		keyboard.LEFT = false;
 	};
 
-	document.getElementById('jumpRightSide').ontouchstart = (e) => {
+	document.getElementById('jump').ontouchstart = (e) => {
 		handleEvent(e);
 		keyboard.UP = true;
 	};
 
-	document.getElementById('jumpRightSide').ontouchend = (e) => {
-		handleEvent(e);
-		keyboard.UP = false;
-	};
-
-	document.getElementById('jumpLeftSide').ontouchstart = (e) => {
-		handleEvent(e);
-		keyboard.UP = true;
-	};
-
-	document.getElementById('jumpLeftSide').ontouchend = (e) => {
+	document.getElementById('jump').ontouchend = (e) => {
 		handleEvent(e);
 		keyboard.UP = false;
 	};
