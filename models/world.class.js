@@ -45,7 +45,6 @@ class World extends DrawableObject {
 		}, 40);
 		setInterval(() => {
 			this.sounds.setSounds();
-			console.log(soundsOn);
 		}, 40);
 	}
 
@@ -446,11 +445,8 @@ class World extends DrawableObject {
 	 */
 	checksRightEndScreen() {
 		if (this.level.endBoss[0].isDead()) this.showEndScreen('endScreen');
-		if (
-			this.character.isDead() ||
-			(this.character.isDead && this.level.endBoss[0].isDead())
-		)
-			this.showEndScreen('loosesEndScreen');
+		if (this.level.endBoss[0].isDead()) return;
+		if (this.character.isDead()) this.showEndScreen('loosesEndScreen');
 	}
 
 	/**

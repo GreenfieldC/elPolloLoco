@@ -10,7 +10,7 @@ let keyboard;
 let levelRunning = false;
 let fullScreen = false;
 let soundsOn = true;
-/* let openMenu = false; */
+let openMenu = false;
 /* let openLegends = true;
 let openPlaybuttons = false; */
 
@@ -20,8 +20,6 @@ function init() {
 	world = new World(canvas, keyboard);
 }
 
-/* 
-!keyCode überarbeiten. Das ist veraltet! key! */
 window.addEventListener('keydown', (event) => {
 	if (event.keyCode == 37) {
 		keyboard.LEFT = true;
@@ -127,26 +125,27 @@ function openCloseMenuToggle() {
 	document
 		.getElementById('menuContainer')
 		.classList.toggle('showNavigationBar');
-	/* 	!openMenu ? (openMenu = true) : (openMenu = false); */
+	!openMenu ? (openMenu = true) : (openMenu = false);
 }
 
 function startGame() {
 	checkMobilePlayButtonNeeded();
-	toggleShowHideStartGameButton();
+	closeStartGameButton();
 	openCloseMenuToggle();
 	hideWholeStartScreen();
+	closeGameGuide();
 	initLevel1();
 	init();
 	buttonListener();
 	levelRunning = true;
-	toggleShowHideStartGameButton();
+	closeStartGameButton();
 }
 
 function hideWholeStartScreen() {
 	document.getElementById('startScreen').classList.add('d-none');
 }
 
-function toggleShowHideStartGameButton() {
+function closeStartGameButton() {
 	if (levelRunning) {
 		document.getElementById('startIcon').classList.add('d-none');
 	}
@@ -154,6 +153,10 @@ function toggleShowHideStartGameButton() {
 
 function toggleShowFullscreenButton() {
 	document.getElementById('fullscreenIcon').classList.toggle('d-none');
+}
+
+function closeGameGuide() {
+	document.getElementById('gameGuide').classList.add('d-none');
 }
 
 /**
@@ -203,10 +206,17 @@ function exitFullscreen() {
 	if (document.webkitExitFullscreen) document.webkitExitFullscreen();
 }
 
-/* 
-	Sound Switch
-*/
+/**
+ * Opens or closes game guide
+ */
+function toggleGameGuide() {
+	document.getElementById('gameGuide').classList.toggle('d-none');
+}
 
+/**
+ * Sound switch
+ * @param {boolean} soundsOn
+ */
 function toggleSounds() {
 	soundsOn ? (soundsOn = false) : (soundsOn = true);
 	console.log(soundsOn);

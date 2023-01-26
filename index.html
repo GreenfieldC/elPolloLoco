@@ -143,7 +143,39 @@
 				<!-- Menu -->
 
 				<div id="menuContainerOverlay" class="menuContainerOverlay">
-					<div id="gameGuide" class="gameGuide"></div>
+					<div
+						onclick="toggleGameGuide()"
+						id="gameGuide"
+						class="gameGuide d-none"
+					>
+						<div class="story">
+							<h3>Story</h3>
+							Pepe needs to find the biggest chicken for a party
+							so everyone gets fed. Unfortunately that chicken is
+							still alive and being protected by many chicks and
+							chickens. Kill them by a jump or by throwing bottles
+							at them. Be aware the big chicken gets only defeated
+							by bottles. So save some for later!
+						</div>
+
+						<div class="controls">
+							<div class="desktopGameGuide">
+								<h3>Desktop</h3>
+								<span
+									>Use the arrow keys to move the
+									character.</span
+								>
+								<span>Use the "D" to throw</span>
+							</div>
+							<div class="mobileGameGuide">
+								<h3>Mobile device</h3>
+								<span
+									>Touch the arrows to move and the bottle to
+									throw</span
+								>
+							</div>
+						</div>
+					</div>
 					<div id="menuContainer" class="menuContainer">
 						<!-- Menu Opener Button -->
 						<div
@@ -181,7 +213,7 @@
 							</div>
 
 							<img
-								onclick="showHideTogglePlayButtons(), hideShowKeyLegendsToggle();"
+								onclick="toggleGameGuide();"
 								class="navigationButtons"
 								src="./img/10_navbar/icons8-arrow-keys-50.png"
 								alt="game guide"

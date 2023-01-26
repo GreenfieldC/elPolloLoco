@@ -6,6 +6,7 @@ class Character extends MovableObject {
 	cache = new CharacterCache();
 	isInactive = false;
 	energy = 100;
+	lastThrow = 0;
 	/* otherDirection = false; */
 
 	offset = {
@@ -168,9 +169,12 @@ class Character extends MovableObject {
 	checkThrowing() {
 		let bottle = new ThrowableObjects(this.x + 60, this.y + 100);
 		if (this.noBottleToThrow()) return;
+		if (!this.throwAllowed()) return;
 		if (this.world.keyboard.D && this.isAlive() && this.headingForwards()) {
 			this.throwBottle(bottle);
 			this.world.updateDecreaseStatusBarBottles();
+			this.lastThrow = new Date().getTime();
+			console.log(this.throwAllowed());
 		}
 	}
 
@@ -197,6 +201,18 @@ class Character extends MovableObject {
 	 */
 	noBottlesCollected() {
 		return this.world.bottlesStatusBar.collectedBottles == 0;
+	}
+
+	/**
+	 * Takes the time between the last and the current
+	 * being wanted throw
+	 * If the time is bigger than 0.5seconds it return true otherwise false;
+	 * @returns {boolean}
+	 */
+	throwAllowed() {
+		let timepassed = new Date().getTime() - this.lastThrow;
+		timepassed = timepassed / 1000; //divide 1000 to get seconds
+		return timepassed > 1; //seconds
 	}
 
 	/**
