@@ -89,7 +89,8 @@ class Endboss extends MovableObject {
 
 	dyingAnimation() {
 		if (this.i >= 3 || this.isAlive()) return;
-		if (this.i >= 2 || this.lastJump) this.loadImage(this.cache.IMAGES_ENDBOSS_DYING[2]); //! HIER GEHT ES EINFACH NICHT REIN. WARUM?
+		if (this.i >= 2 || this.lastJump)
+			this.loadImage(this.cache.IMAGES_ENDBOSS_DYING[2]); //! HIER GEHT ES EINFACH NICHT REIN. WARUM?
 		if (this.i < 2 || /* (!this.aboveGround() */ /* && */ this.isDead()) {
 			/* ) */ this.playAnimation(this.cache.IMAGES_ENDBOSS_DYING);
 			this.i++;

@@ -8,6 +8,7 @@ class World extends DrawableObject {
 	coinsStatusBar = new CoinsStatusBar();
 	statusBarEndboss = new HealthStatusBarEndBoss();
 	overlayIconStatusBarEndboss = new OverlayIconEndboss();
+	sounds = new Sounds();
 
 	level = level1;
 	gameEnds = false;
@@ -24,6 +25,7 @@ class World extends DrawableObject {
 		this.drawWorld();
 		this.setWorld();
 		this.run();
+		this.sounds.setVolume();
 	}
 
 	setWorld() {
@@ -40,6 +42,10 @@ class World extends DrawableObject {
 			this.checkBottleHitsEnemy();
 			this.checkCharacterGetDetectedByEndboss();
 			this.checksRightEndScreen();
+		}, 40);
+		setInterval(() => {
+			this.sounds.setSounds();
+			console.log(soundsOn);
 		}, 40);
 	}
 
@@ -111,7 +117,10 @@ class World extends DrawableObject {
 	 */
 	checkHitsChickOnTop() {
 		this.level.smallEnemies.forEach((chick, i) => {
-			if (this.character.isColliding(chick) && this.character.aboveGround()) {
+			if (
+				this.character.isColliding(chick) &&
+				this.character.aboveGround()
+			) {
 				this.chickDies(chick, i);
 				this.character.jump();
 			}
@@ -126,7 +135,10 @@ class World extends DrawableObject {
 	 */
 	checkHitsChickenOnTop() {
 		this.level.biggerEnemies.forEach((chicken, i) => {
-			if (this.character.isColliding(chicken) && this.character.aboveGround()) {
+			if (
+				this.character.isColliding(chicken) &&
+				this.character.aboveGround()
+			) {
 				this.chickenDies(chicken, i);
 				this.character.jump();
 			}
@@ -150,6 +162,7 @@ class World extends DrawableObject {
 			if (this.character.isColliding(bottlesOnGround)) {
 				this.takeBottleOnGroundFromMap(i);
 				this.updateIncreaseStatusBarBottles();
+				this.sounds.collect_sound.play();
 			}
 		});
 	}
@@ -177,6 +190,7 @@ class World extends DrawableObject {
 			if (this.character.isColliding(objectInAir)) {
 				this.takeBottleInAirFromMap(i);
 				this.updateIncreaseStatusBarBottles();
+				this.sounds.collect_sound.play();
 			}
 		});
 	}
@@ -190,12 +204,16 @@ class World extends DrawableObject {
 	 */
 	updateIncreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles++;
-		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
+		this.bottlesStatusBar.setAmountBottles(
+			this.bottlesStatusBar.collectedBottles
+		);
 	}
 
 	updateDecreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles--;
-		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
+		this.bottlesStatusBar.setAmountBottles(
+			this.bottlesStatusBar.collectedBottles
+		);
 	}
 
 	checkCharacterAbleOfCollectingMoreBottles() {
@@ -205,10 +223,12 @@ class World extends DrawableObject {
 	checkCollisionsWithCoins() {
 		this.level.coins.forEach((coins, i) => {
 			if (this.character.isColliding(coins)) {
-				console.log('coin on ground collected');
 				this.level.coins.splice(i, 1);
 				this.coinsStatusBar.collectedCoins++;
-				this.coinsStatusBar.setAmountCoins(this.coinsStatusBar.collectedCoins);
+				this.coinsStatusBar.setAmountCoins(
+					this.coinsStatusBar.collectedCoins
+				);
+				this.sounds.collect_sound.play();
 			}
 		});
 	}
@@ -226,7 +246,10 @@ class World extends DrawableObject {
 	 */
 	checkBottleHitsGround() {
 		this.throwableObject.forEach((bottle) => {
-			if (bottle.y > 300) this.bottleSplashes(bottle);
+			if (bottle.y > 300) {
+				this.bottleSplashes(bottle);
+				this.sounds.smashing_bottle_sound.play();
+			}
 		});
 	}
 
@@ -256,6 +279,7 @@ class World extends DrawableObject {
 				if (bottle.isColliding(enemy)) {
 					this.chickDies(enemy, i);
 					this.bottleSplashes(bottle);
+					this.sounds.smashing_bottle_sound.play();
 				}
 			});
 		});
@@ -289,7 +313,7 @@ class World extends DrawableObject {
 				if (bottle.isColliding(enemy)) {
 					this.chickenDies(enemy, i);
 					this.bottleSplashes(bottle);
-					console.log(typeof bottle);
+					this.sounds.smashing_bottle_sound.play();
 				}
 			});
 		});
@@ -324,11 +348,12 @@ class World extends DrawableObject {
 					this.endbossLoosesEnergy(i);
 					this.upDatinghealthbarOfEndboss(i);
 					this.bottleSplashes(bottle);
+					this.sounds.smashing_bottle_sound.play();
 					this.setsEndBossBeingAttackedByCharacter();
 				}
-
 				if (this.level.endBoss[i].isDead()) {
 					this.bottleSplashes(bottle);
+					this.sounds.smashing_bottle_sound.play();
 					this.stopEndboss(i);
 				}
 			});
@@ -387,7 +412,9 @@ class World extends DrawableObject {
 	 * according to the distance between endboss and character
 	 */
 	checkCharacterMakingEndbossWild() {
-		this.notEnoughDistance() && this.character.isAlive() ? this.setCharacterTooClose() : this.setCharacterNotTooClose();
+		this.notEnoughDistance() && this.character.isAlive()
+			? this.setCharacterTooClose()
+			: this.setCharacterNotTooClose();
 	}
 
 	/**
@@ -419,7 +446,11 @@ class World extends DrawableObject {
 	 */
 	checksRightEndScreen() {
 		if (this.level.endBoss[0].isDead()) this.showEndScreen('endScreen');
-		if (this.character.isDead()) this.showEndScreen('loosesEndScreen');
+		if (
+			this.character.isDead() ||
+			(this.character.isDead && this.level.endBoss[0].isDead())
+		)
+			this.showEndScreen('loosesEndScreen');
 	}
 
 	/**
@@ -431,7 +462,7 @@ class World extends DrawableObject {
 			document.getElementById(screenId).classList.remove('d-none');
 			this.gameEnds = true;
 			this.stopAllIntervals();
-			/* 	this.backToStartScreen(); */
+			this.backToStartScreen();
 		}, 2000);
 	}
 

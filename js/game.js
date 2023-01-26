@@ -1,15 +1,18 @@
 /* code by Christian Greenfield */
 'use strict';
 
-let maximalTableSize = window.innerWidth <= 1024 || (window.innerHeight <= 1024 && window.innerWidth <= 768);
+let maximalTableSize =
+	window.innerWidth <= 1024 ||
+	(window.innerHeight <= 1024 && window.innerWidth <= 768);
 let canvas = document.getElementById('canvas');
 let world;
 let keyboard;
 let levelRunning = false;
 let fullScreen = false;
-let openMenu = false;
-let openLegends = true;
-let openPlaybuttons = false;
+let soundsOn = true;
+/* let openMenu = false; */
+/* let openLegends = true;
+let openPlaybuttons = false; */
 
 function init() {
 	keyboard = new Keyboard();
@@ -121,8 +124,10 @@ Start Screen
  * container.
  */
 function openCloseMenuToggle() {
-	document.getElementById('menuContainer').classList.toggle('showNavigationBar');
-	!openMenu ? (openMenu = true) : (openMenu = false);
+	document
+		.getElementById('menuContainer')
+		.classList.toggle('showNavigationBar');
+	/* 	!openMenu ? (openMenu = true) : (openMenu = false); */
 }
 
 function startGame() {
@@ -135,10 +140,6 @@ function startGame() {
 	buttonListener();
 	levelRunning = true;
 	toggleShowHideStartGameButton();
-}
-
-function hideNavigation() {
-	document.getElementById('navigationContainer').classList.add('d-none');
 }
 
 function hideWholeStartScreen() {
@@ -200,4 +201,13 @@ function enterFullscreen(element) {
 function exitFullscreen() {
 	if (document.exitFullscreen) document.exitFullscreen();
 	if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+}
+
+/* 
+	Sound Switch
+*/
+
+function toggleSounds() {
+	soundsOn ? (soundsOn = false) : (soundsOn = true);
+	console.log(soundsOn);
 }

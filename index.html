@@ -12,18 +12,70 @@
 
 		<!-- Favicon -->
 		<link rel="apple-touch-icon" sizes="57x57" href="favicon/" />
-		<link rel="apple-touch-icon" sizes="60x60" href="favicon//apple-icon-60x60.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="favicon//apple-icon-72x72.png" />
-		<link rel="apple-touch-icon" sizes="76x76" href="favicon//apple-icon-76x76.png" />
-		<link rel="apple-touch-icon" sizes="114x114" href="favicon//apple-icon-114x114.png" />
-		<link rel="apple-touch-icon" sizes="120x120" href="favicon//apple-icon-120x120.png" />
-		<link rel="apple-touch-icon" sizes="144x144" href="favicon//apple-icon-144x144.png" />
-		<link rel="apple-touch-icon" sizes="152x152" href="favicon//apple-icon-152x152.png" />
-		<link rel="apple-touch-icon" sizes="180x180" href="favicon//apple-icon-180x180.png" />
-		<link rel="icon" type="image/png" sizes="192x192" href="favicon//android-icon-192x192.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="favicon//favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="96x96" href="favicon//favicon-96x96.png" />
-		<link rel="icon" type="image/png" sizes="16x16" href="favicon//favicon-16x16.png" />
+		<link
+			rel="apple-touch-icon"
+			sizes="60x60"
+			href="favicon//apple-icon-60x60.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="72x72"
+			href="favicon//apple-icon-72x72.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="76x76"
+			href="favicon//apple-icon-76x76.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="114x114"
+			href="favicon//apple-icon-114x114.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="120x120"
+			href="favicon//apple-icon-120x120.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="144x144"
+			href="favicon//apple-icon-144x144.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="152x152"
+			href="favicon//apple-icon-152x152.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="favicon//apple-icon-180x180.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="192x192"
+			href="favicon//android-icon-192x192.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="favicon//favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="96x96"
+			href="favicon//favicon-96x96.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="favicon//favicon-16x16.png"
+		/>
 		<link rel="manifest" href="favicon//manifest.json" />
 		<meta name="msapplication-TileColor" content="#ffffff" />
 		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
@@ -31,11 +83,26 @@
 
 		<!-- Javascript -->
 		<script src="models/drawable-objects.class.js" defer></script>
-		<script src="models/statusbar-endboss.class.js" defer></script>
-		<script src="models/statusbar-overlay-icon-endboss.class.js" defer></script>
-		<script src="models/statusbar-health.class.js" defer></script>
-		<script src="models/statusbar-bottles.class.js" defer></script>
-		<script src="models/statusbar-coins.class.js" defer></script>
+		<script
+			src="models/status-bars/statusbar-endboss.class.js"
+			defer
+		></script>
+		<script
+			src="models/status-bars/statusbar-overlay-icon-endboss.class.js"
+			defer
+		></script>
+		<script
+			src="models/status-bars/statusbar-health.class.js"
+			defer
+		></script>
+		<script
+			src="models/status-bars/statusbar-bottles.class.js"
+			defer
+		></script>
+		<script
+			src="models/status-bars/statusbar-coins.class.js"
+			defer
+		></script>
 		<script src="models/sounds.class.js" defer></script>
 		<script src="cache/character-images.class.js"></script>
 		<script src="cache/endboss-images.class.js"></script>
@@ -76,29 +143,62 @@
 				<!-- Menu -->
 
 				<div id="menuContainerOverlay" class="menuContainerOverlay">
+					<div id="gameGuide" class="gameGuide"></div>
 					<div id="menuContainer" class="menuContainer">
 						<!-- Menu Opener Button -->
-						<div id="containerOpenNavigationButton" class="containerOpenNavigationButton">
-							<div onclick="openCloseMenuToggle()" id="openNavigationBar" class="openNavigationBar">
+						<div
+							id="containerOpenNavigationButton"
+							class="containerOpenNavigationButton"
+						>
+							<div
+								onclick="openCloseMenuToggle()"
+								id="openNavigationBar"
+								class="openNavigationBar"
+							>
 								<p>Menu</p>
 							</div>
 						</div>
 						<!-- Menu Bar -->
 						<div id="navigationBar" class="navigationBar">
-							<div onclick="startGame()" id="startRestart" class="menuButtonsContainer">
-								<img class="navigationButtons" src="./img/10_navbar/icons8-refresh-50.png" alt="play" title="play" />
-								<img id="startIcon" class="navigationButtons start" src="./img/10_navbar/icons8-play-50.png" alt="play" title="play" />
+							<div
+								onclick="startGame()"
+								id="startRestart"
+								class="menuButtonsContainer"
+							>
+								<img
+									class="navigationButtons"
+									src="./img/10_navbar/icons8-refresh-50.png"
+									alt="play"
+									title="play"
+								/>
+								<img
+									id="startIcon"
+									class="navigationButtons start"
+									src="./img/10_navbar/icons8-play-50.png"
+									alt="play"
+									title="play"
+								/>
 							</div>
 
 							<img
 								onclick="showHideTogglePlayButtons(), hideShowKeyLegendsToggle();"
 								class="navigationButtons"
 								src="./img/10_navbar/icons8-arrow-keys-50.png"
-								alt="play"
-								title="play"
+								alt="game guide"
+								title="game guide"
 							/>
 
-							<div onclick="toggleFullScreen(), toggleShowFullscreenButton()" id="fullScreenButton" class="menuButtonsContainer">
+							<div
+								onclick="toggleFullScreen(), toggleShowFullscreenButton()"
+								id="fullScreenButton"
+								class="menuButtonsContainer"
+							>
+								<img
+									class="navigationButtons"
+									src="./img/10_navbar/icons8-verkleinern-80.png"
+									alt="toggle fullscreen"
+									title="toggle fullscreen"
+								/>
 								<img
 									id="fullscreenIcon"
 									class="navigationButtons fullscreenIcon"
@@ -106,33 +206,64 @@
 									alt="toggle fullscreen"
 									title="toggle fullscreen"
 								/>
-								<img class="navigationButtons" src="./img/10_navbar/icons8-verkleinern-80.png" alt="toggle fullscreen" title="toggle fullscreen" />
 							</div>
 
-							<img class="navigationButtons" src="./img/10_navbar/icons8-musical-notes-50.png" alt="music" title="music switch" />
+							<!-- <img class="navigationButtons" src="./img/10_navbar/icons8-musical-notes-50.png" alt="music" title="music switch" /> -->
 
-							<img onclick="toggleEndScreen()" class="navigationButtons" src="./img/10_navbar/icons8-audio-50.png" alt="sound switch" title="sound switch" />
+							<img
+								onclick="toggleSounds()"
+								class="navigationButtons"
+								src="./img/10_navbar/icons8-audio-50.png"
+								alt="sound switch"
+								title="sound switch"
+							/>
 						</div>
 					</div>
 
 					<!-- Play Buttons -->
-					<div id="rightSidePlayButtons" class="playButtonsContainer rightSide d-none">
-						<img id="jump" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" />
-						<img id="throw" class="navigationButtons backgroundTransparent btnBottle" src="./img/11_playButtons/icons8-throw-bottle-99.png" alt="" />
+					<div
+						id="rightSidePlayButtons"
+						class="playButtonsContainer rightSide d-none"
+					>
+						<img
+							id="jump"
+							class="navigationButtons backgroundTransparent"
+							src="./img/11_playButtons/icons8-up-50.png"
+							alt=""
+						/>
+						<img
+							id="throw"
+							class="navigationButtons backgroundTransparent btnBottle"
+							src="./img/11_playButtons/icons8-throw-bottle-99.png"
+							alt=""
+						/>
 						<!-- <span>JUMP</span> -->
 
 						<!-- <img id="right" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-right-50.png" alt="" /> -->
 						<!-- <span>WALK RIGHT</span> -->
 					</div>
-					<div id="leftSidePlayButtons" class="playButtonsContainer leftSide d-none">
+					<div
+						id="leftSidePlayButtons"
+						class="playButtonsContainer leftSide d-none"
+					>
 						<!-- <img id="throw" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-throw-bottle-99.png" alt="" /> -->
 						<!-- <span>THROW BOTTLE</span> -->
 						<!-- <img id="jumpLeftSide" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-up-50.png" alt="" /> -->
 						<!-- <span>JUMP</span> -->
 
-						<img id="left" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-left-50.png" alt="" />
+						<img
+							id="left"
+							class="navigationButtons backgroundTransparent"
+							src="./img/11_playButtons/icons8-left-50.png"
+							alt=""
+						/>
 						<!-- <span>WALK LEFT</span> -->
-						<img id="right" class="navigationButtons backgroundTransparent" src="./img/11_playButtons/icons8-right-50.png" alt="" />
+						<img
+							id="right"
+							class="navigationButtons backgroundTransparent"
+							src="./img/11_playButtons/icons8-right-50.png"
+							alt=""
+						/>
 					</div>
 				</div>
 			</div>

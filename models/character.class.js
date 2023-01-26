@@ -27,7 +27,7 @@ class Character extends MovableObject {
 	/* hier nur die Funktionen, wo Tasten gedrückt werden */
 	animate() {
 		setInterval(() => {
-			this.sounds.walking_sound.pause();
+			/* this.sounds.walking_sound.pause(); */
 			this.checkWalking();
 			this.checkWalkingRight();
 			this.checkWalkingLeft();
@@ -40,6 +40,7 @@ class Character extends MovableObject {
 			this.checkReactionToInjury();
 			this.checkIsBeingKilled();
 			this.setCameraForCharacter();
+			this.sounds.setSounds();
 		}, 100);
 	}
 
@@ -61,7 +62,10 @@ class Character extends MovableObject {
 	 * the walking animation
 	 */
 	checkWalking() {
-		(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.objectOnGround() ? this.walkingAnimation() : null;
+		(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
+		this.objectOnGround()
+			? this.walkingAnimation()
+			: this.sounds.walking_sound.pause();
 	}
 
 	/**
@@ -69,7 +73,11 @@ class Character extends MovableObject {
 	 * player right and play the walking sound
 	 */
 	checkWalkingRight() {
-		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x ? (this.moveRight(), this.forwards(), this.sounds.walking_sound.play()) : null;
+		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x
+			? (this.moveRight(),
+			  this.forwards(),
+			  this.sounds.walking_sound.play())
+			: null;
 	}
 
 	/**
@@ -77,14 +85,20 @@ class Character extends MovableObject {
 	 * the character left and play the walking sound
 	 */
 	checkWalkingLeft() {
-		this.world.keyboard.LEFT && this.x > -50 ? (this.moveLeft(), this.backwards(), this.sounds.walking_sound.play()) : null;
+		this.world.keyboard.LEFT && this.x > -50
+			? (this.moveLeft(),
+			  this.backwards(),
+			  this.sounds.walking_sound.play())
+			: null;
 	}
 
 	/**
 	 * If the player is above ground, pause the walking sound
 	 */
 	checkWalkingSound() {
-		this.aboveGround() || this.isInPain() ? this.sounds.walking_sound.pause() : null;
+		this.aboveGround() || this.isInPain()
+			? this.sounds.walking_sound.pause()
+			: null;
 	}
 
 	/**
@@ -111,7 +125,13 @@ class Character extends MovableObject {
 	 * @returns the value of the function.
 	 */
 	checkIsIdling() {
-		if (this.isInactive == true || this.isMoving() || this.isDead() || this.aboveGround()) return;
+		if (
+			this.isInactive == true ||
+			this.isMoving() ||
+			this.isDead() ||
+			this.aboveGround()
+		)
+			return;
 		this.idlingAnimation();
 		setTimeout(() => {
 			this.isInactive = true;
@@ -124,7 +144,13 @@ class Character extends MovableObject {
 	 * @returns the value of the function longIdlingAnimation()
 	 */
 	checkIsLongIdling() {
-		if (this.isInactive == false || this.isMoving() || this.isDead() || this.aboveGround()) return;
+		if (
+			this.isInactive == false ||
+			this.isMoving() ||
+			this.isDead() ||
+			this.aboveGround()
+		)
+			return;
 		this.longIdlingAnimation();
 	}
 
@@ -192,6 +218,7 @@ class Character extends MovableObject {
 		if (this.aboveGround()) return;
 		if (this.isInPain()) {
 			this.beingInPainAnimation();
+			this.sounds.ouch_sound.play();
 		}
 	}
 
@@ -277,6 +304,11 @@ class Character extends MovableObject {
 	 * @returns a boolean value.
 	 */
 	isMoving() {
-		return this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.D;
+		return (
+			this.world.keyboard.RIGHT ||
+			this.world.keyboard.LEFT ||
+			this.world.keyboard.UP ||
+			this.world.keyboard.D
+		);
 	}
 }

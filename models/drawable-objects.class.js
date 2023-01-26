@@ -92,7 +92,10 @@ class DrawableObject {
 	 * moving and fighting against the character
 	 */
 	endbossGetsAnnoyed() {
-		return this.level.endBoss[0].characterDetected || this.level.endBoss[0].beingAttacked;
+		return (
+			this.level.endBoss[0].characterDetected ||
+			this.level.endBoss[0].beingAttacked
+		);
 	}
 
 	drawMovableObjects() {
@@ -125,11 +128,19 @@ class DrawableObject {
 	 * @param {movableObject} objects that can change direction (only character)
 	 */
 	addToCanvas(movableObject) {
-		if (movableObject.otherDirection || movableObject == this.statusBarEndboss) this.flipImage(movableObject);
+		if (
+			movableObject.otherDirection ||
+			movableObject == this.statusBarEndboss
+		)
+			this.flipImage(movableObject);
 
 		movableObject.draw(this.ctx);
 
-		if (movableObject.otherDirection || movableObject == this.statusBarEndboss) this.flipImageBack(movableObject);
+		if (
+			movableObject.otherDirection ||
+			movableObject == this.statusBarEndboss
+		)
+			this.flipImageBack(movableObject);
 	}
 
 	/**
