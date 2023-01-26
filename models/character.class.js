@@ -212,7 +212,7 @@ class Character extends MovableObject {
 	throwAllowed() {
 		let timepassed = new Date().getTime() - this.lastThrow;
 		timepassed = timepassed / 1000; //divide 1000 to get seconds
-		return timepassed > 1; //seconds
+		return timepassed > 0.5; //seconds
 	}
 
 	/**
