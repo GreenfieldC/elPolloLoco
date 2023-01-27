@@ -259,6 +259,11 @@ h1 {
 	top: 0;
 }
 
+.soundOnIcon {
+	position: absolute;
+	top: 0;
+}
+
 /* =============
 	PLAY BUTTONS
  ===============*/

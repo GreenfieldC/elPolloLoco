@@ -11,8 +11,6 @@ let levelRunning = false;
 let fullScreen = false;
 let soundsOn = true;
 let openMenu = false;
-/* let openLegends = true;
-let openPlaybuttons = false; */
 
 function init() {
 	keyboard = new Keyboard();
@@ -155,6 +153,10 @@ function toggleShowFullscreenButton() {
 	document.getElementById('fullscreenIcon').classList.toggle('d-none');
 }
 
+function toggleSoundButton() {
+	document.getElementById('soundOnIcon').classList.toggle('d-none');
+}
+
 function closeGameGuide() {
 	document.getElementById('gameGuide').classList.add('d-none');
 }
@@ -219,4 +221,5 @@ function toggleGameGuide() {
  */
 function toggleSounds() {
 	soundsOn ? (soundsOn = false) : (soundsOn = true);
+	toggleSoundButton();
 }
