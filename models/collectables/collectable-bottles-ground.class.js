@@ -12,6 +12,6 @@ class BottlesOnGround extends MovableObject {
 
 	constructor() {
 		super().loadImage('./img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
-		this.x = 2500 + Math.random() * 200; // puts bottles at different place at  2500 >= x <= 2700
+		this.x = 2500 + Math.random() * 200;
 	}
 }
