@@ -99,16 +99,28 @@ class DrawableObject {
 	}
 
 	drawMovableObjects() {
+		this.addEnemiesToCanvas();
+		this.addCollectiblesToCanvas();
+		this.addDestroyedCollectiblesToCanvas();
+		this.addObjectsToCanvas(this.deadEnemies);
+		this.addToCanvas(this.character);
+	}
+
+	addEnemiesToCanvas() {
 		this.addObjectsToCanvas(this.level.smallEnemies);
 		this.addObjectsToCanvas(this.level.biggerEnemies);
 		this.addObjectsToCanvas(this.level.endBoss);
+	}
+
+	addCollectiblesToCanvas() {
 		this.addObjectsToCanvas(this.level.bottlesOnGround);
 		this.addObjectsToCanvas(this.level.bottlesInAir);
 		this.addObjectsToCanvas(this.level.coins);
+	}
+
+	addDestroyedCollectiblesToCanvas() {
 		this.addObjectsToCanvas(this.throwableObject);
 		this.addObjectsToCanvas(this.splashedBottle);
-		this.addObjectsToCanvas(this.deadEnemies);
-		this.addToCanvas(this.character);
 	}
 
 	/**
@@ -200,7 +212,7 @@ class DrawableObject {
 				return 3;
 			case this.percentage > 40:
 				return 2;
-			case this.percentage > 20:
+			case this.percentage >= 20:
 				return 1;
 			default:
 				return 0;

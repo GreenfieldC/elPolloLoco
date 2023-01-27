@@ -42,8 +42,6 @@ class World extends DrawableObject {
 			this.checkBottleHitsEnemy();
 			this.checkCharacterGetDetectedByEndboss();
 			this.checksRightEndScreen();
-		}, 40);
-		setInterval(() => {
 			this.sounds.setSounds();
 		}, 40);
 	}
@@ -183,23 +181,42 @@ class World extends DrawableObject {
 		this.level.bottlesOnGround.splice(i, 1);
 	}
 
+	/**
+	 * Checks collision with bottles in air
+	 * and takes them off the map at collision
+	 * @returns if character cannot carry more bottles
+	 * @param {objectInAir} bottle
+	 */
 	checkCollisionsWithBottlesInAir() {
-		if (this.bottlesStatusBar.collectedBottles == 10) return; //Pepe kann carry more than 10 bottles at the time
+		if (this.cannotCarryMoreBottles()) return; //Pepe kann carry more than 10 bottles at the time
 		this.level.bottlesInAir.forEach((objectInAir, i) => {
-			if (this.character.isColliding(objectInAir)) {
-				this.takeBottleInAirFromMap(i);
-				this.updateIncreaseStatusBarBottles();
-				this.sounds.collect_sound.play();
-			}
+			if (this.character.isColliding(objectInAir))
+				this.collectBottleProcess(i);
 		});
 	}
 
+	/**
+	 * Whole process of collecting bottle
+	 * to updates status bar
+	 * @param {number} i index of bottle
+	 */
+	collectBottleProcess(i) {
+		this.takeBottleInAirFromMap(i);
+		this.updateIncreaseStatusBarBottles();
+		this.sounds.collect_sound.play();
+	}
+
+	/**
+	 * Takes bottle from map by splicing
+	 * obect out of bottlesInAir array
+	 * @param {number} i index of array of bottles
+	 */
 	takeBottleInAirFromMap(i) {
 		this.level.bottlesInAir.splice(i, 1);
 	}
 
 	/**
-	 * Updates Statusbar for collected bottles
+	 * Number of collected bottles gets increased and status bar gets updated
 	 */
 	updateIncreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles++;
@@ -208,6 +225,9 @@ class World extends DrawableObject {
 		);
 	}
 
+	/**
+	 * Number of collected bottles gets reduced and status bar gets updated
+	 */
 	updateDecreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles--;
 		this.bottlesStatusBar.setAmountBottles(
@@ -215,24 +235,39 @@ class World extends DrawableObject {
 		);
 	}
 
-	checkCharacterAbleOfCollectingMoreBottles() {
-		if (this.bottlesStatusBar.collectedBottles == 10) return;
-	}
-
+	/**
+	 * If character collides with coin, coin gets taken off the map
+	 * and
+	 */
 	checkCollisionsWithCoins() {
 		this.level.coins.forEach((coins, i) => {
 			if (this.character.isColliding(coins)) {
-				this.level.coins.splice(i, 1);
-				this.coinsStatusBar.collectedCoins++;
-				this.coinsStatusBar.setAmountCoins(
-					this.coinsStatusBar.collectedCoins
-				);
+				this.takesCoinOffMap(i);
+				this.updateCoinStatusBar();
 				this.sounds.collect_sound.play();
 			}
 		});
 	}
 
 	/**
+	 * Takes coin of map
+	 * @param {number} i is index of coin being spliced.
+	 */
+	takesCoinOffMap(i) {
+		this.level.coins.splice(i, 1);
+	}
+
+	/**
+	 * updates status bar of coins
+	 * after adding 1 to collectedCoins
+	 */
+	updateCoinStatusBar() {
+		this.coinsStatusBar.collectedCoins++;
+		this.coinsStatusBar.setAmountCoins(this.coinsStatusBar.collectedCoins);
+	}
+
+	/**
+	 * Checks if number of collected bottles equals 10
 	 * @returns {boolean}
 	 */
 	noBottlesCollected() {
@@ -246,13 +281,12 @@ class World extends DrawableObject {
 	checkBottleHitsGround() {
 		this.throwableObject.forEach((bottle) => {
 			if (bottle.y > 300) {
-				this.bottleSplashes(bottle);
-				this.sounds.smashing_bottle_sound.play();
+				this.smashingBottleAnimation(bottle);
 			}
 		});
 	}
 
-	bottleSplashes(bottleObj) {
+	bottleSmashes(bottleObj) {
 		let bottle = new SplashedBottle(bottleObj.x, bottleObj.y);
 		this.throwableObject.splice(bottleObj, 1);
 		this.splashedBottle.push(bottle);
@@ -277,8 +311,7 @@ class World extends DrawableObject {
 			this.level.smallEnemies.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
 					this.chickDies(enemy, i);
-					this.bottleSplashes(bottle);
-					this.sounds.smashing_bottle_sound.play();
+					this.smashingBottleAnimation(bottle);
 				}
 			});
 		});
@@ -288,7 +321,7 @@ class World extends DrawableObject {
 	 *Splices chicken and puts died chicken
 	 in its place
 	 * @param {object} enemy that has died
-	 * @param {number} position of died enemy
+	 * @param {number} index of died enemy
 	 * @param {object} deadChick gets added to map
 	 */
 	chickDies(enemy, position) {
@@ -311,8 +344,7 @@ class World extends DrawableObject {
 			this.level.biggerEnemies.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
 					this.chickenDies(enemy, i);
-					this.bottleSplashes(bottle);
-					this.sounds.smashing_bottle_sound.play();
+					this.smashingBottleAnimation(bottle);
 				}
 			});
 		});
@@ -345,14 +377,11 @@ class World extends DrawableObject {
 			this.level.endBoss.forEach((enemy, i) => {
 				if (bottle.isColliding(enemy)) {
 					this.endbossLoosesEnergy(i);
-					this.upDatinghealthbarOfEndboss(i);
-					this.bottleSplashes(bottle);
-					this.sounds.smashing_bottle_sound.play();
+					this.updatingHealthbarOfEndboss(i);
+					this.smashingBottleAnimation(bottle);
 					this.setsEndBossBeingAttackedByCharacter();
 				}
 				if (this.level.endBoss[i].isDead()) {
-					this.bottleSplashes(bottle);
-					this.sounds.smashing_bottle_sound.play();
 					this.stopEndboss(i);
 				}
 			});
@@ -364,15 +393,20 @@ class World extends DrawableObject {
 	 * 10 is substracted from its current energy level
 	 */
 	endbossLoosesEnergy(i) {
-		this.level.endBoss[i].injury(10);
+		this.level.endBoss[i].injury(20);
 	}
 
 	/**
 	 * Updates the healthbar of endboss
 	 */
 
-	upDatinghealthbarOfEndboss(i) {
+	updatingHealthbarOfEndboss(i) {
 		this.statusBarEndboss.setPercentage(this.level.endBoss[i].energy);
+	}
+
+	smashingBottleAnimation(bottle) {
+		this.bottleSmashes(bottle);
+		this.sounds.smashing_bottle_sound.play();
 	}
 
 	/**
