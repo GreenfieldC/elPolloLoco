@@ -32,18 +32,22 @@ class World extends DrawableObject {
 		this.character.world = this;
 	}
 
-	/* important to run the game */
+	/**
+	 * Runs checks for collisions
+	 */
 	run() {
-		setInterval(() => {
-			this.checkCollsionWithEnemies();
-			this.checkCollsionWithCollectableObjects();
-			this.checkCharacterMakingEndbossWild();
-			this.checkBottleHitsGround();
-			this.checkBottleHitsEnemy();
-			this.checkCharacterGetDetectedByEndboss();
-			this.checksRightEndScreen();
-			this.sounds.setSounds();
-		}, 40);
+		this.playinterval = setStoppableInterval(this.checks.bind(this), 40);
+	}
+
+	checks() {
+		this.checkCollsionWithEnemies();
+		this.checkCollsionWithCollectableObjects();
+		this.checkCharacterMakingEndbossWild();
+		this.checkBottleHitsGround();
+		this.checkBottleHitsEnemy();
+		this.checkCharacterGetDetectedByEndboss();
+		this.checksRightEndScreen();
+		this.sounds.checkSetSounds();
 	}
 
 	checkCollsionWithEnemies() {
@@ -513,9 +517,9 @@ class World extends DrawableObject {
 	 */
 	stopAllIntervals() {
 		setTimeout(() => {
-			for (let i = 0; i < 999; i++) {
-				clearInterval(i);
-			}
+			intervallIds.forEach((id) => {
+				clearInterval(id);
+			});
 		}, 3000);
 	}
 }

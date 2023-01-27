@@ -34,13 +34,15 @@ class Endboss extends MovableObject {
 	 * It checks if the character is alert, walking, being attacked, attacking the character or dying.
 	 */
 	animate() {
-		this.id = setInterval(() => {
-			this.checkBeingAlert();
-			this.checkWalking();
-			this.checkBeingAttacked();
-			this.checkAttackCharacter();
-			this.checkIsBeingKilled();
-		}, 200);
+		this.playInterval = setStoppableInterval(this.checks.bind(this), 200);
+	}
+
+	checks() {
+		this.checkBeingAlert();
+		this.checkWalking();
+		this.checkBeingAttacked();
+		this.checkAttackCharacter();
+		this.checkIsBeingKilled();
 	}
 
 	/**

@@ -27,22 +27,23 @@ class Character extends MovableObject {
 
 	/* hier nur die Funktionen, wo Tasten gedrückt werden */
 	animate() {
-		setInterval(() => {
-			/* this.sounds.walking_sound.pause(); */
-			this.checkWalking();
-			this.checkWalkingRight();
-			this.checkWalkingLeft();
-			this.checkWalkingSound();
-			this.checkJumping();
-			this.checkIsIdling(); // intervall zu hoch auslagern in andere Funktionen
-			this.checkIsLongIdling(); // intervall zu hoch auslagern in andere Funktionen
-			this.checkStopLongIdling();
-			this.checkThrowing();
-			this.checkReactionToInjury();
-			this.checkIsBeingKilled();
-			this.setCameraForCharacter();
-			this.sounds.setSounds();
-		}, 100);
+		this.playInterval = setStoppableInterval(this.checks.bind(this), 90);
+	}
+
+	checks() {
+		this.checkWalking();
+		this.checkWalkingRight();
+		this.checkWalkingLeft();
+		this.checkWalkingSound();
+		this.checkJumping();
+		this.checkIsIdling(); // intervall zu hoch auslagern in andere Funktionen
+		this.checkIsLongIdling(); // intervall zu hoch auslagern in andere Funktionen
+		this.checkStopLongIdling();
+		this.checkThrowing();
+		this.checkReactionToInjury();
+		this.checkIsBeingKilled();
+		this.setCameraForCharacter();
+		this.sounds.checkSetSounds();
 	}
 
 	/**

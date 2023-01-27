@@ -27,24 +27,30 @@ class Chick extends MovableObject {
 
 	animation() {
 		this.chickMovesLeft();
-		this.walkingAnimation();
+		this.walkingAnimationApplied();
 	}
 
 	/**
 	 * Runs animation of the walking chick
 	 */
+	walkingAnimationApplied() {
+		this.playInterval = setStoppableInterval(
+			this.walkingAnimation.bind(this),
+			200
+		);
+	}
+
 	walkingAnimation() {
-		setInterval(() => {
-			this.playAnimation(this.IMAGES_WALKING);
-		}, 100);
+		this.playAnimation(this.IMAGES_WALKING);
 	}
 
 	/**
 	 * Moves the chick to the left side of the map
 	 */
 	chickMovesLeft() {
-		setInterval(() => {
-			this.moveLeft();
-		}, 1000 / 60);
+		this.playInterval = setStoppableInterval(
+			this.moveLeft.bind(this),
+			1000 / 60
+		);
 	}
 }

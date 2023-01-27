@@ -22,7 +22,7 @@ class Sounds {
 	 * Switches for the sounds of the game
 	 * @param {boolean} sounds is true or false;
 	 */
-	setSounds() {
+	checkSetSounds() {
 		soundsOn ? this.setVolume() : this.muteSounds();
 	}
 }

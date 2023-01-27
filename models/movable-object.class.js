@@ -47,15 +47,17 @@ class MovableObject extends DrawableObject {
 
 	// if aus setinterval raus!?
 	applyGravity() {
-		setInterval(() => {
-			if (this.aboveGround() || this.speedY > 0) {
-				this.y -= this.speedY; // warum nicht plus???
-				this.speedY -= this.acceleration;
-			} else {
-				this.speedX = 0; //bottles does not move on the ground!
-				this.y = this.groundPosition;
-			}
-		}, 40);
+		this.playInterval = setStoppableInterval(this.gravity.bind(this), 40);
+	}
+
+	gravity() {
+		if (this.aboveGround() || this.speedY > 0) {
+			this.y -= this.speedY; // warum nicht plus???
+			this.speedY -= this.acceleration;
+		} else {
+			this.speedX = 0; //bottles does not move on the ground!
+			this.y = this.groundPosition;
+		}
 	}
 
 	//character is colliding enemies

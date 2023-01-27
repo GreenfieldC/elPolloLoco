@@ -23,13 +23,21 @@ class Coins extends MovableObject {
 	 *
 	 */
 	pulsatingCoinsAnimation() {
-		setInterval(() => {
-			if (this.height <= 150 || this.height < 200) {
-				this.sizingCoins();
-				this.fixationCoins();
-			}
-			this.toggleGrowthDirection();
-		}, 800);
+		this.playInterval = setStoppableInterval(
+			this.coinsAnimationSettings.bind(this),
+			800
+		);
+	}
+
+	/**
+	 * Coins Animation
+	 */
+	coinsAnimationSettings() {
+		if (this.height <= 150 || this.height < 200) {
+			this.sizingCoins();
+			this.fixationCoins();
+		}
+		this.toggleGrowthDirection();
 	}
 
 	/**

@@ -35,17 +35,30 @@ class ThrowableObjects extends MovableObject {
 	throw() {
 		this.speedY = this.speedY;
 		this.applyGravity();
-		setInterval(() => {
-			this.x += this.speedX;
-		}, 120);
+		this.playInterval = setStoppableInterval(
+			this.throwToRightSide.bind(this),
+			120
+		);
+	}
+
+	throwToRightSide() {
+		this.x += this.speedX;
+	}
+
+	/**
+	 * Animates being thrown bottle images at right speed
+	 */
+	bottleBeingThrownAnimation() {
+		this.playInterval = setStoppableInterval(
+			this.bottleAnimation.bind(this),
+			90
+		);
 	}
 
 	/**
 	 * Animates being thrown bottle
 	 */
-	bottleBeingThrownAnimation() {
-		setInterval(() => {
-			this.playAnimation(this.IMAGES_FLYING_BOTTLES);
-		}, 90);
+	bottleAnimation() {
+		this.playAnimation(this.IMAGES_FLYING_BOTTLES);
 	}
 }

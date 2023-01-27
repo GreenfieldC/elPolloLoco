@@ -14,8 +14,9 @@ class Cloud extends MovableObject {
 	 * Moves the clouds from the right to the left side of the map
 	 */
 	moveLeftAnimation() {
-		setInterval(() => {
-			this.moveLeft();
-		}, 1000 / 60);
+		this.playInterval = setStoppableInterval(
+			this.moveLeft.bind(this),
+			1000 / 60
+		);
 	}
 }

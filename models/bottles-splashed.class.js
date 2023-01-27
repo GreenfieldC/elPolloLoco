@@ -18,12 +18,23 @@ class SplashedBottle extends MovableObject {
 		this.x = x;
 		this.y = y;
 		this.loadImages(this.IMAGES_SPLASHED_BOTTLES);
-		this.splashAnimation();
+		this.splashAnimationApplied();
 	}
 
+	/**
+	 * Applies splash animation at the right speed
+	 */
+	splashAnimationApplied() {
+		this.setIntervalId = setStoppableInterval(
+			this.splashAnimation.bind(this),
+			50
+		);
+	}
+
+	/**
+	 * Swaps images for animation
+	 */
 	splashAnimation() {
-		setInterval(() => {
-			this.playAnimation(this.IMAGES_SPLASHED_BOTTLES);
-		}, 50);
+		this.playAnimation(this.IMAGES_SPLASHED_BOTTLES);
 	}
 }

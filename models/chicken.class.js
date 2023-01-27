@@ -27,7 +27,7 @@ class Chicken extends MovableObject {
 
 	animation() {
 		this.moveLeftAnimation();
-		this.walkingAnimation();
+		this.walkingAnimationApplied();
 	}
 
 	/**
@@ -35,17 +35,26 @@ class Chicken extends MovableObject {
 	 * and
 	 */
 	moveLeftAnimation() {
-		setInterval(() => {
-			this.moveLeft();
-		}, 1000 / 60);
+		this.playInterval = setStoppableInterval(
+			this.moveLeft.bind(this),
+			1000 / 60
+		);
 	}
 
 	/**
-	 * Shows the walking animation of the chicken
+	 * Applies walking animation
+	 */
+	walkingAnimationApplied() {
+		this.playInterval = setStoppableInterval(
+			this.walkingAnimation.bind(this),
+			100
+		);
+	}
+
+	/**
+	 * Changes images for animation
 	 */
 	walkingAnimation() {
-		setInterval(() => {
-			this.playAnimation(this.IMAGES_WALKING);
-		}, 1000 / 5);
+		this.playAnimation(this.IMAGES_WALKING);
 	}
 }

@@ -11,6 +11,7 @@ let levelRunning = false;
 let fullScreen = false;
 let soundsOn = true;
 let openMenu = false;
+let intervallIds = [''];
 
 function init() {
 	keyboard = new Keyboard();
@@ -114,21 +115,9 @@ function handleEvent(e) {
 Start Screen
 ==============*/
 
-/**
- * When the user clicks on the hamburger menu,
- * toggle the class 'showNavigationBar' on the navigation
- * container.
- */
-function openCloseMenuToggle() {
-	document
-		.getElementById('menuContainer')
-		.classList.toggle('showNavigationBar');
-	!openMenu ? (openMenu = true) : (openMenu = false);
-}
-
 function startGame() {
 	checkMobilePlayButtonNeeded();
-	closeStartGameButton();
+	/* closeStartGameButton(); */
 	openCloseMenuToggle();
 	hideWholeStartScreen();
 	closeGameGuide();
@@ -137,6 +126,18 @@ function startGame() {
 	buttonListener();
 	levelRunning = true;
 	closeStartGameButton();
+}
+
+/**
+ * When the user clicks on the menu,
+ * toggle the class 'showNavigationBar' on the navigation
+ * container.
+ */
+function openCloseMenuToggle() {
+	document
+		.getElementById('menuContainer')
+		.classList.toggle('showNavigationBar');
+	!openMenu ? (openMenu = true) : (openMenu = false);
 }
 
 function hideWholeStartScreen() {
@@ -222,4 +223,9 @@ function toggleGameGuide() {
 function toggleSounds() {
 	soundsOn ? (soundsOn = false) : (soundsOn = true);
 	toggleSoundButton();
+}
+
+function setStoppableInterval(fn, time) {
+	let id = setInterval(fn, time);
+	intervallIds.push(id);
 }
