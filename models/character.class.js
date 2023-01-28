@@ -7,6 +7,7 @@ class Character extends MovableObject {
 	isInactive = false;
 	energy = 100;
 	lastThrow = 0;
+	timeLimit = 0.1;
 	/* otherDirection = false; */
 
 	offset = {
@@ -232,7 +233,7 @@ class Character extends MovableObject {
 	 */
 	checkIsBeingHurt() {
 		if (this.aboveGround()) return;
-		if (this.isInPain()) {
+		if (this.isInPain(this.timeLimit)) {
 			this.beingInPainAnimation();
 			this.sounds.ouch_sound.play();
 		}

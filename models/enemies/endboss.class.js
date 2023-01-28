@@ -13,6 +13,7 @@ class Endboss extends MovableObject {
 	lastJump = false;
 	groundPosition = 100;
 	cache = new EndbossCache();
+	timeLimit = 0.8;
 	i = 0;
 	id;
 
@@ -86,6 +87,7 @@ class Endboss extends MovableObject {
 
 	/**
 	 * This function plays the dying animation of the endboss.
+	 * ! neu machen. es funktioniert nicht!
 	 */
 
 	dyingAnimation() {
@@ -131,7 +133,8 @@ class Endboss extends MovableObject {
 	 */
 	checkBeingAttacked() {
 		if (this.isDead()) return;
-		if (this.beingAttacked && this.isInPain()) this.hurtAnimation();
+		if (this.beingAttacked && this.isInPain(this.timeLimit))
+			this.hurtAnimation();
 	}
 
 	/**

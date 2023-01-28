@@ -99,6 +99,7 @@ canvas,
 	align-items: center;
 	flex-direction: column;
 	width: 100%;
+	text-align: center;
 }
 
 .controls {

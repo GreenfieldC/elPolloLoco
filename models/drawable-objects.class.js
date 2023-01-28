@@ -7,11 +7,20 @@ class DrawableObject {
 	imageCache = {};
 	currentImage = 0;
 
+	/**
+	 * 
+	 * @param {string} path is relative path of image being loaded
+	 */
 	loadImage(path) {
 		this.img = new Image(); // Image() = document.getElementById('').innerHTML = <img src="path" alt="" />
 		this.img.src = path;
 	}
 
+	/**
+	 * Preloads images being used for animation
+	 * @param {array} arr is array with images
+	 * @param {string} path is relativ path of image	
+	 */
 	loadImages(arr) {
 		arr.forEach((path) => {
 			let img = new Image();

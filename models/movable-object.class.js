@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
 	acceleration = 10;
 	energy = 100;
 	lastHit = 0;
+	timeLimit = 0;
 	groundPosition = 180;
 	setIntervalId = [];
 
@@ -109,12 +110,23 @@ class MovableObject extends DrawableObject {
 	}
 
 	/**
-
- */
-	isInPain() {
-		let timepassed = new Date().getTime() - this.lastHit; // difference in ms
+	 * Calculates the time being passed
+	 * since the last hit/collision
+	 * @param {number} timeLimit
+	 * @returns {boolean} it is true when time passed it smaller than time
+	 */
+	isInPain(timeLimit) {
+		let timepassed = this.now() - this.lastHit; // difference in ms
 		timepassed = timepassed / 1000;
-		return timepassed < 0.1;
+		return timepassed < timeLimit;
+	}
+
+	/**
+	 *
+	 * @returns {number} current time in ms
+	 */
+	now() {
+		return new Date().getTime();
 	}
 
 	playAnimation(images) {

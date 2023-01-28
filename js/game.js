@@ -12,6 +12,7 @@ let fullScreen = false;
 let soundsOn = true;
 let openMenu = false;
 let intervallIds = [''];
+let gameGuideOpen = false;
 
 function init() {
 	keyboard = new Keyboard();
@@ -211,9 +212,12 @@ function exitFullscreen() {
 
 /**
  * Opens or closes game guide
+ * @param {boolean} gameGuideOpen
  */
 function toggleGameGuide() {
 	document.getElementById('gameGuide').classList.toggle('d-none');
+	!gameGuideOpen ? (gameGuideOpen = true) : (gameGuideOpen = false);
+	if (gameGuide) openCloseMenuToggle();
 }
 
 /**

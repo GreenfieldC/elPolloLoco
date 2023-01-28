@@ -150,20 +150,7 @@ async function initLevel1() {
 			),
 		],
 
-		[
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-			new BottlesOnGround(),
-		],
+		[new BottlesOnGround(), new BottlesOnGround()],
 		[
 			new BottlesInAir(
 				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -185,18 +172,7 @@ async function initLevel1() {
 				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
 				240
 			),
-			new BottlesInAir(
-				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
-				500
-			),
-			new BottlesInAir(
-				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
-				700
-			),
-			new BottlesInAir(
-				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
-				900
-			),
+
 			new BottlesInAir(
 				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
 				1200
