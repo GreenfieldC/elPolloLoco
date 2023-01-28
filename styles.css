@@ -9,10 +9,10 @@ body {
 	align-items: center;
 	height: 100vh;
 	font-family: 'Walter Turncoat';
-	background-image: url(./img/desert-5396906_1920.jpg);
+	/* background-image: url(./img/desert-5396906_1920.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: bottom;
+	background-position: bottom; */
 }
 
 canvas,
@@ -23,13 +23,18 @@ canvas,
 	border-radius: 20px;
 }
 
+/* fullscreen oder body background image? */
 .fullscreen {
 	position: relative;
 	height: 100vh;
-	width: fit-content;
+	width: 100vw;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-image: url(./img/desert-5396906_1920.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: bottom;
 }
 
 .startScreen,
