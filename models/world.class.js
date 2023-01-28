@@ -71,7 +71,6 @@ class World extends DrawableObject {
 			if (this.character.isColliding(enemy)) {
 				this.character.injury(0.5);
 				this.healthStatusBar.setPercentage(this.character.energy);
-				/* this.character.isInactive = false; */
 			}
 		});
 	}
@@ -84,11 +83,10 @@ class World extends DrawableObject {
 	 */
 	checkCollisionsWithBiggerEnemies() {
 		this.level.biggerEnemies.forEach((enemy) => {
-			if (this.character.isColliding(enemy)) {
-				this.character.injury(1);
-				this.healthStatusBar.setPercentage(this.character.energy);
-				/* this.character.isInactive = false; */
-			}
+			this.character.isColliding(enemy)
+				? (this.character.injury(1),
+				  this.healthStatusBar.setPercentage(this.character.energy))
+				: null;
 		});
 	}
 
@@ -100,10 +98,10 @@ class World extends DrawableObject {
 	 */
 	checkCollisionsWithEndBossEnemies() {
 		this.level.endBoss.forEach((enemy) => {
-			if (this.character.isColliding(enemy)) {
-				this.character.injury(5);
-				this.healthStatusBar.setPercentage(this.character.energy);
-			}
+			this.character.isColliding(enemy)
+				? (this.character.injury(5),
+				  this.healthStatusBar.setPercentage(this.character.energy))
+				: null;
 		});
 	}
 
@@ -120,13 +118,9 @@ class World extends DrawableObject {
 	 */
 	checkHitsChickOnTop() {
 		this.level.smallEnemies.forEach((chick, i) => {
-			if (
-				this.character.isColliding(chick) &&
-				this.character.aboveGround()
-			) {
-				this.chickDies(chick, i);
-				this.character.jump();
-			}
+			this.character.isColliding(chick) && this.character.aboveGround()
+				? (this.chickDies(chick, i), this.character.jump())
+				: null;
 		});
 	}
 
@@ -138,13 +132,9 @@ class World extends DrawableObject {
 	 */
 	checkHitsChickenOnTop() {
 		this.level.biggerEnemies.forEach((chicken, i) => {
-			if (
-				this.character.isColliding(chicken) &&
-				this.character.aboveGround()
-			) {
-				this.chickenDies(chicken, i);
-				this.character.jump();
-			}
+			this.character.isColliding(chicken) && this.character.aboveGround()
+				? (this.chickenDies(chicken, i), this.character.jump())
+				: null;
 		});
 	}
 
