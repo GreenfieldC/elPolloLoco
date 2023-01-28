@@ -9,10 +9,10 @@ body {
 	align-items: center;
 	height: 100vh;
 	font-family: 'Walter Turncoat';
-	/* background-image: url(./img/desert-5396906_1920.jpg);
+	background-image: url(./img/desert-5396906_1920.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: bottom; */
+	background-position: bottom;
 }
 
 canvas,
@@ -27,14 +27,14 @@ canvas,
 .fullscreen {
 	position: relative;
 	height: 100vh;
-	width: 100vw;
+	width: fit-content;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-image: url(./img/desert-5396906_1920.jpg);
+	/* background-image: url(./img/desert-5396906_1920.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: bottom;
+	background-position: bottom; */
 }
 
 .startScreen,

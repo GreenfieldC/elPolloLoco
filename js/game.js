@@ -124,6 +124,9 @@ function handleEvent(e) {
 Start Screen
 ==============*/
 
+/**
+ * Starts  game
+ */
 function startGame() {
 	setsScreen();
 	initLevel1();

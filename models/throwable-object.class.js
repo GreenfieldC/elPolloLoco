@@ -1,3 +1,4 @@
+'use strict';
 class ThrowableObjects extends MovableObject {
 	groundPosition = 320;
 	speedY = 50;

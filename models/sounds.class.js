@@ -1,3 +1,4 @@
+'use strict';
 class Sounds {
 	walking_sound = new Audio('./audio/walking_sound.mp3');
 	ouch_sound = new Audio('./audio/ouch_sound.mp3');

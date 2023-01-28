@@ -1,3 +1,4 @@
+'use strict';
 class MovableObject extends DrawableObject {
 	speed = 0.25;
 	img;

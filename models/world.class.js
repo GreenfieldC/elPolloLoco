@@ -1,3 +1,5 @@
+'use strict';
+
 class World extends DrawableObject {
 	character = new Character();
 	throwableObject = [];
@@ -161,8 +163,7 @@ class World extends DrawableObject {
 		this.level.bottlesOnGround.forEach((bottlesOnGround, i) => {
 			if (this.cannotCarryMoreBottles()) return; //Pepe kann carry more than 10 bottles at the time
 			if (this.character.isColliding(bottlesOnGround)) {
-				this.takeBottleOnGroundFromMap(i);
-				this.updateIncreaseStatusBarBottles();
+				this.collectBottleProcess(i);
 				this.sounds.collect_sound.play();
 			}
 		});
@@ -194,8 +195,10 @@ class World extends DrawableObject {
 	checkCollisionsWithBottlesInAir() {
 		if (this.cannotCarryMoreBottles()) return; //Pepe kann carry more than 10 bottles at the time
 		this.level.bottlesInAir.forEach((objectInAir, i) => {
-			if (this.character.isColliding(objectInAir))
+			if (this.character.isColliding(objectInAir)) {
 				this.collectBottleProcess(i);
+				this.sounds.collect_sound.play();
+			}
 		});
 	}
 
