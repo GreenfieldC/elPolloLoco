@@ -158,19 +158,15 @@ async function initLevel1() {
 			),
 			new BottlesInAir(
 				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
-				210
-			),
-			new BottlesInAir(
-				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
 				220
 			),
 			new BottlesInAir(
 				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
-				230
+				500
 			),
 			new BottlesInAir(
 				'./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
-				240
+				700
 			),
 
 			new BottlesInAir(

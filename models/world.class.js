@@ -153,7 +153,8 @@ class World extends DrawableObject {
 		this.level.bottlesOnGround.forEach((bottlesOnGround, i) => {
 			if (this.cannotCarryMoreBottles()) return; //Pepe kann carry more than 10 bottles at the time
 			if (this.character.isColliding(bottlesOnGround)) {
-				this.collectBottleProcess(i);
+				this.takeBottleOnGroundFromMap(i);
+				this.updateIncreaseStatusBarBottles();
 				this.sounds.collect_sound.play();
 			}
 		});
@@ -186,7 +187,7 @@ class World extends DrawableObject {
 		if (this.cannotCarryMoreBottles()) return; //Pepe kann carry more than 10 bottles at the time
 		this.level.bottlesInAir.forEach((objectInAir, i) => {
 			if (this.character.isColliding(objectInAir)) {
-				this.collectBottleProcess(i);
+				this.collectBottleFromAirProcess(i);
 				this.sounds.collect_sound.play();
 			}
 		});
@@ -197,7 +198,7 @@ class World extends DrawableObject {
 	 * to updates status bar
 	 * @param {number} i index of bottle
 	 */
-	collectBottleProcess(i) {
+	collectBottleFromAirProcess(i) {
 		this.takeBottleInAirFromMap(i);
 		this.updateIncreaseStatusBarBottles();
 		this.sounds.collect_sound.play();
