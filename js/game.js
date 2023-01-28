@@ -60,11 +60,19 @@ window.addEventListener('keyup', (event) => {
 	MOBILE NAVIGATION CHARACTER
 ================================*/
 
-function buttonListener() {
+function mobileBtnsListener() {
 	document.getElementById('right').ontouchstart = (e) => {
 		handleEvent(e);
 		keyboard.RIGHT = true;
 	};
+
+	/* 
+	
+	document.getElementById('right').addEventListener('touchstart', (e) => {
+		handleEvent(e);
+		keyboard.RIGHT = true;
+	}, { passive: true });
+	*/
 
 	document.getElementById('right').ontouchend = (e) => {
 		handleEvent(e);
@@ -117,16 +125,17 @@ Start Screen
 ==============*/
 
 function startGame() {
+	setsScreen();
+	initLevel1();
+	init();
+	mobileBtnsListener();
+}
+
+function setsScreen() {
 	checkMobilePlayButtonNeeded();
-	/* closeStartGameButton(); */
 	openCloseMenuToggle();
 	hideWholeStartScreen();
 	closeGameGuide();
-	initLevel1();
-	init();
-	buttonListener();
-	levelRunning = true;
-	closeStartGameButton();
 }
 
 /**
