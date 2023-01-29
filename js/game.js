@@ -2,8 +2,7 @@
 'use strict';
 
 let maximalTableSize =
-	window.innerWidth <= 1024 ||
-	(window.innerHeight <= 1024 && window.innerWidth <= 768);
+	window.innerWidth <= 1024 || (window.innerHeight <= 1024 && window.innerWidth <= 768);
 let canvas = document.getElementById('canvas');
 let world;
 let keyboard;
@@ -47,9 +46,7 @@ function setsScreen() {
  * container.
  */
 function openCloseMenuToggle() {
-	document
-		.getElementById('menuContainer')
-		.classList.toggle('showNavigationBar');
+	document.getElementById('menuContainer').classList.toggle('showNavigationBar');
 	!openMenu ? (openMenu = true) : (openMenu = false);
 }
 
@@ -91,6 +88,25 @@ function showMobilePlayButtons() {
 	});
 }
 
+/**
+ * Opens or closes game guide
+ * @param {boolean} gameGuideOpen
+ */
+function toggleGameGuide() {
+	document.getElementById('gameGuide').classList.toggle('d-none');
+	!gameGuideOpen ? (gameGuideOpen = true) : (gameGuideOpen = false);
+	if (gameGuide) openCloseMenuToggle();
+}
+
+/**
+ * Sound switch
+ * @param {boolean} soundsOn
+ */
+function toggleSounds() {
+	soundsOn ? (soundsOn = false) : (soundsOn = true);
+	toggleSoundButton();
+}
+
 /* ============
 	FULLSCREEN
 ===============*/
@@ -126,24 +142,11 @@ function exitFullscreen() {
 }
 
 /**
- * Opens or closes game guide
- * @param {boolean} gameGuideOpen
+ * Creates  a setIntervall with the containing function
+ * and pushes its id into intervallIds
+ * @param {function} fn
+ * @param {number} time
  */
-function toggleGameGuide() {
-	document.getElementById('gameGuide').classList.toggle('d-none');
-	!gameGuideOpen ? (gameGuideOpen = true) : (gameGuideOpen = false);
-	if (gameGuide) openCloseMenuToggle();
-}
-
-/**
- * Sound switch
- * @param {boolean} soundsOn
- */
-function toggleSounds() {
-	soundsOn ? (soundsOn = false) : (soundsOn = true);
-	toggleSoundButton();
-}
-
 function setStoppableInterval(fn, time) {
 	let id = setInterval(fn, time);
 	intervallIds.push(id);

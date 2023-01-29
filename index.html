@@ -15,55 +15,20 @@
 		<link rel="apple-touch-icon" sizes="60x60" href="favicon//apple-icon-60x60.png" />
 		<link rel="apple-touch-icon" sizes="72x72" href="favicon//apple-icon-72x72.png" />
 		<link rel="apple-touch-icon" sizes="76x76" href="favicon//apple-icon-76x76.png" />
-		<link
-			rel="apple-touch-icon"
-			sizes="114x114"
-			href="favicon//apple-icon-114x114.png"
-		/>
-		<link
-			rel="apple-touch-icon"
-			sizes="120x120"
-			href="favicon//apple-icon-120x120.png"
-		/>
-		<link
-			rel="apple-touch-icon"
-			sizes="144x144"
-			href="favicon//apple-icon-144x144.png"
-		/>
-		<link
-			rel="apple-touch-icon"
-			sizes="152x152"
-			href="favicon//apple-icon-152x152.png"
-		/>
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="favicon//apple-icon-180x180.png"
-		/>
+		<link rel="apple-touch-icon" sizes="114x114" href="favicon//apple-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="favicon//apple-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="favicon//apple-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="favicon//apple-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon//apple-icon-180x180.png" />
 		<link
 			rel="icon"
 			type="image/png"
 			sizes="192x192"
 			href="favicon//android-icon-192x192.png"
 		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="32x32"
-			href="favicon//favicon-32x32.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="96x96"
-			href="favicon//favicon-96x96.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="16x16"
-			href="favicon//favicon-16x16.png"
-		/>
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon//favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="favicon//favicon-96x96.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon//favicon-16x16.png" />
 		<link rel="manifest" href="favicon//manifest.json" />
 		<meta name="msapplication-TileColor" content="#ffffff" />
 		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
@@ -72,10 +37,7 @@
 		<!-- Javascript -->
 		<script src="models/drawable-objects.class.js" defer></script>
 		<script src="models/status-bars/statusbar-endboss.class.js" defer></script>
-		<script
-			src="models/status-bars/statusbar-overlay-icon-endboss.class.js"
-			defer
-		></script>
+		<script src="models/status-bars/statusbar-overlay-icon-endboss.class.js" defer></script>
 		<script src="models/status-bars/statusbar-health.class.js" defer></script>
 		<script src="models/status-bars/statusbar-bottles.class.js" defer></script>
 		<script src="models/status-bars/statusbar-coins.class.js" defer></script>
@@ -97,10 +59,7 @@
 		<script src="models/collectables/collectable-coins.class.js" defer></script>
 		<script src="models/throwable-object.class.js" defer></script>
 		<script src="models/collectables/bottles-splashed.class.js" defer></script>
-		<script
-			src="models/collectables/collectable-bottles-ground.class.js"
-			defer
-		></script>
+		<script src="models/collectables/collectable-bottles-ground.class.js" defer></script>
 		<script src="models/level.class.js" defer></script>
 		<script src="js/levels/level1.js" defer></script>
 		<script src="js/controls.js" defer></script>
@@ -109,7 +68,7 @@
 	<body>
 		<div class="fullscreen" id="fullscreen">
 			<canvas id="canvas" width="760" height="480"></canvas>
-			<div id="testContainer" class="testContainer">
+			<div id="screensContainer" class="screensContainer">
 				<div id="startScreen" class="startScreen">
 					<h1>El Pollo Loco</h1>
 				</div>
@@ -119,18 +78,14 @@
 				<!-- Menu -->
 
 				<div id="menuContainerOverlay" class="menuContainerOverlay">
-					<div
-						onclick="toggleGameGuide()"
-						id="gameGuide"
-						class="gameGuide d-none"
-					>
+					<div onclick="toggleGameGuide()" id="gameGuide" class="gameGuide d-none">
 						<div class="story">
 							<h3>Story</h3>
-							Pepe needs to find the biggest chicken for a party so everyone
-							gets fed. Unfortunately that chicken is still alive and being
-							protected by many chicks and chickens. Kill them by a jump or
-							by throwing bottles at them. Be aware the big chicken gets
-							only defeated by bottles. So save some for later!
+							Pepe needs to find the biggest chicken for a party so everyone gets fed.
+							Unfortunately that chicken is still alive and being protected by many
+							chicks and chickens. Kill them by a jump or by throwing bottles at them.
+							Be aware the big chicken gets only defeated by bottles. So save some for
+							later!
 						</div>
 
 						<div class="controls">
@@ -141,10 +96,7 @@
 							</div>
 							<div class="mobileGameGuide">
 								<h3>Mobile device</h3>
-								<span
-									>Touch the arrows to move and the bottle to
-									throw</span
-								>
+								<span>Touch the arrows to move and the bottle to throw</span>
 							</div>
 						</div>
 					</div>
@@ -234,10 +186,7 @@
 					</div>
 
 					<!-- Play Buttons: Right side -->
-					<div
-						id="rightSidePlayButtons"
-						class="playButtonsContainer rightSide d-none"
-					>
+					<div id="rightSidePlayButtons" class="playButtonsContainer rightSide d-none">
 						<img
 							id="jump"
 							class="navigationButtons backgroundTransparent"
@@ -252,10 +201,7 @@
 						/>
 					</div>
 					<!-- Play Buttons: Left side -->
-					<div
-						id="leftSidePlayButtons"
-						class="playButtonsContainer leftSide d-none"
-					>
+					<div id="leftSidePlayButtons" class="playButtonsContainer leftSide d-none">
 						<!-- walk left button -->
 						<img
 							id="left"

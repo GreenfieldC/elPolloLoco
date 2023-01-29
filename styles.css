@@ -31,10 +31,6 @@ canvas,
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/* background-image: url(./img/desert-5396906_1920.jpg);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: bottom; */
 }
 
 .startScreen,
@@ -42,12 +38,11 @@ canvas,
 .loosesEndScreen,
 .callToTurnScreen,
 .menuContainerOverlay,
-.testContainer {
+.screensContainer {
 	position: absolute;
 	width: 100%;
 	max-width: 760px;
 	max-height: 480px;
-	/* height: 100%; */
 	aspect-ratio: auto 1 / 0.631;
 }
 
@@ -56,12 +51,10 @@ canvas,
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	/* overflow: hidden; */
 	width: 100%;
 	height: 100%;
 }
 
-/* media query nicht vergessen */
 .endScreen {
 	background-image: url(./img/9_intro_outro_screens/game_over/game\ over.png);
 	background-repeat: no-repeat;
@@ -127,7 +120,7 @@ canvas,
 	flex-direction: column;
 }
 
-.testContainer {
+.screensContainer {
 	max-height: 480px;
 	max-width: 760px;
 }
@@ -274,14 +267,6 @@ h1 {
 	PLAY BUTTONS
  ===============*/
 
-/* .mobilePlayButtonsContainer {
-	position: absolute;
-	bottom: 24px;
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-} */
-
 .playButtonsContainer {
 	display: flex;
 	justify-content: center;
@@ -326,24 +311,16 @@ span {
 	background-color: transparent !important;
 }
 
-/* TABLETS */
-
-/* @media (max-width: 1024px) {
-	.playButtonsContainer {
-		display: flex;
-	}
-} */
-
 /* SMARTPHONES */
 @media only screen and (max-width: 760px) {
 	canvas,
-	.testContainer,
+	.screensContainer,
 	.startScreen,
 	.endScreen,
 	.loosesEndScreen,
 	.callToTurnScreen,
 	.menuContainerOverlay {
-		width: 100vw !important; /* ! I dont want that, because it looses aspect ratio! */
+		width: 100vw !important;
 		border-radius: unset;
 		aspect-ratio: auto 1 / 0.631;
 	}
@@ -406,7 +383,7 @@ span {
 	.startScreen,
 	.endScreen,
 	.loosesEndScreen,
-	.testContainer {
+	.screensContainer {
 		height: 100vh !important;
 	}
 }
