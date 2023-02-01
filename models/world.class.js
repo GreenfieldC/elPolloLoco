@@ -114,7 +114,7 @@ class World extends DrawableObject {
 	 * Checks if character hits chicken on top
 	 * and kills it if it is the case
 	 * @param {object} chick
-	 * @param {number} i
+	 * @param {number} i is index of chick
 	 */
 	checkHitsChickOnTop() {
 		this.level.smallEnemies.forEach((chick, i) => {
@@ -162,7 +162,7 @@ class World extends DrawableObject {
 
 	/**
 	 *
-	 * @returns {boolean}
+	 * @returns {boolean} either true or false depending on number of collected bottles
 	 */
 	cannotCarryMoreBottles() {
 		return this.bottlesStatusBar.collectedBottles == 10;
@@ -218,9 +218,7 @@ class World extends DrawableObject {
 	 */
 	updateIncreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles++;
-		this.bottlesStatusBar.setAmountBottles(
-			this.bottlesStatusBar.collectedBottles
-		);
+		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
 	}
 
 	/**
@@ -228,9 +226,7 @@ class World extends DrawableObject {
 	 */
 	updateDecreaseStatusBarBottles() {
 		this.bottlesStatusBar.collectedBottles--;
-		this.bottlesStatusBar.setAmountBottles(
-			this.bottlesStatusBar.collectedBottles
-		);
+		this.bottlesStatusBar.setAmountBottles(this.bottlesStatusBar.collectedBottles);
 	}
 
 	/**
