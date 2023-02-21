@@ -1,6 +1,32 @@
 /* =========
      KEYBOARD
 ==========*/
+ 
+let keys = [
+	{name: "keyup", type: true},
+	{name: "keydown", type: false},
+]
+
+keys.forEach((item) => {
+	window.addEventListener(item.name, (event) => {
+		switch(event.keycode) {
+			case 37:
+				keyboard.LEFT = item.type;
+				break
+			case 38:
+				keyboard.UP = item.type;
+				break
+			case 39:
+				keyboard.RIGHT = item.type;
+				break
+			case 68:
+				keyboard.D = item.type;
+				break;
+		}
+	});
+
+});
+
 
 window.addEventListener('keydown', (event) => {
 	if (event.keyCode == 37) {
@@ -21,26 +47,27 @@ window.addEventListener('keydown', (event) => {
 });
 
 window.addEventListener('keyup', (event) => {
-	if (event.keyCode == 37) {
-		keyboard.LEFT = false;
-	}
-
-	if (event.keyCode == 38) {
-		keyboard.UP = false;
-	}
-
-	if (event.keyCode == 39) {
-		keyboard.RIGHT = false;
-	}
-
-	if (event.keyCode == 68) {
-		keyboard.D = false;
+	switch(event.keycode) {
+		case 37:
+			keyboard.LEFT = false;
+			break
+		case 38:
+			keyboard.UP = false;
+			break
+		case 39:
+			keyboard.RIGHT = false;
+			break
+		case 68:
+			keyboard.D = false;
+			break;
 	}
 });
 
 /* ==============================
 	MOBILE NAVIGATION CHARACTER
 ================================*/
+
+
 
 function mobileBtnsListener() {
 	document.getElementById('right').ontouchstart = (e) => {
