@@ -27,7 +27,7 @@ Start Screen
  * Starts  game
  */
 function startGame() {
-	stopAllIntervals(); // stop all intervals from previous game
+	stopAllIntervals();
 	setsScreen();
 	initLevel1();
 	init();
@@ -41,8 +41,6 @@ function setsScreen() {
 	closeGameGuide();
 }
 
-
-
 /**
  * When the user clicks on the menu,
  * toggle the class 'showNavigationBar' on the navigation
@@ -50,8 +48,7 @@ function setsScreen() {
  */
 function openCloseMenuToggle() {
 	document.getElementById('menuContainer').classList.toggle('showNavigationBar');
-	openMenu = !openMenu
-	openMenu = !openMenu ? openMenu : !openMenu
+	!openMenu ? (openMenu = true) : (openMenu = false);
 }
 
 function hideWholeStartScreen() {
@@ -66,25 +63,8 @@ function closeStartGameButton() {
 
 function toggleShowFullscreenButton() {
 	document.getElementById('fullscreenIcon').classList.toggle('d-none');
-	element = document.getElementById("myID")
-	toggleVisibility(element)
-	toggleVisibility("myID")
 }
 
-/*
-/ @param string element
-*/
-function toggleVisibility(element) {
-	if(typeof(element) == "string") {
-		document.getElementById(element).classList.toggle('d-none');
-		return
-	}
-	
-	new Error("please give a string to the toggleVisibility funcction")
-}
-
-//DRY-Prinzip - Don't Repeat Yourself
-// GEnerische Funktionen schreiben
 function toggleSoundButton() {
 	document.getElementById('soundOnIcon').classList.toggle('d-none');
 }
@@ -97,16 +77,7 @@ function closeGameGuide() {
  * Shows play buttons for mobil devices
  */
 function checkMobilePlayButtonNeeded() {
-	
-	playerName = storedName ? storedName : "Player 1"
-	
-	playerName = storedName ?? "Player 1"
-	
-	soundsOn ? (soundsOn = false) : (soundsOn = true);
-	
-	showPlayer = hasPlayer ?? "Player1"
-	if(!maximalTableSize) return 
-	showMobilePlayButtons()
+	maximalTableSize ? showMobilePlayButtons() : null;
 }
 
 /**
@@ -157,6 +128,8 @@ function toggleFullScreen() {
  */
 function enterFullscreen(element) {
 	if (element.requestFullscreen) element.requestFullscreen();
+	// for IE11 (remove June 15, 2022)
+	if (element.msRequestFullscreen) element.msRequestFullscreen();
 	// iOS Safari
 	if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
 }
