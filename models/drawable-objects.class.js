@@ -8,7 +8,7 @@ class DrawableObject {
 	currentImage = 0;
 
 	/**
-	 * 
+	 *
 	 * @param {string} path is relative path of image being loaded
 	 */
 	loadImage(path) {
@@ -19,7 +19,7 @@ class DrawableObject {
 	/**
 	 * Preloads images being used for animation
 	 * @param {array} arr is array with images
-	 * @param {string} path is relativ path of image	
+	 * @param {string} path is relativ path of image
 	 */
 	loadImages(arr) {
 		arr.forEach((path) => {
@@ -101,10 +101,7 @@ class DrawableObject {
 	 * moving and fighting against the character
 	 */
 	endbossGetsAnnoyed() {
-		return (
-			this.level.endBoss[0].characterDetected ||
-			this.level.endBoss[0].beingAttacked
-		);
+		return this.level.endBoss[0].characterDetected || this.level.endBoss[0].beingAttacked;
 	}
 
 	drawMovableObjects() {
@@ -149,18 +146,12 @@ class DrawableObject {
 	 * @param {movableObject} objects that can change direction (only character)
 	 */
 	addToCanvas(movableObject) {
-		if (
-			movableObject.otherDirection ||
-			movableObject == this.statusBarEndboss
-		)
+		if (movableObject.otherDirection || movableObject == this.statusBarEndboss)
 			this.flipImage(movableObject);
 
 		movableObject.draw(this.ctx);
 
-		if (
-			movableObject.otherDirection ||
-			movableObject == this.statusBarEndboss
-		)
+		if (movableObject.otherDirection || movableObject == this.statusBarEndboss)
 			this.flipImageBack(movableObject);
 	}
 

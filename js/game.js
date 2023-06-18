@@ -27,6 +27,7 @@ Start Screen
  * Starts  game
  */
 function startGame() {
+	stopAllIntervals(); // stop all intervals from previous game
 	setsScreen();
 	initLevel1();
 	init();
@@ -150,4 +151,10 @@ function exitFullscreen() {
 function setStoppableInterval(fn, time) {
 	let id = setInterval(fn, time);
 	intervallIds.push(id);
+}
+
+function stopAllIntervals() {
+	intervallIds.forEach((id) => {
+		clearInterval(id);
+	});
 }

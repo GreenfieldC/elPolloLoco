@@ -28,7 +28,7 @@ class Character extends MovableObject {
 
 	/* hier nur die Funktionen, wo Tasten gedrückt werden */
 	animate() {
-		this.playInterval = setStoppableInterval(this.checks.bind(this), 90);
+		this.playInterval = setStoppableInterval(this.checks.bind(this), 50);
 	}
 
 	checks() {
@@ -65,8 +65,7 @@ class Character extends MovableObject {
 	 * the walking animation
 	 */
 	checkWalking() {
-		(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
-		this.objectOnGround()
+		(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.objectOnGround()
 			? this.walkingAnimation()
 			: this.sounds.walking_sound.pause();
 	}
@@ -77,9 +76,7 @@ class Character extends MovableObject {
 	 */
 	checkWalkingRight() {
 		this.world.keyboard.RIGHT && this.x < this.world.level.endOfLevel_x
-			? (this.moveRight(),
-			  this.forwards(),
-			  this.sounds.walking_sound.play())
+			? (this.moveRight(), this.forwards(), this.sounds.walking_sound.play())
 			: null;
 	}
 
@@ -89,9 +86,7 @@ class Character extends MovableObject {
 	 */
 	checkWalkingLeft() {
 		this.world.keyboard.LEFT && this.x > -50
-			? (this.moveLeft(),
-			  this.backwards(),
-			  this.sounds.walking_sound.play())
+			? (this.moveLeft(), this.backwards(), this.sounds.walking_sound.play())
 			: null;
 	}
 
@@ -99,9 +94,7 @@ class Character extends MovableObject {
 	 * If the player is above ground, pause the walking sound
 	 */
 	checkWalkingSound() {
-		this.aboveGround() || this.isInPain()
-			? this.sounds.walking_sound.pause()
-			: null;
+		this.aboveGround() || this.isInPain() ? this.sounds.walking_sound.pause() : null;
 	}
 
 	/**
@@ -128,12 +121,7 @@ class Character extends MovableObject {
 	 * @returns the value of the function.
 	 */
 	checkIsIdling() {
-		if (
-			this.isInactive == true ||
-			this.isMoving() ||
-			this.isDead() ||
-			this.aboveGround()
-		)
+		if (this.isInactive == true || this.isMoving() || this.isDead() || this.aboveGround())
 			return;
 		this.idlingAnimation();
 		setTimeout(() => {
@@ -147,12 +135,7 @@ class Character extends MovableObject {
 	 * @returns the value of the function longIdlingAnimation()
 	 */
 	checkIsLongIdling() {
-		if (
-			this.isInactive == false ||
-			this.isMoving() ||
-			this.isDead() ||
-			this.aboveGround()
-		)
+		if (this.isInactive == false || this.isMoving() || this.isDead() || this.aboveGround())
 			return;
 		this.longIdlingAnimation();
 	}
